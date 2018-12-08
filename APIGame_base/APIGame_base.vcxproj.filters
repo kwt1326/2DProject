@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00_main">
+      <UniqueIdentifier>{67f01c22-3b13-4629-ae47-2e1c98d5a3db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager">
+      <UniqueIdentifier>{7e398348-9ffd-4954-b178-0a8538efd89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager\00_Gamemanager">
+      <UniqueIdentifier>{619c232b-405f-4263-b12d-d4beed3d55d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager\01_Timemanager">
+      <UniqueIdentifier>{05c782d8-18bf-4e52-aee1-e1919cdd5727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_unit">
+      <UniqueIdentifier>{45d6270b-97a8-49f6-8b88-0a3c4a4cafca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_unit\00_input">
+      <UniqueIdentifier>{e06d9ac4-2af8-419a-8e91-b802145306f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene">
+      <UniqueIdentifier>{6cfdbb44-a279-466e-b402-5e9af2d20dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\01_MainScene">
+      <UniqueIdentifier>{8a2cb34b-5f49-4c52-bf4a-5c3f229c329e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03_Vector">
+      <UniqueIdentifier>{c05baa20-5245-4ce4-8311-8fe7e83a754e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\03_ClockScene">
+      <UniqueIdentifier>{6f7ba978-23ee-4bf8-97e3-c06e2f0e2ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_unit\01_image">
+      <UniqueIdentifier>{2abd8344-f336-4b4c-882e-c9564165278c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\04_imageScene">
+      <UniqueIdentifier>{2d129fc3-f028-40ee-9df8-92a2e5383474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\05_scrollmapScene">
+      <UniqueIdentifier>{bd9db4ae-22eb-4c03-9928-1baca1b5a32d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\06_MaptoolScene">
+      <UniqueIdentifier>{1c4aaf3a-293d-4fa8-9a0b-2a9e64bd7733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\02_Scene">
+      <UniqueIdentifier>{659ce7b1-b798-45ba-a993-a9af8eb39a14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_GameObject">
+      <UniqueIdentifier>{13d79a32-5542-4dbb-a516-39a6d022c6e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_GameObject\00_GameObject">
+      <UniqueIdentifier>{462dc09b-0b07-4e13-9712-243128eea42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager\02_ObjectManager">
+      <UniqueIdentifier>{d60c9677-1575-4bf7-84e3-e4a5bca1e151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99_unit\02_Physic">
+      <UniqueIdentifier>{2401f9db-5247-4123-bc65-b255327f85cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager\03_Scenemanager">
+      <UniqueIdentifier>{2345deb8-b7e9-4114-bec7-0124a855646b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01_manager\04_SoundManager">
+      <UniqueIdentifier>{416c22c1-1f83-4978-855b-2f226b4c4281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05_Component">
+      <UniqueIdentifier>{32ebc52b-4999-4bf9-9681-f0b43f60027e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05_Component\06_Animation">
+      <UniqueIdentifier>{8b1e1e14-1835-4a81-9a86-39b90a7de022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05_Component\03_AnimationClip">
+      <UniqueIdentifier>{fcf30658-698f-48fb-b645-17fd14c3f070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02_Scene\07_GameObjectScene">
+      <UniqueIdentifier>{edb95432-288f-4217-b004-a0e1c8ea31c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project">
+      <UniqueIdentifier>{242a7c06-0460-41e4-a513-e6c11475726b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\04_Rigidbody">
+      <UniqueIdentifier>{c0e93f0a-778a-42fe-a562-eec649ff5557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\000_Scene">
+      <UniqueIdentifier>{6e6553b7-6cc6-497b-8f5b-b0db9a0fc5f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\000_Scene\000_TitleScene">
+      <UniqueIdentifier>{a6b53ab2-f163-451a-bf1f-6aa09a0e4827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\000_Scene\001_MainGameScene">
+      <UniqueIdentifier>{b2569e7b-fa14-4ff4-9e2b-08092d9b63f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\001_GameObject">
+      <UniqueIdentifier>{2866e0ba-2bb7-4d4d-b85b-4d85cfa08bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\002_Script">
+      <UniqueIdentifier>{f307cbbb-9a1b-463c-99be-d4c2370bed73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\003_Manager">
+      <UniqueIdentifier>{fb7367f4-fca6-4317-b976-8bdce36c9f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\003_Manager\AnimationClipManager">
+      <UniqueIdentifier>{453c4368-06c4-437c-9277-30177854aa33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\003_Manager\DIBsectionMGR">
+      <UniqueIdentifier>{d2273b07-947d-4d8e-8b86-dc146be4d086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\003_Manager\FSMstate">
+      <UniqueIdentifier>{0f286723-fdf2-4928-9901-6dabd5ab4474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MegamanXGame_Project\001_GameObject\EnemyList">
+      <UniqueIdentifier>{72a518c1-3f6b-4d0f-9838-71880837076f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Winmain.cpp">
+      <Filter>00_main</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamemanager.cpp">
+      <Filter>01_manager\00_Gamemanager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timemanager.cpp">
+      <Filter>01_manager\01_Timemanager</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>99_unit\00_input</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>01_manager\03_Scenemanager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>02_Scene\02_Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>03_Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="clockscene.cpp">
+      <Filter>02_Scene\03_ClockScene</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>99_unit\01_image</Filter>
+    </ClCompile>
+    <ClCompile Include="imagescene.cpp">
+      <Filter>02_Scene\04_imageScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollScene.cpp">
+      <Filter>02_Scene\05_scrollmapScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MaptoolScene.cpp">
+      <Filter>02_Scene\06_MaptoolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>04_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>04_GameObject\00_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>05_Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>05_Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>05_Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectScene.cpp">
+      <Filter>02_Scene\07_GameObjectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>01_manager\02_ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Physic.cpp">
+      <Filter>99_unit\02_Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>01_manager\04_SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG_MGR.cpp">
+      <Filter>99_unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Objectcar.cpp">
+      <Filter>99_unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>05_Component\06_Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClip.cpp">
+      <Filter>05_Component\03_AnimationClip</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGameScene.cpp">
+      <Filter>MegamanXGame_Project\000_Scene\001_MainGameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Titlescene.cpp">
+      <Filter>MegamanXGame_Project\000_Scene\000_TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClipManager.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\AnimationClipManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DIBsectionMGR.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\DIBsectionMGR</Filter>
+    </ClCompile>
+    <ClCompile Include="Titleanimscript.cpp">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerObject.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Titleanim.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ToggleScript.cpp">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>99_unit\01_image</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerJumpState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShotState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletScript.cpp">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDashState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLandWallState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderPixel.cpp">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="MapBackGround.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MapColider.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderManager.cpp">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray2D.cpp">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera2D.cpp">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTransformManager.cpp">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="UnityBuild.cpp" />
+    <ClCompile Include="MainScene.cpp">
+      <Filter>02_Scene\01_MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMMarcine.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStartState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="EBee.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Gamemanager.h">
+      <Filter>01_manager\00_Gamemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timemanager.h">
+      <Filter>01_manager\01_Timemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>99_unit\00_input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenemanager.h">
+      <Filter>01_manager\03_Scenemanager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>02_Scene\02_Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>03_Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="clockscene.h">
+      <Filter>02_Scene\03_ClockScene</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>99_unit\01_image</Filter>
+    </ClInclude>
+    <ClInclude Include="imagescene.h">
+      <Filter>02_Scene\04_imageScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollScene.h">
+      <Filter>02_Scene\05_scrollmapScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MaptoolScene.h">
+      <Filter>02_Scene\06_MaptoolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>04_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>04_GameObject\00_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>05_Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>05_Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>05_Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectScene.h">
+      <Filter>02_Scene\07_GameObjectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>01_manager\02_ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Physic.h">
+      <Filter>99_unit\02_Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>01_manager\04_SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG_MGR.h">
+      <Filter>99_unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Objectcar.h">
+      <Filter>99_unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>05_Component\06_Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClip.h">
+      <Filter>05_Component\03_AnimationClip</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGameScene.h">
+      <Filter>MegamanXGame_Project\000_Scene\001_MainGameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Titlescene.h">
+      <Filter>MegamanXGame_Project\000_Scene\000_TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClipManager.h">
+      <Filter>MegamanXGame_Project\003_Manager\AnimationClipManager</Filter>
+    </ClInclude>
+    <ClInclude Include="DIBsectionMGR.h">
+      <Filter>MegamanXGame_Project\003_Manager\DIBsectionMGR</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="Titleanimscript.h">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerObject.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Titleanim.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleScript.h">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>99_unit\01_image</Filter>
+    </ClInclude>
+    <ClInclude Include="HISTORYMEMO.h" />
+    <ClInclude Include="Enumdefinition.h">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerJumpState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShotState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletScript.h">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDashState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLandWallState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderPixel.h">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBackGround.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MapColider.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderManager.h">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray2D.h">
+      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera2D.h">
+      <Filter>MegamanXGame_Project\002_Script</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTransformManager.h">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>02_Scene\01_MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMMarcine.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStartState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="TState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="EBee.h">
+      <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBase.h">
+      <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="APIGame_base1.rc" />
+  </ItemGroup>
+</Project>

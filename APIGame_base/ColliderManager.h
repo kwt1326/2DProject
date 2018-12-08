@@ -1,0 +1,73 @@
+#pragma once
+
+#ifndef _COLLIDER_MANAGER_H_
+#define _COLLIDER_MANAGER_H_
+
+#include "GameObject.h"
+#include "Vector2.h"
+#include "Transform.h"
+#include "Enumdefinition.h"
+#include "ColliderPixel.h"
+#include "Rigidbody.h"
+#include <list>
+#include <map>
+
+#include "PlayerObject.h"
+#include "Camera2D.h"
+
+#define COLLIDER_MGR ColliderManager::GetInstance()
+
+class ColliderManager
+{
+public:
+	static ColliderManager* m_Instance;
+public:
+	static ColliderManager* GetInstance()
+	{
+		if (m_Instance == NULL) m_Instance = new ColliderManager;
+		return m_Instance;
+	}
+
+	struct ColliderInfo {
+		Rect col;
+		int  nType; // 0 = Normal Rectangle, 1 = Down Slope 2 = Up Slope
+	};
+public:
+	ColliderManager();
+	virtual ~ColliderManager();
+
+	void init(const char* path);
+	void Release();
+
+	void UpdateObjectOnField(float dt);
+
+	GameObject* GetField() { return m_pField; }
+	void SetField(GameObject* obj) { if (obj->GetComponent<ColliderPixel>() != NULL) m_pField = obj; }
+	void AddCollider(GameObject* obj) { m_colliderObjlist.push_back(obj); }
+	void RemoveObj(GameObject* pobj);
+
+	void SetStage(int nStage) { m_nStage = nStage; }
+	void SetDraw(bool bDraw) { m_bDraw = bDraw; }
+	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
+
+private:
+	std::list<GameObject*> m_colliderObjlist;
+	std::map<std::string, std::list<ColliderInfo>> m_colliderFieldlist;
+	GameObject* m_pField;
+	int m_nStage = 0;
+	bool m_bDraw;
+
+private: // draw
+	void PreDrawMode(bool btrue);
+	void Draw(bool btrue);
+	PAINTSTRUCT m_ps;
+	HDC m_hdc;
+	HBRUSH MyBrush, OldBrush;
+	HPEN Mypen, Oldpen;
+
+	PlayerObject* m_pPlayer;
+	Camera2D*     m_pcam;
+};
+
+#endif
+
