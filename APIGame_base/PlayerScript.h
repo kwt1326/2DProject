@@ -8,6 +8,7 @@
 #include "Vector2.h"
 #include "AnimationClipManager.h"
 #include "Enumdefinition.h"
+#include "PlayerObject.h"
 
 class PlayerObject;
 class AnimationClip;

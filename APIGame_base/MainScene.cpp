@@ -52,7 +52,7 @@ void MainScene::Render(HDC hdc)
 
 	char Angle[100];
 	sprintf(Angle, "Angle : %f", m_rotationAngle);
-	TextOut(hdc, 0, 90, Angle, strlen(Angle));
+	TextOut(hdc, 0, 90, (LPCTSTR)Angle, strlen(Angle));
 
 	HPEN hpen = CreatePen(PS_DASH, 3, RGB(255, 255, 0));
 	HPEN oldpen = (HPEN)SelectObject(hdc, hpen);
@@ -100,11 +100,6 @@ LRESULT MainScene::SceneProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPa
 			if (wParam == VK_F5)
 			{
 				SCENE_MGR->ChangeScene<GameObjectScene>();
-				break;
-			}
-			if (wParam == VK_F6)
-			{
-				SCENE_MGR->ChangeScene<DIBPrintScene>();
 				break;
 			}
 		}

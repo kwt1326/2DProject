@@ -1,5 +1,6 @@
 #include "PlayerDashState.h"
 #include "PlayerScript.h"
+#include "FSMMarcine.h"
 
 PlayerDashState::PlayerDashState()
 	:pMachine(NULL)

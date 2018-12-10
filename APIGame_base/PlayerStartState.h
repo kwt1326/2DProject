@@ -4,6 +4,9 @@
 #include "TState.h"
 
 class FSMMarcine;
+class PlayerObject;
+class Animation;
+class Rigidbody;
 class PlayerStartState : public TState
 {
 public:
@@ -19,6 +22,5 @@ private:
 	PlayerObject *  pObject;
 	Animation*		pAnim;
 	Rigidbody*		pRgid;
-	ColliderPixel*  pColpixel;
 };
 #endif

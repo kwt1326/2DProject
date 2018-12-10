@@ -1,5 +1,6 @@
 #include "PlayerMoveState.h"
 #include "PlayerScript.h"
+#include "FSMMarcine.h"
 #include "input.h"
 
 PlayerMoveState::PlayerMoveState()

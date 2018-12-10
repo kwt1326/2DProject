@@ -69,7 +69,7 @@ void MaptoolScene::Update(float dt)
 			}
 		}
 		fclose(fp);
-		MessageBox(NULL, "로드완료!", "로드", MB_OK);
+		MessageBox(NULL, (LPCTSTR)"로드완료!", (LPCTSTR)"로드", MB_OK);
 	}
 }
 void MaptoolScene::Render(HDC hdc)
@@ -127,7 +127,7 @@ LRESULT MaptoolScene::SceneProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM 
 				m_tileChoice = wParam - '0';
 				char title[255];
 				sprintf(title, "선택된 타일 : %d", m_tileChoice);
-				SetWindowText(hWnd, title);
+				SetWindowText(hWnd, (LPCTSTR)title);
 				break;
 			}
 

@@ -1,5 +1,7 @@
 #include "PlayerShotState.h"
 #include "PlayerScript.h"
+#include "ObjectManager.h"
+#include "FSMMarcine.h"
 #include "Attack.h"
 
 PlayerShotState::PlayerShotState()

@@ -1,5 +1,7 @@
 #include "PlayerLandWallState.h"
 #include "PlayerScript.h"
+#include "FSMMarcine.h"
+#include "input.h"
 
 PlayerLandWallState::PlayerLandWallState()
 	:pMachine(NULL)

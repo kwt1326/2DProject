@@ -1,5 +1,7 @@
 #include "PlayerIdleState.h"
 #include "PlayerScript.h"
+#include "FSMMarcine.h"
+#include "input.h"
 
 PlayerIdleState::PlayerIdleState()
 	:pMachine(NULL)

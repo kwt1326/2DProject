@@ -4,6 +4,8 @@
 
 #include "TState.h"
 
+class Rigidbody;
+class FSMMarcine;
 class PlayerLandWallState : public TState
 {
 public:

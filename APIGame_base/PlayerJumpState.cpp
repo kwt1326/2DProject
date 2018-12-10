@@ -1,5 +1,7 @@
 #include "PlayerJumpState.h"
 #include "PlayerScript.h"
+#include "FSMMarcine.h"
+#include "input.h"
 
 PlayerJumpState::PlayerJumpState()
 	:pMachine(NULL)
