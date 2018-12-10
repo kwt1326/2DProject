@@ -184,16 +184,16 @@ void ColliderManager::Draw(bool btrue)
 		// ¸Êº¤ÅÍ°ª ½Ç½Ã°£ Ç¥½Ã
 		char Timestr[255];
 		sprintf(Timestr, "MapVector : %.2f, %.2f", m_pcam->GetPosition().x, m_pcam->GetPosition().y);
-		TextOut(m_hdc, 0, 45, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 45, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerpos : %.2f, %.2f", m_pPlayer->GetPosition().x, m_pPlayer->GetPosition().y);
-		TextOut(m_hdc, 0, 60, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 60, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerpos : %.2f, %.2f", m_pPlayer->GetWorldPosition().x, m_pPlayer->GetWorldPosition().y);
-		TextOut(m_hdc, 0, 75, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 75, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerWorldRect : %.2f, %.2f,%.2f, %.2f", PlayerRectW.Left, PlayerRectW.Top, PlayerRectW.Right, PlayerRectW.Bottom);
-		TextOut(m_hdc, 0, 90, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 90, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerLocalRect : %.2f, %.2f,%.2f, %.2f", PlayerRect.Left, PlayerRect.Top, PlayerRect.Right, PlayerRect.Bottom);
-		TextOut(m_hdc, 0, 105, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 105, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerRectXXXX : %.2f, %.2f,%.2f, %.2f", PlayerRectX.Left, PlayerRectX.Top, PlayerRectX.Right, PlayerRectX.Bottom);
-		TextOut(m_hdc, 0, 120, ((LPCWSTR)Timestr), strlen(Timestr));
+		TextOut(m_hdc, 0, 120, (Timestr), strlen(Timestr));
 	}
 }

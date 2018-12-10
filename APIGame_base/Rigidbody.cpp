@@ -375,7 +375,7 @@ void Rigidbody::ProcessPlayer(PlayerObject* pPlayer, float dt)
 
 	if (PLAYER_INSTANCE->GetJump() == true)
 	{
-		if (m_airtime <= 0.5f)
+		if (m_airtime <= 0.6f)
 		{
 			m_gravity.y += 10;
 			m_Velocity = (m_gravity * dt);

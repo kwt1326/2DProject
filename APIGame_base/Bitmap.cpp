@@ -21,7 +21,7 @@ HBITMAP Bitmap::LoadFile(char* FileName)
 	HANDLE File = NULL;
 	DWORD  LoadData = 0;
 
-	File = CreateFile(((LPCWSTR)FileName), GENERIC_READ, 0, NULL,
+	File = CreateFile((FileName), GENERIC_READ, 0, NULL,
 					OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (File == INVALID_HANDLE_VALUE) // 무효값 판단

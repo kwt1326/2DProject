@@ -1,5 +1,5 @@
 #include "SoundManager.h"
-#pragma comment (lib, "FMOD\\lib\\fmodex_vc")
+#pragma comment (lib, "FMOD\\lib\\fmodex_vc.lib")
 
 SoundManager* SoundManager::m_instance;
 

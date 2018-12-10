@@ -62,7 +62,7 @@ void image::init(char* Filename)
 
 	m_hbit = (HBITMAP)LoadImage(
 		GetModuleHandle(NULL),
-		(LPCWSTR)Filename,
+		Filename,
 		IMAGE_BITMAP,
 		0, 0,
 		LR_LOADFROMFILE);

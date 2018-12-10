@@ -103,8 +103,8 @@ int Gamemanager::Run(const char*Title, int x, int y)
 	winc.hbrBackground = /*(HBRUSH)GetStockObject(WHITE_BRUSH)*/CreateSolidBrush(RGB(255, 130, 255));
 	winc.hCursor =		LoadCursor(NULL, IDC_ARROW);
 	winc.hIcon =		LoadIcon(NULL, IDI_APPLICATION);
-	winc.lpszClassName = (LPCWSTR)("PORTFOLIO_2D_MEGAMAN");
-	winc.lpszMenuName = (LPCWSTR)("PORTFOLIO_2D_MEGAMAN");
+	winc.lpszClassName = ("PORTFOLIO_2D_MEGAMAN");
+	winc.lpszMenuName = ("PORTFOLIO_2D_MEGAMAN");
 	winc.style =		CS_HREDRAW | CS_VREDRAW;
 	winc.hInstance = minstance = GetModuleHandle(NULL); // 인스턴스 핸들
 	winc.lpfnWndProc = (WNDPROC)WndProc; // 윈도우 프로시저
@@ -118,7 +118,7 @@ int Gamemanager::Run(const char*Title, int x, int y)
 	mrect.bottom = y;
 
 	mhwnd = CreateWindow(
-		((LPCWSTR)Title), ((LPCWSTR)Title),
+		(Title), (Title),
 		WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT,
 		x + (rectwindow.right - rectwindow.left), y + (rectwindow.bottom - rectwindow.top), NULL, NULL, minstance, NULL);
 
@@ -161,11 +161,11 @@ void Gamemanager::Render(HDC hdc)
 	
 	char Timestr[255];
 	sprintf(Timestr, "WorldTime : %.2f", TIME_MGR->GetWorldTime());
-	TextOut(hdc, 0, 0, ((LPCWSTR)Timestr), strlen(Timestr));
+	TextOut(hdc, 0, 0, (Timestr), strlen(Timestr));
 	sprintf(Timestr, "FPS Time : %.2f", TIME_MGR->GetFPS());
-	TextOut(hdc, 0, 15, ((LPCWSTR)Timestr), strlen(Timestr));
+	TextOut(hdc, 0, 15, (Timestr), strlen(Timestr));
 	sprintf(Timestr, "DeltaTime : %f", TIME_MGR->GetDeltaTime());
-	TextOut(hdc, 0, 30, ((LPCWSTR)Timestr), strlen(Timestr));
+	TextOut(hdc, 0, 30, (Timestr), strlen(Timestr));
 
 
 }
