@@ -38,29 +38,38 @@ PlayerScript::PlayerScript()
 PlayerScript::~PlayerScript()
 {
 }
+bool PlayerScript::IsScrolling(bool bX) {
+	Rect screen = GAME_MGR->Getrect();
+	double recthalfsize_X = screen.Right / 2;
+	double recthalfsize_Y = screen.Bottom / 2;
 
+	if (bX) {
+		return (m_pPlayer->GetWorldPosition().x > recthalfsize_X &&
+			m_pPlayer->GetWorldPosition().x < m_pRelationCamera->GetMaxMovablePosition().x)
+			? true : false;
+	}
+	else {
+		return (m_pPlayer->GetWorldPosition().y > recthalfsize_Y &&
+			m_pPlayer->GetWorldPosition().y < m_pRelationCamera->GetMaxMovablePosition().y)
+			? true : false;
+	}
+}
 void PlayerScript::SetComparePosition(Vector2 vPos, Vector2 vWorldPos)
 {
 	Rect screen = GAME_MGR->Getrect();
 	double recthalfsize_X = screen.Right / 2;
 	double recthalfsize_Y = screen.Bottom / 2;
-	Vector2 calcpos = m_pPlayer->GetPosition();
-	{
-		if (m_pPlayer->GetWorldPosition().x > recthalfsize_X)
-		{
-			if(m_pPlayer->GetWorldPosition().x < m_pRelationCamera->GetMaxMovablePosition().x - recthalfsize_X)
-				vPos.x = recthalfsize_X;
-		}
 
-		if (m_pPlayer->GetWorldPosition().y > recthalfsize_Y)
-		{
-			if(m_pPlayer->GetWorldPosition().y < m_pRelationCamera->GetMaxMovablePosition().y)
-				vPos.y = recthalfsize_Y;
-		}
-
-		m_pPlayer->SetPosition(vPos);
-		m_pPlayer->SetWorldPosition(vWorldPos);
+	if (IsScrolling(true)) {
+		vPos.x = recthalfsize_X;
 	}
+
+	if (IsScrolling(false)) {
+		vPos.y = recthalfsize_Y;
+	}
+
+	m_pPlayer->SetPosition(vPos);
+	m_pPlayer->SetWorldPosition(vWorldPos);
 }
 
 void PlayerScript::Update(float dt)
@@ -111,14 +120,11 @@ void PlayerScript::ProcessPlayer(float dt)
 
 	ChangePlayerAnimState(m_pMachine->GetCurAnimState());
 
-	// 충돌 검사
-	if (m_pRigidbody->OnRectColliderEnter_PLAYER(m_pPlayer))
-	{
-		OnlandChangeState(m_pPlayer);
+	if (m_pRigidbody->OnRectColliderEnter_PLAYER(m_pPlayer)) {
+		GameStart(m_pPlayer);
 	}
-	else
-		if (m_pRigidbody->GetGravity() == Vector2::Zero)
-			m_pRigidbody->SetGravity(Vector2(0, 300.f));
+	else if (m_pRigidbody->GetGravity() == Vector2::Zero && m_pPlayer->GetJump())
+		m_pRigidbody->SetGravity(Vector2(0, 300.f));
 }
 
 void PlayerScript::ChangePlayerAnimState(PlayerState state)
@@ -142,14 +148,8 @@ void PlayerScript::AnimationPlay(Animation* panim, AnimationClip* clip, Animatio
 		p_Anim->Play(compare_clip);
 }
 
-bool PlayerScript::OnlandChangeState(PlayerObject* player)
-{
-	//if (m_pRigidbody->GetAirTime() == 0.f)
-	//{
-	//	player->SetJump(false);
-	//	m_pRigidbody->SetGravity(Vector2::Zero);
-	//}
-	
+bool PlayerScript::GameStart(PlayerObject* player)
+{	
 	if (m_pMachine->GetCurAnimState() == STATE_FALLDOWN)
 		m_pMachine->Update(0);
 	return true;

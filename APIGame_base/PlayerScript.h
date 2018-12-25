@@ -38,7 +38,7 @@ private:
 	TState*		m_playerstate;
 
 	void AnimationPlay(Animation* panim, AnimationClip* clip, AnimationClip* rclip);
-	bool OnlandChangeState(PlayerObject* player);
+	bool GameStart(PlayerObject* player);
 
 public:
 	PlayerObject * m_pPlayer;
@@ -55,6 +55,8 @@ public:
 	void SetComparePosition(Vector2 vPos, Vector2 vWorldPos);
 	void InputKeycode(int input, BOOL istrue) { m_wparam[input] = istrue; }
 	BOOL GetInput(int input) { return m_wparam[input]; }
+
+	bool IsScrolling(bool bX);
 
 };
 

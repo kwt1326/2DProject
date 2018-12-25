@@ -66,10 +66,10 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
 	Vector2 prevCamPos = m_tr->GetPosition();
 	float rectcenterX = rectpoint.x *0.5;
 	float rectcenterY = rectpoint.y *0.5;
-	Vector2 calcCameraPoint = (player->GetWorldPosition() - (rectpoint / 2)) *(-1); // 이미지는 반대로 움직여야한다.
+	Vector2 calcCameraPoint = (point - (rectpoint / 2)) *(-1); // 이미지는 반대로 움직여야한다.
 	Vector2 moveCameraPoint = Vector2::Zero;
 
-	if (point.x >= rectcenterX && point.x <= m_mapRect.x - rectpoint.x)
+	if (point.x >= rectcenterX && point.x <= m_mapRect.x - rectpoint.x / 2)
 	{
 		m_tr->SetPosition(Vector2(calcCameraPoint.x, m_tr->GetPosition().y));
 	}
@@ -81,7 +81,7 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
 			m_tr->SetPosition(Vector2(-(m_mapRect.x - rectcenterX), m_tr->GetPosition().y));
 	}
 
-	if (point.y >= rectcenterY && point.y <= m_mapRect.y - rectpoint.y)
+	if (point.y >= rectcenterY && point.y <= m_mapRect.y - rectpoint.y / 2)
 	{
 		m_tr->SetPosition(Vector2(m_tr->GetPosition().x, calcCameraPoint.y));
 	}
@@ -117,8 +117,8 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
 	}
 
 	// Field Collider All Scroll
-	std::list<ColliderManager::ColliderInfo>& rectcolliderlist = COLLIDER_MGR->GetCurField();
-	std::list<ColliderManager::ColliderInfo>::iterator it = rectcolliderlist.begin();
+	std::list<ColliderInfo>& rectcolliderlist = COLLIDER_MGR->GetCurField();
+	std::list<ColliderInfo>::iterator it = rectcolliderlist.begin();
 	Rect moverect = { moveCameraPoint.x,moveCameraPoint.y,moveCameraPoint.x,moveCameraPoint.y };
 	for ( ; it != rectcolliderlist.end() ; ++it){
 		(*it).col += moverect;

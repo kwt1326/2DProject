@@ -48,9 +48,9 @@ void ColliderManager::init(const char* path)
 			}
 			else
 			{
-				if (strstr(pGet, "[END]") != NULL)
+				if (strstr(pGet, "[END]") != nullptr)
 				{
-					m_colliderFieldlist.insert(std::make_pair("STAGE" + std::to_string(nStage), rectBuffer));
+					m_colliderFieldlist["STAGE" + std::to_string(nStage)] = rectBuffer;
 					bHasCollider = false;
 					rectBuffer.clear();
 					continue;

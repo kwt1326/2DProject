@@ -17,6 +17,11 @@
 
 #define COLLIDER_MGR ColliderManager::GetInstance()
 
+struct ColliderInfo {
+	Rect col;
+	int  nType; // 0 = Normal Rectangle, 1 = Down Slope 2 = Up Slope
+};
+
 class ColliderManager
 {
 public:
@@ -27,11 +32,6 @@ public:
 		if (m_Instance == NULL) m_Instance = new ColliderManager;
 		return m_Instance;
 	}
-
-	struct ColliderInfo {
-		Rect col;
-		int  nType; // 0 = Normal Rectangle, 1 = Down Slope 2 = Up Slope
-	};
 public:
 	ColliderManager();
 	virtual ~ColliderManager();

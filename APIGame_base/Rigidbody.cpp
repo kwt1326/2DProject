@@ -4,6 +4,7 @@
 #include "PlayerObject.h"
 #include "PlayerScript.h"
 #include "ColliderManager.h"
+#include "Gamemanager.h"
 
 Rigidbody::Rigidbody()
 {
@@ -14,106 +15,143 @@ Rigidbody::Rigidbody()
 	m_bUseGravity = true;
 	m_airtime = 0.f;
 	m_Colmrg = COLLIDER_MGR;
+	m_previnfoIndex = std::make_pair(0,0);
 }
 Rigidbody::~Rigidbody()
 {
-
 }
 
-// 렉트 충돌 (맵 기본 충돌)
+// Rect 충돌 (맵 기본 충돌) 
 bool Rigidbody::OnRectColliderEnter_PLAYER(PlayerObject* player)
 {
 	PlayerScript* pScript = player->GetComponent<PlayerScript>();
 	Rect& playercol = player->GetLocalRect();
-	Rect Mergecol;
+	bool bBottomExist = false;
 
 	player->SetBlockState(NO_BLOCK);
-	m_strstay.m_coord = Vector2::Zero;
 	m_strstay.m_bOnMap = false;
 	m_strstay.m_bOnHWall = false;
 
-	std::list<ColliderManager::ColliderInfo>& colliderlist = m_Colmrg->GetCurField();
-	std::list<ColliderManager::ColliderInfo>::iterator it = colliderlist.begin();
+	std::list<ColliderInfo>& colliderlist = m_Colmrg->GetCurField();
+	std::list<ColliderInfo>::iterator it = colliderlist.begin();
+
 	for (; it != colliderlist.end(); ++it)
 	{
+		m_strstay.m_coord = Vector2::Zero;
 		Rect& Mapcol = (*it).col;
 
 		if (Physic::RectToRectCollisionCheck(playercol, Mapcol))
 		{
-			if ((*it).nType != 0) // Diagonal Collision
+			if (playercol.Bottom + 1 > Mapcol.Top)
+				bBottomExist = true;
+
+			//if (OnDiagonelColliderEnter_Check_PLAYER(player, (*it))) {
+			//	return true;
+			//}
+			m_strstay.m_coord = Vector2::Zero;
+			if (OnRectColliderEnter_Check_PLAYER(player, playercol, (*it))) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+// Line 충돌 [Diagonel]
+bool Rigidbody::OnDiagonelColliderEnter_Check_PLAYER(PlayerObject* player, ColliderInfo& mapCol)
+{
+	PlayerScript* pScript = player->GetComponent<PlayerScript>();
+	Rect& Mapcol = mapCol.col;
+
+	Vector2 playerRay_Spoint(player->GetPosition().x, player->GetPosition().y);
+	Vector2 playerRay_Epoint(player->GetPosition().x, player->GetPosition().y + PLAYER_V_HALFSIZE);
+	Vector2 s, d;
+
+	if (mapCol.nType == 0) {
+		return false;
+	}
+
+	if (mapCol.nType == 1) {
+		s = Vector2(Mapcol.Left, Mapcol.Top);
+		d = Vector2(Mapcol.Right, Mapcol.Bottom);
+	}
+	else if (mapCol.nType == 2) {
+		s = Vector2(Mapcol.Left, Mapcol.Bottom);
+		d = Vector2(Mapcol.Right, Mapcol.Top);
+	}
+	Vector2 result = Vector2::Zero;
+	if (Vector2::SegmentIntersection(s, d, playerRay_Spoint, playerRay_Epoint, result))
+	{
+		Vector2 movew(player->GetWorldPosition().x, result.y - PLAYER_V_HALFSIZE);
+		Vector2 move(player->GetPosition().x, result.y - PLAYER_V_HALFSIZE);
+		pScript->SetComparePosition(move, movew);
+		m_strstay.m_bOnMap = true;
+		player->SetJump(false);
+		SetGravity(Vector2::Zero);
+		return true;
+	}
+	return false;
+}
+bool Rigidbody::OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, ColliderInfo& mapinfo) {
+
+	PlayerScript* pScript = player->GetComponent<PlayerScript>();
+	Rect Mapcol = mapinfo.col;
+	Rect Mergecol;
+
+	if (mapinfo.nType != 0) {
+		return false;
+	}
+
+	std::function<bool()> SetPosition = [&]() mutable -> bool {
+		Vector2 movew = player->GetWorldPosition() + m_strstay.m_coord;
+		Vector2 move = player->GetPosition() + m_strstay.m_coord;
+		pScript->SetComparePosition(move, movew);
+		m_strstay.m_coord = Vector2::Zero;
+		return true;
+	};
+
+	Mergecol.Left = (playercol.Left > Mapcol.Left) ? playercol.Left : Mapcol.Left;
+	Mergecol.Right = (playercol.Right < Mapcol.Right) ? playercol.Right : Mapcol.Right;
+	Mergecol.Top = (playercol.Top > Mapcol.Top) ? playercol.Top : Mapcol.Top;
+	Mergecol.Bottom = (playercol.Bottom < Mapcol.Bottom) ? playercol.Bottom : Mapcol.Bottom;
+
+	float MergecolHorizontal = Mergecol.Right - Mergecol.Left;
+	float MergecolVertical = Mergecol.Bottom - Mergecol.Top;
+
+	if (MergecolHorizontal < MergecolVertical)
+	{
+		// 수평 충돌
+		if (playercol.Right > Mapcol.Right && playercol.Left > Mapcol.Left || playercol.Left < Mapcol.Left && playercol.Right < Mapcol.Right)
+		{
+			if (Mergecol.Right == Mapcol.Right)
 			{
-				Vector2 playerRay_Spoint(player->GetPosition().x , player->GetPosition().y);
-				Vector2 playerRay_Epoint(player->GetPosition().x , player->GetPosition().y + PLAYER_V_HALFSIZE );
-				Vector2 s, d;
-				if ((*it).nType == 1) {
-					s = Vector2(Mapcol.Left, Mapcol.Top);
-					d = Vector2(Mapcol.Right, Mapcol.Bottom);
-				}
-				else if ((*it).nType == 2) {
-					s = Vector2(Mapcol.Left, Mapcol.Bottom);
-					d = Vector2(Mapcol.Right, Mapcol.Top);
-				}
-				Vector2 result = Vector2::Zero;
-				if (Vector2::SegmentIntersection(s, d, playerRay_Spoint, playerRay_Epoint, result))
-				{
-					Vector2 movew(player->GetWorldPosition().x, result.y - PLAYER_V_HALFSIZE);
-					Vector2 move(player->GetPosition().x, result.y - PLAYER_V_HALFSIZE);
-					pScript->SetComparePosition(move, movew);
-					m_strstay.m_bOnMap = true;
-					player->SetJump(false);
-					SetGravity(Vector2::Zero);
-					return true;
-				}
-				continue;
+				m_strstay.m_coord.x = MergecolHorizontal;
+				player->SetBlockState(LEFT_BLOCK);
+			}
+			else if (Mergecol.Left == Mapcol.Left)
+			{
+				m_strstay.m_coord.x = -MergecolHorizontal;
+				player->SetBlockState(RIGHT_BLOCK);
+			}
+			m_strstay.m_bOnHWall = true;
+			return SetPosition();
+		}
+	}
+	else
+	{
+		// 수직 충돌
+		if (playercol.Bottom > Mapcol.Top && playercol.Top < Mapcol.Bottom || playercol.Top < Mapcol.Bottom && playercol.Bottom > Mapcol.Top)
+		{
+			if (Mergecol.Top == Mapcol.Top) { // 바닥 착지
+				m_strstay.m_coord.y = -MergecolVertical;
+				m_strstay.m_bOnMap = true;
+				player->SetJump(false);
+				SetGravity(Vector2::Zero);
 			}
 
-			Mergecol.Left = (playercol.Left > Mapcol.Left) ? playercol.Left : Mapcol.Left;
-			Mergecol.Right = (playercol.Right < Mapcol.Right) ? playercol.Right : Mapcol.Right;
-			Mergecol.Top = (playercol.Top > Mapcol.Top) ? playercol.Top : Mapcol.Top;
-			Mergecol.Bottom = (playercol.Bottom < Mapcol.Bottom) ? playercol.Bottom : Mapcol.Bottom;
-
-			float MergecolHorizontal = Mergecol.Right - Mergecol.Left;
-			float MergecolVertical = Mergecol.Bottom - Mergecol.Top;
-
-			if (MergecolHorizontal < MergecolVertical)
-			{
-				// 수평 충돌
-				if (playercol.Right > Mapcol.Right && playercol.Left > Mapcol.Left || playercol.Left < Mapcol.Left && playercol.Right < Mapcol.Right)
-				{
-					if (Mergecol.Right == Mapcol.Right)
-					{
-						m_strstay.m_coord.x = MergecolHorizontal;
-						player->SetBlockState(LEFT_BLOCK);
-					}
-					else if (Mergecol.Left == Mapcol.Left)
-					{
-						m_strstay.m_coord.x = -MergecolHorizontal;
-						player->SetBlockState(RIGHT_BLOCK);
-					}
-					m_strstay.m_bOnHWall = true;
-				}
+			else if (Mergecol.Bottom == Mapcol.Bottom) { // 천장 충돌
+				m_strstay.m_coord.y = MergecolVertical;
 			}
-			else
-			{
-				// 수직 충돌
-				if (playercol.Bottom > Mapcol.Top && playercol.Top < Mapcol.Bottom || playercol.Top < Mapcol.Bottom && playercol.Bottom > Mapcol.Top)
-				{
-					if (Mergecol.Top == Mapcol.Top) {
-						m_strstay.m_coord.y = -MergecolVertical;
-					}
-
-					else if (Mergecol.Bottom == Mapcol.Bottom) {
-						m_strstay.m_coord.y = MergecolVertical;
-					}
-					m_strstay.m_bOnMap = true;
-					player->SetJump(false);
-					SetGravity(Vector2::Zero);
-				}
-			}
-			Vector2 movew = player->GetWorldPosition() + m_strstay.m_coord;
-			Vector2 move = player->GetPosition() + m_strstay.m_coord;
-			pScript->SetComparePosition(move, movew);
-			return true;
+			return SetPosition();
 		}
 	}
 	return false;
@@ -137,7 +175,7 @@ bool Rigidbody::HitColliderOnMap(const Rect playercol, const Rect Mapcol)
 	}
 	else return false;
 }
-
+// [Rect]
 int Rigidbody::HitColliderToHorizon(const Rect playercol, const Rect Mapcol)
 {
 	if (playercol.Right > Mapcol.Right && playercol.Left > Mapcol.Left)		 return 1; // 오른쪽에서 왼쪽 벽에 충돌시
@@ -175,7 +213,7 @@ bool Rigidbody::OnPixleCollisionEnter(Vector2* vArr, ColliderPixel* pColPixel, P
 
 	return false;
 }
-// 바닥 검사 이므로 바닥 한줄만 검사한다. (또한, 맵 스크롤링 중에는 렉트가 픽셀좌표와 동일시 되지 않으므로 가상 트랜스폼 이용)
+// [Pixel]바닥 검사 이므로 바닥 한줄만 검사한다. (또한, 맵 스크롤링 중에는 렉트가 픽셀좌표와 동일시 되지 않으므로 가상 트랜스폼 이용)
 bool Rigidbody::OnPixleCollisionLanding(PlayerObject* pObject, ColliderPixel* pColPixel, PIXEL colorrgb)
 {
 	Rect rt = pObject->GetWorldRect();
@@ -222,7 +260,7 @@ bool Rigidbody::OnPixleCollisionLanding(PlayerObject* pObject, ColliderPixel* pC
 	}
 	return false;
 }
-// 수평선 벽 충돌 (바닥 - 5 위치 검사)
+// [Pixel]수평선 벽 충돌 (바닥 - 5 위치 검사)
 bool Rigidbody::OnPixleCollisionHorizon(PlayerObject* pObject, bool bdirection, ColliderPixel* pColPixel, PIXEL colorrgb)
 {
 	Rect rt = pObject->GetWorldRect();
@@ -341,7 +379,6 @@ bool Rigidbody::OnPixleCollisionStay(Rect & rt, ColliderPixel * pColPixel, PIXEL
 
 void Rigidbody::Init()
 {
-
 }
 void Rigidbody::Update(float dt)
 {
@@ -375,7 +412,7 @@ void Rigidbody::ProcessPlayer(PlayerObject* pPlayer, float dt)
 
 	if (PLAYER_INSTANCE->GetJump() == true)
 	{
-		if (m_airtime <= 0.6f)
+		if (m_airtime <= 0.7f)
 		{
 			m_gravity.y += 10;
 			m_Velocity = (m_gravity * dt);

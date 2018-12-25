@@ -9,6 +9,8 @@
 #include "GameObject.h"
 #include <list>
 
+struct ColliderInfo;
+class ColliderManager;
 typedef struct CollisionStay
 {
 	bool  mb_stay;
@@ -17,8 +19,6 @@ typedef struct CollisionStay
 	bool  m_bOnMap;
 	bool  m_bOnHWall;
 }STAY;
-
-class ColliderManager;
 class PlayerObject;
 class Rigidbody : public Component
 {
@@ -30,7 +30,11 @@ public:
 	void Update(float dt);
 	void Release();
 public:
+	// Player Check
 	bool OnRectColliderEnter_PLAYER(PlayerObject* player);
+	bool OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, ColliderInfo& mapinfo);
+	bool OnDiagonelColliderEnter_Check_PLAYER(PlayerObject* player, ColliderInfo& mapCol);
+
 	bool HitColliderOnMap(const Rect playercol, const Rect Mapcol);
 	int HitColliderToHorizon(const Rect playercol, const Rect Mapcol);
 
@@ -63,6 +67,8 @@ private:
 	Vector2 m_gravity;
 	// player
 	float m_airtime;
+	// other
+	std::pair<int,int> m_previnfoIndex;
 };
 
 #endif // !_RIGIDBODY_H_
