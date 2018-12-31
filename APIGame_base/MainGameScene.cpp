@@ -48,8 +48,9 @@ void MainGameScene::Init()
 	//SOUND_MGR->SoundInit("sonic/stage1bgmact1.mp3", true, true);
 	//SOUND_MGR->SoundPlay("sonic/stage1bgmact1.mp3", 0.1f);
 
-	COLLIDER_MGR->init("megamanx/Maps/collider.txt");
 	pCollMan = COLLIDER_MGR;
+	pCollMan->SetLineThink(10);
+	COLLIDER_MGR->init("megamanx/Maps/collider.txt");
 	pCollMan->SetDraw(true);
 	pCollMan->SetStage(0);
 }

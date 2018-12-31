@@ -122,5 +122,12 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
 	Rect moverect = { moveCameraPoint.x,moveCameraPoint.y,moveCameraPoint.x,moveCameraPoint.y };
 	for ( ; it != rectcolliderlist.end() ; ++it){
 		(*it).col += moverect;
+		if((*it).nType != 0) {
+			std::list <Rect>& staircollist = (*it).m_listlinecol;
+			std::list <Rect>::iterator itr = staircollist.begin();
+			for (; itr != staircollist.end(); ++itr) {
+				(*itr) += moverect;
+			}
+		}
 	}
 }

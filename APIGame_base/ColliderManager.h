@@ -19,6 +19,7 @@
 
 struct ColliderInfo {
 	Rect col;
+	std::list<Rect> m_listlinecol;
 	int  nType; // 0 = Normal Rectangle, 1 = Down Slope 2 = Up Slope
 };
 
@@ -48,6 +49,7 @@ public:
 
 	void SetStage(int nStage) { m_nStage = nStage; }
 	void SetDraw(bool bDraw) { m_bDraw = bDraw; }
+	void SetLineThink(float fthink) { m_LineColthink = fthink; }
 	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
 
 private:
@@ -65,8 +67,10 @@ private: // draw
 	HBRUSH MyBrush, OldBrush;
 	HPEN Mypen, Oldpen;
 
+	// other
 	PlayerObject* m_pPlayer;
 	Camera2D*     m_pcam;
+	float		  m_LineColthink = 1;
 };
 
 #endif

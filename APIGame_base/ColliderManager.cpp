@@ -48,6 +48,9 @@ void ColliderManager::init(const char* path)
 			}
 			else
 			{
+				ColliderInfo info;
+				bIsLine = false;
+
 				if (strstr(pGet, "[END]") != nullptr)
 				{
 					m_colliderFieldlist["STAGE" + std::to_string(nStage)] = rectBuffer;
@@ -74,9 +77,27 @@ void ColliderManager::init(const char* path)
 					++nindex;
 				}
 				Rect buffer(rectfactor[0], rectfactor[1], rectfactor[2], rectfactor[3]);
-				ColliderInfo info;
 				info.col = buffer;
 				info.nType = (bIsLine) ? (int)rectfactor[4] : 0;
+				if (bIsLine) {
+					int colcount = (buffer.Right - buffer.Left) / m_LineColthink;
+					double dHlength = buffer.Right - buffer.Left;
+					double dHlength_piece = dHlength / colcount;
+					double dVlength = buffer.Bottom - buffer.Top;
+					double dVlength_piece = dVlength / colcount;
+					for (int i = 0; i < colcount; ++i) {
+						if (info.nType == 1) {
+							Rect col(/*left*/ rectfactor[0] + dHlength_piece * (i), /*top*/ rectfactor[1] + dVlength_piece * (i + 1), 
+									/*right*/ rectfactor[0] + dHlength_piece * (i) + m_LineColthink, /*bottom*/ rectfactor[3]);
+							info.m_listlinecol.push_back(col);
+						}
+						else if (info.nType == 2) {
+							Rect col(/*left*/ rectfactor[0] + dHlength_piece * (i), /*top*/ rectfactor[1] + dVlength_piece * (colcount - i),
+									/*right*/ rectfactor[0] + dHlength_piece * (i) + m_LineColthink, /*bottom*/ rectfactor[3]);
+							info.m_listlinecol.push_back(col);
+						}
+					}
+				}
 				rectBuffer.push_back(info);
 			}
 		}
@@ -165,13 +186,19 @@ void ColliderManager::Draw(bool btrue)
 			Rectangle(m_hdc, col.Left, col.Top, col.Right, col.Bottom);
 			if ((*it).nType == 1)
 			{
-				MoveToEx(m_hdc, col.Left, col.Top, NULL);
-				LineTo(m_hdc, col.Right, col.Bottom);
+				for (auto a = (*it).m_listlinecol.begin(); a != (*it).m_listlinecol.end(); ++a) {
+					Rectangle(m_hdc, (*a).Left, (*a).Top, (*a).Right, (*a).Bottom);
+				}
+				//MoveToEx(m_hdc, col.Left, col.Top, NULL);
+				//LineTo(m_hdc, col.Right, col.Bottom);
 			}
 			else if ((*it).nType == 2)
 			{
-				MoveToEx(m_hdc, col.Left, col.Bottom, NULL);
-				LineTo(m_hdc, col.Right, col.Top);
+				for (auto a = (*it).m_listlinecol.begin(); a != (*it).m_listlinecol.end(); ++a) {
+					Rectangle(m_hdc, (*a).Left, (*a).Top, (*a).Right, (*a).Bottom);
+				}
+				//MoveToEx(m_hdc, col.Left, col.Bottom, NULL);
+				//LineTo(m_hdc, col.Right, col.Top);
 			}
 		}
 

@@ -11,11 +11,11 @@ Rigidbody::Rigidbody()
 	m_Velocity = Vector2::Zero;
 	m_strstay = { false, 0 ,Vector2(0,0),false,false };
 	m_Enable = true;
-	m_gravity = Vector2(0, 300);
+	m_gravity = m_DefaultGravity = Vector2(0, 300);
 	m_bUseGravity = true;
 	m_airtime = 0.f;
 	m_Colmrg = COLLIDER_MGR;
-	m_previnfoIndex = std::make_pair(0,0);
+	m_previnfoIndex = 0;
 }
 Rigidbody::~Rigidbody()
 {
@@ -26,7 +26,6 @@ bool Rigidbody::OnRectColliderEnter_PLAYER(PlayerObject* player)
 {
 	PlayerScript* pScript = player->GetComponent<PlayerScript>();
 	Rect& playercol = player->GetLocalRect();
-	bool bBottomExist = false;
 
 	player->SetBlockState(NO_BLOCK);
 	m_strstay.m_bOnMap = false;
@@ -34,7 +33,28 @@ bool Rigidbody::OnRectColliderEnter_PLAYER(PlayerObject* player)
 
 	std::list<ColliderInfo>& colliderlist = m_Colmrg->GetCurField();
 	std::list<ColliderInfo>::iterator it = colliderlist.begin();
+	std::list<ColliderInfo>::iterator instance_it = colliderlist.begin();
+	std::advance(instance_it, m_previnfoIndex);
 
+	if (Physic::RectToRectCollisionCheck(playercol, (*instance_it).col)) {
+		if ((*instance_it).nType != 0) {
+			auto collist = (*instance_it).m_listlinecol;
+			if (!collist.empty()) {
+				for (auto itr = collist.begin(); itr != collist.end(); ++itr) {
+					if (OnStairColliderEnter_Check_PLAYER(player, playercol, (*itr))) {
+						return true;
+					}
+				}
+			}
+		}
+		else {
+			if (OnRectColliderEnter_Check_PLAYER(player, playercol, (*instance_it))) {
+				return true;
+			}
+		}
+	}
+
+	int nCount = 0;
 	for (; it != colliderlist.end(); ++it)
 	{
 		m_strstay.m_coord = Vector2::Zero;
@@ -42,17 +62,23 @@ bool Rigidbody::OnRectColliderEnter_PLAYER(PlayerObject* player)
 
 		if (Physic::RectToRectCollisionCheck(playercol, Mapcol))
 		{
-			if (playercol.Bottom + 1 > Mapcol.Top)
-				bBottomExist = true;
+			if ((*it).nType != 0) {
+				auto collist = (*it).m_listlinecol;
+				if (!collist.empty()) {
+					for (auto itr = collist.begin(); itr != collist.end(); ++itr) {
+						if (OnStairColliderEnter_Check_PLAYER(player, playercol, (*itr))) {
+							m_previnfoIndex = nCount;
+							return true;
+						}
+					}
+				}
+			}
 
-			//if (OnDiagonelColliderEnter_Check_PLAYER(player, (*it))) {
-			//	return true;
-			//}
-			m_strstay.m_coord = Vector2::Zero;
 			if (OnRectColliderEnter_Check_PLAYER(player, playercol, (*it))) {
 				return true;
 			}
 		}
+		++nCount;
 	}
 	return false;
 }
@@ -91,6 +117,44 @@ bool Rigidbody::OnDiagonelColliderEnter_Check_PLAYER(PlayerObject* player, Colli
 	}
 	return false;
 }
+bool Rigidbody::OnStairColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, Rect& mapcol) {
+
+	PlayerScript* pScript = player->GetComponent<PlayerScript>();
+	Rect Mapcol = mapcol;
+	Rect Mergecol;
+
+	std::function<bool()> SetPosition = [&]() mutable -> bool {
+		Vector2 movew = player->GetWorldPosition() + m_strstay.m_coord;
+		Vector2 move = player->GetPosition() + m_strstay.m_coord;
+		pScript->SetComparePosition(move, movew);
+		m_strstay.m_coord = Vector2::Zero;
+		return true;
+	};
+
+	Mergecol.Left = (playercol.Left > Mapcol.Left) ? playercol.Left : Mapcol.Left;
+	Mergecol.Right = (playercol.Right < Mapcol.Right) ? playercol.Right : Mapcol.Right;
+	Mergecol.Top = (playercol.Top > Mapcol.Top) ? playercol.Top : Mapcol.Top;
+	Mergecol.Bottom = (playercol.Bottom < Mapcol.Bottom) ? playercol.Bottom : Mapcol.Bottom;
+
+	float MergecolHorizontal = Mergecol.Right - Mergecol.Left;
+	float MergecolVertical = Mergecol.Bottom - Mergecol.Top;
+
+	if(MergecolHorizontal > MergecolVertical)
+	{
+		if (playercol.Bottom > Mapcol.Top && playercol.Top < Mapcol.Bottom || playercol.Top < Mapcol.Bottom && playercol.Bottom > Mapcol.Top)
+		{
+			if (Mergecol.Top == Mapcol.Top) { // ¹Ù´Ú ÂøÁö
+				m_strstay.m_coord.y = -MergecolVertical + /*º¸Á¤°ª*/0.5;
+				m_strstay.m_bOnMap = true;
+				player->SetJump(false);
+				SetGravity(Vector2::Zero);
+			}
+			return SetPosition();
+		}
+	}
+	return false;
+}
+
 bool Rigidbody::OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, ColliderInfo& mapinfo) {
 
 	PlayerScript* pScript = player->GetComponent<PlayerScript>();
@@ -142,7 +206,7 @@ bool Rigidbody::OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& pla
 		if (playercol.Bottom > Mapcol.Top && playercol.Top < Mapcol.Bottom || playercol.Top < Mapcol.Bottom && playercol.Bottom > Mapcol.Top)
 		{
 			if (Mergecol.Top == Mapcol.Top) { // ¹Ù´Ú ÂøÁö
-				m_strstay.m_coord.y = -MergecolVertical;
+				m_strstay.m_coord.y = -MergecolVertical + /*º¸Á¤°ª*/2;
 				m_strstay.m_bOnMap = true;
 				player->SetJump(false);
 				SetGravity(Vector2::Zero);

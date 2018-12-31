@@ -34,6 +34,7 @@ public:
 	bool OnRectColliderEnter_PLAYER(PlayerObject* player);
 	bool OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, ColliderInfo& mapinfo);
 	bool OnDiagonelColliderEnter_Check_PLAYER(PlayerObject* player, ColliderInfo& mapCol);
+	bool OnStairColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, Rect& mapcol);
 
 	bool HitColliderOnMap(const Rect playercol, const Rect Mapcol);
 	int HitColliderToHorizon(const Rect playercol, const Rect Mapcol);
@@ -65,10 +66,11 @@ private:
 	STAY m_strstay;
 	Vector2 m_Velocity;
 	Vector2 m_gravity;
+	Vector2 m_DefaultGravity;
 	// player
 	float m_airtime;
 	// other
-	std::pair<int,int> m_previnfoIndex;
+	int m_previnfoIndex;
 };
 
 #endif // !_RIGIDBODY_H_

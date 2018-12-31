@@ -54,10 +54,10 @@ void FSMMarcine::ChangeState(StateIdentify sid)
 	
 	// if Current Exist Enter the Exit, and New State Enter
 	if (m_pCurrState != NULL)
-		m_pCurrState->HandleExit();
+		ExitState();
 
 	m_pCurrState = pState;
-	m_pCurrState->HandleInput();
+	EnterState();
 	m_nState = m_pCurrState->Getid();
 }
 

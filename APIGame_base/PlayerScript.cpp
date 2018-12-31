@@ -65,7 +65,7 @@ void PlayerScript::SetComparePosition(Vector2 vPos, Vector2 vWorldPos)
 	}
 
 	if (IsScrolling(false)) {
-		vPos.y = recthalfsize_Y;
+		//vPos.y = recthalfsize_Y;
 	}
 
 	m_pPlayer->SetPosition(vPos);
@@ -123,8 +123,9 @@ void PlayerScript::ProcessPlayer(float dt)
 	if (m_pRigidbody->OnRectColliderEnter_PLAYER(m_pPlayer)) {
 		GameStart(m_pPlayer);
 	}
-	else if (m_pRigidbody->GetGravity() == Vector2::Zero && m_pPlayer->GetJump())
+	else if (m_pRigidbody->GetGravity() == Vector2::Zero) {
 		m_pRigidbody->SetGravity(Vector2(0, 300.f));
+	}
 }
 
 void PlayerScript::ChangePlayerAnimState(PlayerState state)
