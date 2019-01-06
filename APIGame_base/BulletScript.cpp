@@ -39,4 +39,5 @@ void BulletScript::Update(float dt)
 		if (m_durationtime > 2.0f) 
 			COLLIDER_MGR->RemoveObj(this->m_GameObject);
 	}
+
 };

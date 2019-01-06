@@ -267,9 +267,6 @@
     <ClCompile Include="Camera2D.cpp">
       <Filter>MegamanXGame_Project\002_Script</Filter>
     </ClCompile>
-    <ClCompile Include="WorldTransformManager.cpp">
-      <Filter>MegamanXGame_Project\003_Manager</Filter>
-    </ClCompile>
     <ClCompile Include="UnityBuild.cpp" />
     <ClCompile Include="MainScene.cpp">
       <Filter>02_Scene\01_MainScene</Filter>
@@ -283,7 +280,7 @@
     <ClCompile Include="PlayerStartState.cpp">
       <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
     </ClCompile>
-    <ClCompile Include="EBee.cpp">
+    <ClCompile Include="NormalEnemy.cpp">
       <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
     </ClCompile>
   </ItemGroup>
@@ -443,9 +440,6 @@
     <ClInclude Include="Camera2D.h">
       <Filter>MegamanXGame_Project\002_Script</Filter>
     </ClInclude>
-    <ClInclude Include="WorldTransformManager.h">
-      <Filter>MegamanXGame_Project\003_Manager</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>02_Scene\01_MainScene</Filter>
     </ClInclude>
@@ -461,10 +455,10 @@
     <ClInclude Include="TState.h">
       <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
     </ClInclude>
-    <ClInclude Include="EBee.h">
+    <ClInclude Include="EnemyBase.h">
       <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBase.h">
+    <ClInclude Include="NormalEnemy.h">
       <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,38 +1,34 @@
 #pragma once
-#ifndef _EBEE_H_
-#define _EBEE_H_
+#ifndef _NormalEnemy_H_
+#define _NormalEnemy_H_
 
 #include "GameObject.h"
 #include "EnemyBase.h"
 #include "TState.h"
+#include <map>
 
 class FSMMarcine;
 class Animation;
 class AnimationClipManager;
 class Rigidbody;
-class EBee : public EnemyBase, public GameObject
+class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
-	EBee();
-	virtual ~EBee();
+	NormalEnemy();
+	virtual ~NormalEnemy();
 
 	virtual void Init();
 	virtual void Update(float dt);
 	virtual void Release() ;
 
-	void SetHealth(int calcHealth) { m_nHealth = calcHealth; }
-	int GetHealth() { return m_nHealth; }
+	//void SetEnemy(std::map<std::string, >)
 
-	int m_nReceiveDamage;
 protected:
 	ObjectCamp m_type;
 	AnimationClipManager* m_pAnimMgr;
 	Animation* m_pAnim;
 	Rigidbody* m_pRg;
 	BOOL m_nbdir;
-
-	int m_nHealth;
-	int m_nAttackDamage;
 };
 
 class EnemyShotPos : public GameObject
@@ -59,38 +55,38 @@ private:
 	Vector2 m_leftpos;
 };
 
-class Bee_detection : public TState
+class NormalEnemy_detection : public TState
 {
 public:
-	Bee_detection() { m_id = E_DETECTION_ID; }
-	virtual ~Bee_detection() {};
+	NormalEnemy_detection() { m_id = E_DETECTION_ID; }
+	virtual ~NormalEnemy_detection() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
 };
 
-class Bee_Attack : public TState
+class NormalEnemy_Attack : public TState
 {
 public:
-	Bee_Attack() { m_id = E_ATTACK_ID; }
-	virtual ~Bee_Attack() {};
+	NormalEnemy_Attack() { m_id = E_ATTACK_ID; }
+	virtual ~NormalEnemy_Attack() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
 };
 
-class Bee_Demage : public TState
+class NormalEnemy_Damage : public TState
 {
 public:
-	Bee_Demage() { m_id = E_DAMAGE_ID; }
-	virtual ~Bee_Demage() {};
+	NormalEnemy_Damage() { m_id = E_DAMAGE_ID; }
+	virtual ~NormalEnemy_Damage() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
-
+	void EarnDamage();
 };
 
 #endif

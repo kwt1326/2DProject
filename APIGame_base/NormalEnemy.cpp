@@ -1,4 +1,4 @@
-#include "EBee.h"
+#include "NormalEnemy.h"
 #include "Renderer.h"
 #include "Animation.h"
 #include "AnimationClipManager.h"
@@ -11,22 +11,22 @@
 #include "FSMMarcine.h"
 #include "ObjectManager.h"
 
-EBee::EBee()
+NormalEnemy::NormalEnemy()
 	:m_type(ENEMYCAMP)
 	,m_nbdir(FALSE)
 {
-	m_eType = E_TYPE_BEE;
+	m_eType = E_TYPE_NORMAL;
 	m_nHealth = 3;
 }
 
-EBee::~EBee()
+NormalEnemy::~NormalEnemy()
 {
 }
-void EBee::Release()
+void NormalEnemy::Release()
 {
 
 }
-void EBee::Init()
+void NormalEnemy::Init()
 {
 	// Enemy Most Component
 	AddComponent<Renderer>();
@@ -48,68 +48,66 @@ void EBee::Init()
 
 	Vector2 pos = GetComponent<Transform>()->GetPosition();
 	GetComponent<Collider>()->SetRect(Rect(pos.x - 10, pos.y - 10, pos.x + 10, pos.y + 10));
-	COLLIDER_MGR->AddCollider(this);
+	COLLIDER_MGR->AddEnemyCollider(this);
 
-	m_pMachine->InsertState(E_DETECTION_ID, new Bee_detection());
-	m_pMachine->InsertState(E_DAMAGE_ID, new Bee_Demage());
-	m_pMachine->InsertState(E_ATTACK_ID, new Bee_Attack());
+	m_pMachine->InsertState(E_DETECTION_ID, new NormalEnemy_detection());
+	m_pMachine->InsertState(E_DAMAGE_ID, new NormalEnemy_Damage());
+	m_pMachine->InsertState(E_ATTACK_ID, new NormalEnemy_Attack());
 	m_pMachine->ChangeState(E_DETECTION_ID);
 
 	// most 
 	SetActive(true);
-
 }
 
-void EBee::Update(float dt)
+void NormalEnemy::Update(float dt)
 {
 }
 // detection
+void NormalEnemy_detection::HandleInput()
+{
+}
+
+void NormalEnemy_detection::Update(float dt)
+{
+}
+
+void NormalEnemy_detection::HandleExit()
+{
+}
 // attack
-void Bee_Attack::HandleInput()
+void NormalEnemy_Attack::HandleInput()
 {
 }
 
-void Bee_Attack::Update(float dt)
+void NormalEnemy_Attack::Update(float dt)
 {
 }
 
-void Bee_Attack::HandleExit()
+void NormalEnemy_Attack::HandleExit()
 {
 }
 // damage
-void Bee_Demage::HandleInput()
+void NormalEnemy_Damage::HandleInput()
 {
 
 }
 
-void Bee_Demage::Update(float dt)
+void NormalEnemy_Damage::Update(float dt)
+{
+}
+
+void NormalEnemy_Damage::HandleExit()
+{
+}
+
+void NormalEnemy_Damage::EarnDamage() 
 {
 	GameObject* pOwner = GetOwner();
 
 	if (pOwner)
 	{
-		EBee* pobj = dynamic_cast<EBee*>(pOwner);
-		pobj->SetHealth(pobj->GetHealth() - pobj->m_nReceiveDamage);
-
-		if (pobj->GetHealth() == 0)
-		{
-			OBJECT_MGR->Destroy(pOwner);
-		}
+		EnemyBase* pobj = dynamic_cast<EnemyBase*>(pOwner);
+		pobj->SetHealth(pobj->GetHealth() - pobj->GetDamage());
+		pobj->SetDamage(0);
 	}
-}
-
-void Bee_Demage::HandleExit()
-{
-}
-
-void Bee_detection::HandleInput()
-{
-}
-
-void Bee_detection::Update(float dt)
-{
-}
-
-void Bee_detection::HandleExit()
-{
 }

@@ -38,14 +38,13 @@
 #include "Titleanimscript.cpp"
 #include "ToggleScript.cpp"
 #include "AnimationClipManager.cpp"
-#include "WorldTransformManager.cpp"
 #include "Collider.cpp"
 #include "ColliderManager.cpp"
 #include "ColliderPixel.cpp"
 #include "Ray2D.cpp"
 #include "Rigidbody.cpp"
 // enemy list
-#include "EBee.cpp"
+#include "NormalEnemy.cpp"
 
 #include "PlayerStartState.cpp"
 #include "PlayerIdleState.cpp"

@@ -2,6 +2,10 @@
 #include "ObjectManager.h"
 #include "input.h"
 
+#include "Attack.h"
+#include "EnemyBase.h"
+#include "NormalEnemy.h"
+
 ColliderManager* ColliderManager::m_Instance = NULL;
 
 ColliderManager::ColliderManager()
@@ -109,51 +113,80 @@ void ColliderManager::Release()
 {
 	PreDrawMode(false);
 	m_pField = NULL;
-	m_colliderObjlist.clear();
-}
-void ColliderManager::UpdateObjectOnField(float dt) // 오브젝트의 픽셀 필드 접촉 이벤트
+	m_InstanceColliderlist.clear();
+	m_EnemyColliderlist.clear();
+}	
+void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝트 충돌 이벤트 체크
 {
 	if (input::GetKeyDown(0x50)) m_bDraw = (m_bDraw) ? false : true;
 
 	Draw(m_bDraw);
 
+	// 적/아군 총알 <-> 필드_충돌
 	std::list<ColliderInfo>& curColliderlist = GetCurField();
 	std::list<ColliderInfo>::iterator itCol = curColliderlist.begin();
 
-	if (curColliderlist.empty()) return;
-
-	for (; itCol != curColliderlist.end(); ++itCol)
-	{
-		std::list<GameObject*>::iterator itr = m_colliderObjlist.begin();
-		while (itr != m_colliderObjlist.end())
+	for (; itCol != curColliderlist.end(); ++itCol) {
+		std::list<GameObject*>::iterator itr = m_InstanceColliderlist.begin();
+		while (itr != m_InstanceColliderlist.end()) 
 		{
 			Collider* col = (*itr)->GetComponent<Collider>();
 			Rigidbody* rg = (*itr)->GetComponent<Rigidbody>();
-			if (col != NULL && rg != NULL)
-			{
-				if (col->GetIsInstance())
-				{
+			if (col != NULL && rg != NULL) {
+				if (col->GetIsInstance()) {
 					Rect& rect = col->GetRect();
-					if (Physic::RectToRectCollisionCheck(rect, (*itCol).col)) // 인스턴스가 필드에 충돌시 삭제된다.
+					if (Physic::RectToRectCollisionCheck(rect, (*itCol).col))
 					{
 						OBJECT_MGR->Destroy((*itr));
-						itr = m_colliderObjlist.erase(itr);
+						itr = m_InstanceColliderlist.erase(itr);
 						continue;
 					}
 				}
 			}
-			++itr; // if erase iterator using, must [add 1] part partial.
+			++itr;
+		}
+	}
+
+	// 적/아군 총알 <-> 적/아군 오브젝트
+	std::list<GameObject*>::iterator itCol2 = m_InstanceColliderlist.begin();
+
+	for (; itCol2 != m_InstanceColliderlist.end(); ++itCol2) 
+	{
+		Attack* patk = dynamic_cast<Attack*>(*itCol2);
+		Collider* col_bullet = (*itCol2)->GetComponent<Collider>();
+		Rigidbody* rg_bullet = (*itCol2)->GetComponent<Rigidbody>();
+		std::list<GameObject*>::iterator itr = m_EnemyColliderlist.begin();
+		while (itr != m_EnemyColliderlist.end())
+		{
+			Collider* col = (*itr)->GetComponent<Collider>();
+			Rigidbody* rg = (*itr)->GetComponent<Rigidbody>();
+			if (col != NULL && rg != NULL) {
+				if (col->GetIsInstance()) {
+					if (Physic::RectToRectCollisionCheck(col->GetRect(), col_bullet->GetRect()))
+					{
+						EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itr);
+						penemy->SetDamage(patk->GetDamage());
+						penemy->GetMachine()->ChangeState(E_DAMAGE_ID);
+						if ((dynamic_cast<EnemyBase*>(*itr))->GetHealth() == 0) {
+							OBJECT_MGR->Destroy((*itr));
+							itr = m_InstanceColliderlist.erase(itr);
+							continue;
+						}
+					}
+				}
+			}
+			++itr;
 		}
 	}
 }
 
 void ColliderManager::RemoveObj(GameObject * pobj)
 {
-	auto itr = std::find(m_colliderObjlist.begin(), m_colliderObjlist.end(), pobj);
-	if (itr != m_colliderObjlist.end())
+	auto itr = std::find(m_InstanceColliderlist.begin(), m_InstanceColliderlist.end(), pobj);
+	if (itr != m_InstanceColliderlist.end())
 	{
 		OBJECT_MGR->Destroy(pobj);
-		m_colliderObjlist.erase(itr);
+		m_InstanceColliderlist.erase(itr);
 	}
 }
 
@@ -189,16 +222,12 @@ void ColliderManager::Draw(bool btrue)
 				for (auto a = (*it).m_listlinecol.begin(); a != (*it).m_listlinecol.end(); ++a) {
 					Rectangle(m_hdc, (*a).Left, (*a).Top, (*a).Right, (*a).Bottom);
 				}
-				//MoveToEx(m_hdc, col.Left, col.Top, NULL);
-				//LineTo(m_hdc, col.Right, col.Bottom);
 			}
 			else if ((*it).nType == 2)
 			{
 				for (auto a = (*it).m_listlinecol.begin(); a != (*it).m_listlinecol.end(); ++a) {
 					Rectangle(m_hdc, (*a).Left, (*a).Top, (*a).Right, (*a).Bottom);
 				}
-				//MoveToEx(m_hdc, col.Left, col.Bottom, NULL);
-				//LineTo(m_hdc, col.Right, col.Top);
 			}
 		}
 

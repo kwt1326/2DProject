@@ -21,7 +21,7 @@
 #include "ColliderManager.h"
 
 //Enemy
-#include "EBee.h"
+#include "NormalEnemy.h"
 
 
 MainGameScene::MainGameScene()
@@ -43,7 +43,7 @@ void MainGameScene::Init()
 	OBJECT_MGR->AddObject(PLAYER_INSTANCE);									// 플레이어 배치
 
 	// Enemy
-	OBJECT_MGR->AddObject(new EBee(), Vector2(400, 200));
+	OBJECT_MGR->AddObject(new NormalEnemy(), Vector2(400, 200));
 
 	//SOUND_MGR->SoundInit("sonic/stage1bgmact1.mp3", true, true);
 	//SOUND_MGR->SoundPlay("sonic/stage1bgmact1.mp3", 0.1f);
@@ -56,7 +56,7 @@ void MainGameScene::Init()
 }
 void MainGameScene::Update(float dt)
 {
-	pCollMan->UpdateObjectOnField(dt);
+	pCollMan->Update_CollisionCheck(dt);
 }
 void MainGameScene::Render(HDC hdc)
 {

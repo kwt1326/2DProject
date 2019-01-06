@@ -58,7 +58,7 @@ void Attack::SetCollider(float Hscale, float Vscale, Vector2 pos)
 	col->SetIsInstance(true);
 	col->SetIsGravity(false);
 	rg->SetUseGravity(false);
-	COLLIDER_MGR->AddCollider(this);
+	COLLIDER_MGR->AddInstanceCollider(this);
 }
 void Attack::SetforType(InstanceObjType type)
 {

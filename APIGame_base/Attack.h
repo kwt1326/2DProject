@@ -25,17 +25,18 @@ public:
 	void SetforType(InstanceObjType type);
 	void SetScale(int x, int y) { m_scale = Vector2(x, y); }
 	Vector2 GetScale() { return m_scale; }
+	int GetDamage() { return m_damage; }
 public:
 	Vector2		m_pos;
 	bool		m_active;
 	InstanceObjType m_type;
 	InstanceType m_oritype;
 	Animation*	mp_Anim;
-	int			m_damage;
 	float		m_untildestroytime;
 	BOOL		m_dir;
 private:
 	Vector2		m_scale;
+	int			m_damage;
 };
 
 #endif

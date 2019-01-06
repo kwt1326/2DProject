@@ -278,7 +278,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="EBee.cpp">
+    <ClCompile Include="NormalEnemy.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
@@ -487,11 +487,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Winmain.cpp" />
-    <ClCompile Include="WorldTransformManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -533,7 +528,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="EBee.h">
+    <ClInclude Include="NormalEnemy.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="EnemyBase.h" />
@@ -697,10 +692,6 @@
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldTransformManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

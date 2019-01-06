@@ -36,6 +36,9 @@ public:
 	bool OnDiagonelColliderEnter_Check_PLAYER(PlayerObject* player, ColliderInfo& mapCol);
 	bool OnStairColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, Rect& mapcol);
 
+	// Object Check
+	//bool OnColliderEnter_Object();
+
 	bool HitColliderOnMap(const Rect playercol, const Rect Mapcol);
 	int HitColliderToHorizon(const Rect playercol, const Rect Mapcol);
 

@@ -52,7 +52,6 @@ void PlayerObject::Init()
 	SetWorldPosition(pt);
 	Vector2 pos = GetPosition();
 	GetComponent<Collider>()->SetRect(Rect(pos.x - PLAYER_H_HALFSIZE, pos.y - PLAYER_V_HALFSIZE, pos.x + PLAYER_H_HALFSIZE, pos.y + PLAYER_V_HALFSIZE));
-	COLLIDER_MGR->AddCollider(this);
 
 	AddComponent<PlayerScript>();
 

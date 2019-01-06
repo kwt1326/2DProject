@@ -21,10 +21,11 @@ Titleanim::~Titleanim()
 void Titleanim::Init()
 {
 	SetName("Title");
+
 	AddComponent<Renderer>();
 	AddComponent<Transform>();
-	AddComponent<Animation>();
-	AddComponent<Titleanimscript>();
+	GetComponent<Renderer>()->SetImage(image::Getimage("megamanx/image/title_rockman.bmp"));
+	GetComponent<Transform>()->SetPosition(0,0);
 }
 void Titleanim::Update()
 {
