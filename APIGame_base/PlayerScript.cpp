@@ -128,7 +128,7 @@ void PlayerScript::ProcessPlayer(float dt)
 	}
 }
 
-void PlayerScript::ChangePlayerAnimState(PlayerState state)
+void PlayerScript::ChangePlayerAnimState(std::string state)
 {
 	AnimationPlay(p_Anim, GetComponent<AnimationClipManager>()->GetPlayerClip(state, true),
 		GetComponent<AnimationClipManager>()->GetPlayerClip(state, false));
@@ -151,7 +151,7 @@ void PlayerScript::AnimationPlay(Animation* panim, AnimationClip* clip, Animatio
 
 bool PlayerScript::GameStart(PlayerObject* player)
 {	
-	if (m_pMachine->GetCurAnimState() == STATE_FALLDOWN)
+	if (m_pMachine->GetCurAnimState().compare("STATE_FALLDOWN") == 0)
 		m_pMachine->Update(0);
 	return true;
 }

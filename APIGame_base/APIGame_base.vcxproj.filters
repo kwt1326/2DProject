@@ -112,6 +112,12 @@
     <Filter Include="MegamanXGame_Project\001_GameObject\EnemyList">
       <UniqueIdentifier>{72a518c1-3f6b-4d0f-9838-71880837076f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{42f23f1b-45bb-43ac-bcf9-2533faa22b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\pugixml">
+      <UniqueIdentifier>{e2f71602-7e96-4161-b05e-6c1c6af8d67b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Winmain.cpp">
@@ -282,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="NormalEnemy.cpp">
       <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
+    </ClCompile>
+    <ClCompile Include="Pugixml\pugixml.cpp">
+      <Filter>lib\pugixml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +469,12 @@
     </ClInclude>
     <ClInclude Include="NormalEnemy.h">
       <Filter>MegamanXGame_Project\001_GameObject\EnemyList</Filter>
+    </ClInclude>
+    <ClInclude Include="Pugixml\pugiconfig.hpp">
+      <Filter>lib\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="Pugixml\pugixml.hpp">
+      <Filter>lib\pugixml</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

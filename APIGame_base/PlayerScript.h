@@ -51,7 +51,7 @@ public:
 	bool		m_gamestart;
 public:
 	void ProcessPlayer(float dt);
-	void ChangePlayerAnimState(PlayerState state);
+	void ChangePlayerAnimState(std::string state);
 	void SetComparePosition(Vector2 vPos, Vector2 vWorldPos);
 	void InputKeycode(int input, BOOL istrue) { m_wparam[input] = istrue; }
 	BOOL GetInput(int input) { return m_wparam[input]; }

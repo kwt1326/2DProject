@@ -14,12 +14,14 @@ class Rigidbody;
 class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
-	NormalEnemy();
+	NormalEnemy(EnemyType etype);
 	virtual ~NormalEnemy();
 
 	virtual void Init();
 	virtual void Update(float dt);
 	virtual void Release() ;
+
+	bool SetEmemy();
 
 	//void SetEnemy(std::map<std::string, >)
 

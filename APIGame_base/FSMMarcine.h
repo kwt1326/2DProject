@@ -26,10 +26,10 @@ public:
 
 	StateIdentify GetCurStateID() { return m_nState; }
 
-	PlayerState GetCurAnimState() { return m_nAnimState; }
+	std::string GetCurAnimState() { return m_nAnimState; }
 	EnemyAnimState GetCurEAnimState() { return m_nEAnimState; }
 
-	void SetAnimState(PlayerState state) { m_nAnimState = state; }
+	void SetAnimState(std::string state) { m_nAnimState = state; }
 	void SetAnimState_Enemy(EnemyAnimState state) { m_nEAnimState = state; }
 
 	TState* GetPrevState() { return m_pPrevState; }
@@ -40,7 +40,7 @@ private:
 	std::map<StateIdentify, TState*> m_mapState;
 	TState * m_pPrevState;
 	TState * m_pCurrState;
-	PlayerState  m_nAnimState;
+	std::string  m_nAnimState;
 	EnemyAnimState  m_nEAnimState;
 	StateIdentify m_nState;
 };

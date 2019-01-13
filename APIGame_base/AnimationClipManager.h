@@ -18,17 +18,17 @@ public:
 	virtual void Init();
 	virtual void Release();
 public:
+	bool Load(std::string strpath);
 
+	AnimationClip* GetEnemyClip(std::string strName, bool dir);
+	AnimationClip* GetPlayerClip(std::string strName, bool dir);
+private:
+	void CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop);
+	void ReleasePlayerClip();
 	void CreateEnemyClip(std::string strName, const char* path, float time, int framecnt, bool loop);
 	void ReleaseEnemyClip();
-	AnimationClip* GetEnemyClip(std::string strName);
-	AnimationClip* GetPlayerClip(PlayerState eClip, bool dir);
-private:
-	void CreatePlayerClip(PlayerState eclip, bool dir, const char* path, float time, int framecnt, bool loop);
-	void ReleasePlayerClip(std::map<PlayerState, AnimationClip*>& mapClip);
 	
-	std::map<PlayerState, AnimationClip*> m_vecPlayerClip;
-	std::map<PlayerState, AnimationClip*> m_vecPlayerClipR;
+	std::map<std::string, AnimationClip*> m_vecPlayerClip;
 	std::map<std::string, AnimationClip*> m_vecEnemyClip;
 };
 

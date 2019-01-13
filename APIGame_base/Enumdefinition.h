@@ -84,7 +84,7 @@ enum ColliderType {
 };
 
 enum EnemyType {
-	E_TYPE_NORMAL,
+	E_TYPE_BEE,
 	E_TYPE_CROLLER,
 	E_TYPE_1BOSS,
 };

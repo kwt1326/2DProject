@@ -65,8 +65,8 @@ void Attack::SetforType(InstanceObjType type)
 	switch (type)
 	{
 	case ROCKMAN_BUSTER_NC:
-		if (PLAYER_INSTANCE->GetDirection()) mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip(STATE_XBUSTER,true));
-		else mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip(STATE_XBUSTER, false));
+		if (PLAYER_INSTANCE->GetDirection()) mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip("STATE_XBUSTER",true));
+		else mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip("R/STATE_XBUSTER", false));
 		SetCollider(5, 3, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR1:

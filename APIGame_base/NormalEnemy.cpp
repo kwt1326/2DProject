@@ -11,11 +11,11 @@
 #include "FSMMarcine.h"
 #include "ObjectManager.h"
 
-NormalEnemy::NormalEnemy()
+NormalEnemy::NormalEnemy(EnemyType etype)
 	:m_type(ENEMYCAMP)
 	,m_nbdir(FALSE)
 {
-	m_eType = E_TYPE_NORMAL;
+	m_eType = etype;
 	m_nHealth = 3;
 }
 
@@ -58,7 +58,21 @@ void NormalEnemy::Init()
 	// most 
 	SetActive(true);
 }
+bool NormalEnemy::SetEmemy() {
+	switch (m_eType)
+	{
+	case E_TYPE_BEE:
+		break;
+	case E_TYPE_CROLLER:
+		break;
+	case E_TYPE_1BOSS:
+		break;
+	default:
+		break;
+	}
 
+	return false;
+}
 void NormalEnemy::Update(float dt)
 {
 }
