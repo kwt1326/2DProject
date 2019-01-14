@@ -17,20 +17,20 @@ void PlayerStartState::HandleInput()
 	pAnim= PLAYER_INSTANCE->GetComponent<Animation>();
 	pRgid= PLAYER_INSTANCE->GetComponent<Rigidbody>();
 
-	pObject->GetComponent<FSMMarcine>()->SetAnimState(STATE_FALLDOWN);
+	pObject->GetComponent<FSMMarcine>()->SetAnimState("STATE_FALLDOWN");
 }
 
 void PlayerStartState::Update(float dt)
 {
 	FSMMarcine* pMarcine = pObject->GetComponent<FSMMarcine>();
 
-	if (pMarcine->GetCurAnimState() == STATE_FALLDOWN)
+	if (pMarcine->GetCurAnimState().compare("STATE_FALLDOWN") == 0)
 	{
 		if(pRgid->GetStateInfo().m_bOnMap)
-			pMarcine->SetAnimState(STATE_GAMESTART);
+			pMarcine->SetAnimState("STATE_GAMESTART");
 	}
 
-	if ((pMarcine->GetCurAnimState() == STATE_GAMESTART) && (pAnim->GetAnimationClip()->IsPlay() == false))
+	if ((pMarcine->GetCurAnimState().compare("STATE_GAMESTART") == 0) && (pAnim->GetAnimationClip()->IsPlay() == false))
 	{
 		pAnim->GetAnimationClip()->Stop();
 		pMarcine->ChangeState(IDLESTATE_ID);

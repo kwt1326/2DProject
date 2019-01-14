@@ -16,7 +16,7 @@ PlayerIdleState::~PlayerIdleState()
 
 void PlayerIdleState::HandleInput()
 {
-	pMachine->SetAnimState(STATE_COMIDLE);
+	pMachine->SetAnimState("STATE_COMIDLE");
 }
 
 void PlayerIdleState::Update(float dt)

@@ -16,7 +16,7 @@ PlayerMoveState::~PlayerMoveState()
 
 void PlayerMoveState::HandleInput()
 {
-	pMachine->SetAnimState(STATE_COMRUN);
+	pMachine->SetAnimState("STATE_COMRUN");
 }
 
 void PlayerMoveState::Update(float dt)

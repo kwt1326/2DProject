@@ -15,7 +15,7 @@ PlayerDashState::~PlayerDashState()
 
 void PlayerDashState::HandleInput()
 {
-	pMachine->SetAnimState(STATE_DASHSTART);
+	pMachine->SetAnimState("STATE_DASHSTART");
 	m_movedist = 0.f;
 }
 
@@ -33,11 +33,11 @@ void PlayerDashState::Update(float dt)
 		return;
 	}
 
-	if ((pMachine->GetCurAnimState() == STATE_DASHSTART) && (script->p_Anim->GetAnimationClip()->IsPlay() == false))
+	if ((pMachine->GetCurAnimState().compare("STATE_DASHSTART") == 0) && (script->p_Anim->GetAnimationClip()->IsPlay() == false))
 	{
-		pMachine->SetAnimState(STATE_DASHING);
+		pMachine->SetAnimState("STATE_DASHING");
 	}
-	else if (pMachine->GetCurAnimState() == STATE_DASHING)
+	else if (pMachine->GetCurAnimState().compare("STATE_DASHING") == 0)
 	{
 		if (player->GetBlockState() == NO_BLOCK)
 		{

@@ -110,6 +110,8 @@ void PlayerScript::Release()
 
 void PlayerScript::ProcessPlayer(float dt)
 {
+	Sleep(1);
+
 	if (input::GetKey(VK_LEFT))
 		m_ChangeDirection = false;
 	else if (input::GetKey(VK_RIGHT))

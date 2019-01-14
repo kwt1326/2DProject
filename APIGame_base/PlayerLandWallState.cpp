@@ -17,7 +17,7 @@ PlayerLandWallState::~PlayerLandWallState()
 
 void PlayerLandWallState::HandleInput()
 {
-	pMachine->SetAnimState(STATE_ATTACHTOWALL);
+	pMachine->SetAnimState("STATE_ATTACHTOWALL");
 	if (m_pRigd == NULL) m_pRigd = PLAYER_INSTANCE->GetComponent<Rigidbody>();
 	m_pRigd->SetGravity(Vector2(0.0f, 70.0f));
 	m_kickwalldist = 0.f;
@@ -42,7 +42,7 @@ void PlayerLandWallState::Update(float dt)
 		if (input::GetKeyUP(0x43) == TRUE)
 		{
 			m_bing = true;
-			pMachine->SetAnimState(STATE_ATTACHTOWALL_KICKUP);
+			pMachine->SetAnimState("STATE_ATTACHTOWALL_KICKUP");
 		}
 	}
 

@@ -17,7 +17,7 @@ PlayerJumpState::~PlayerJumpState()
 void PlayerJumpState::HandleInput()
 {
 	PlayerObject* pPlayer = PLAYER_INSTANCE;
-	pMachine->SetAnimState(STATE_COMJUMP);
+	pMachine->SetAnimState("STATE_COMJUMP");
 
 	if (pPlayer->GetJump() == false)
 	{

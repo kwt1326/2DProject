@@ -27,16 +27,16 @@ bool AnimationClipManager::Load(std::string strpath) {
 				first = first.first_child();
 				if (strcmp(first.name(), "Clip") == 0) {
 					pugi::xml_node base_sibling = first;
-					while (base_sibling.next_sibling() != NULL)
+					while (base_sibling. next_sibling() != NULL)
 					{
-						pugi::xml_attribute xa = first.first_attribute();
-						pugi::xml_attribute_iterator xait = first.attributes_begin();
+						pugi::xml_attribute xa = base_sibling.first_attribute();
+						pugi::xml_attribute_iterator xait = base_sibling.attributes_begin();
 
 						char* name = ""; char* path = ""; char* state = "";
 						bool dir = true; bool loop = false; float dur = 0;
 						int frame = 0;
 
-						while (xait != first.attributes_end())
+						while (xait != base_sibling.attributes_end())
 						{
 							if (strcmp(xait->name(), "target") == 0) {
 								name = const_cast<pugi::char_t*>(xait->value());
@@ -61,12 +61,12 @@ bool AnimationClipManager::Load(std::string strpath) {
 							}
 							++xait;
 						}
-						base_sibling = base_sibling.next_sibling();
+						base_sibling = base_sibling.next_sibling("Clip");
 						if (strcmp(name, "Player") == 0) {
-							CreatePlayerClip(name, path, dur, frame, loop);
+							CreatePlayerClip(state, path, dur, frame, loop);
 						}
 						else if(strcmp(name, "Enemy") == 0) {
-							CreateEnemyClip(name, path, dur, frame, loop);
+							CreateEnemyClip(state, path, dur, frame, loop);
 						}
 					}
 				}
