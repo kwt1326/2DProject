@@ -10,6 +10,12 @@
 
 #define ANIMCLIP_MGR AnimationClipManager::GetInstance()
 
+struct ClipInfo {
+	char* target = ""; char* path = ""; char* name = "";
+	bool dir = true; bool loop = false; float dur = 0;
+	int frame = 0; char* type = "";
+};
+
 class AnimationClipManager
 {
 public:
@@ -30,16 +36,19 @@ public:
 public:
 	bool Load(std::string strpath);
 
-	AnimationClip* GetEnemyClip(std::string strName, bool dir);
-	AnimationClip* GetPlayerClip(std::string strName, bool dir);
+	void CreateClipOfTarget(GameObject* pObject, std::string target, std::map<std::string, AnimationClip*>& out);
+
+	//AnimationClip* GetEnemyClip(std::string strName, bool dir);
+	//AnimationClip* GetPlayerClip(std::string strName, bool dir);
 private:
-	void CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop);
-	void ReleasePlayerClip();
-	void CreateEnemyClip(std::string strName, std::string strType, const char* path, float time, int framecnt, bool loop);
-	void ReleaseEnemyClip();
-	
-	std::map<std::string, AnimationClip*> m_vecPlayerClip;
-	std::map<std::string, AnimationClip*> m_vecEnemyClip;
+	std::vector<std::pair<std::string, ClipInfo>> m_vecLoadedClipInfo;
+	//void CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop);
+	//void ReleasePlayerClip();
+	//void CreateEnemyClip(std::string strName, std::string strType, const char* path, float time, int framecnt, bool loop);
+	//void ReleaseEnemyClip();
+	//
+	//std::map<std::string, AnimationClip*> m_vecPlayerClip;
+	//std::map<std::string, AnimationClip*> m_vecEnemyClip;
 };
 
 #endif

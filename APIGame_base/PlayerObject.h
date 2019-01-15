@@ -9,6 +9,7 @@
 #include "Enumdefinition.h"
 #include "Transform.h"
 #include "ColliderPixel.h"
+#include "AnimationClipManager.h"
 
 #define PLAYER_INSTANCE PlayerObject::GetInstance()
 #define PLAYER_H_HALFSIZE 20
@@ -115,6 +116,7 @@ private:
 	PlayerShotPos* m_shotpos;
 	ObjectCamp m_type;
 
+	std::map<std::string, AnimationClip*> m_playerClips;
 public:
 	float m_movedist;
 };

@@ -2,7 +2,7 @@
 #include "Pugixml/pugixml.hpp"
 #define PUGIXML_NO_EXCEPTIONS
 
-// 50, 96, 166
+// animation pointer 는 개별 관리해야 한다. (릴리스)
 AnimationClipManager::AnimationClipManager()
 {
 }
@@ -32,17 +32,17 @@ bool AnimationClipManager::Load(std::string strpath) {
 						pugi::xml_attribute xa = base_sibling.first_attribute();
 						pugi::xml_attribute_iterator xait = base_sibling.attributes_begin();
 
-						char* name = ""; char* path = ""; char* state = "";
+						char* target = ""; char* path = ""; char* name = "";
 						bool dir = true; bool loop = false; float dur = 0;
 						int frame = 0; char* type = ""; // type = enemy
 
 						while (xait != base_sibling.attributes_end())
 						{
 							if (strcmp(xait->name(), "target") == 0) {
-								name = const_cast<pugi::char_t*>(xait->value());
+								target = const_cast<pugi::char_t*>(xait->value());
 							}
 							else if (strcmp(xait->name(), "state") == 0) {
-								state = const_cast<pugi::char_t*>(xait->value());
+								name = const_cast<pugi::char_t*>(xait->value());
 							}
 							else if (strcmp(xait->name(), "direction") == 0) {
 								dir = (strcmp(xait->value(), "right") == 0) ? true : false;
@@ -65,12 +65,8 @@ bool AnimationClipManager::Load(std::string strpath) {
 							++xait;
 						}
 						base_sibling = base_sibling.next_sibling();
-						if (strcmp(name, "Player") == 0) {
-							CreatePlayerClip(state, path, dur, frame, loop);
-						}
-						else if(strcmp(name, "Enemy") == 0) {
-							CreateEnemyClip(state, type, path, dur, frame, loop);
-						}
+						ClipInfo info = { target, path, name, dir, loop, dur, frame, type };
+						m_vecLoadedClipInfo.push_back(std::make_pair(target, info));
 					}
 				}
 			}
@@ -80,73 +76,83 @@ bool AnimationClipManager::Load(std::string strpath) {
 
 	return false;
 }
+void AnimationClipManager::CreateClipOfTarget(GameObject * pObject, std::string target, std::map<std::string, AnimationClip*>& out)
+{
+	for (auto it = m_vecLoadedClipInfo.begin(); it != m_vecLoadedClipInfo.end(); ++it) {
+		if (it->first.compare(target) == 0) {
+			ClipInfo info = it->second;
+			AnimationClip* pclip = new AnimationClip(pObject);
+			pclip->Init(image::Getimage(const_cast<char*>(info.path)), info.dur, info.frame, 1, info.loop, false);
+			out.insert(std::make_pair(info.name, pclip));
+		}
+	}
+}
 void AnimationClipManager::Init() 
 {
 	Load("megamanx/Data/animclip.xml");
 }
 void AnimationClipManager::Release()
 {
-	ReleasePlayerClip();
-	ReleaseEnemyClip();
+	m_vecLoadedClipInfo.clear();
 }
-void AnimationClipManager::CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop)
-{
-	AnimationClip* pclip = new AnimationClip(m_GameObject);
-	pclip->Init(image::Getimage(const_cast<char*>(path)), time, framecnt, 1, loop, false);
-	m_vecPlayerClip.insert(std::make_pair(strName, pclip));
-}
-
-void AnimationClipManager::CreateEnemyClip(std::string strName, std::string strType, const char * path, float time, int framecnt, bool loop)
-{
-	AnimationClip* NewClip = new AnimationClip(m_GameObject);
-	NewClip->Init(image::Getimage(const_cast<char*>(path)), time, framecnt, 1, loop, false);
-	m_vecEnemyClip.insert(std::make_pair((strName + "/" + strType), NewClip));
-}
-
-void AnimationClipManager::ReleasePlayerClip()
-{
-	std::map<std::string, AnimationClip*>::iterator itr = m_vecPlayerClip.begin();
-	while (itr != m_vecPlayerClip.end())
-	{
-		if ((*itr).second)
-		{
-			delete (*itr).second;
-			(*itr).second = NULL;
-		}
-		++itr;
-	}
-	m_vecPlayerClip.clear();
-}
-
-void AnimationClipManager::ReleaseEnemyClip()
-{
-	std::map<std::string, AnimationClip*>::iterator itr = m_vecEnemyClip.begin();
-	while (itr != m_vecEnemyClip.end())
-	{
-		if ((*itr).second)
-		{
-			delete (*itr).second;
-			(*itr).second = NULL;
-		}
-		++itr;
-	}
-	m_vecEnemyClip.clear();
-}
-
-AnimationClip * AnimationClipManager::GetEnemyClip(std::string strName, bool dir)
-{
-	if (dir)
-		return m_vecEnemyClip[strName];
-	else
-		return m_vecEnemyClip["R/" + strName];
-	return nullptr;
-}
-
-AnimationClip* AnimationClipManager::GetPlayerClip(std::string strName, bool dir)
-{
-	if (dir)
-		return m_vecPlayerClip[strName];
-	else
-		return m_vecPlayerClip["R/" + strName];
-	return nullptr;
-}
+//void AnimationClipManager::CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop)
+//{
+//	AnimationClip* pclip = new AnimationClip(m_GameObject);
+//	pclip->Init(image::Getimage(const_cast<char*>(path)), time, framecnt, 1, loop, false);
+//	m_vecPlayerClip.insert(std::make_pair(strName, pclip));
+//}
+//
+//void AnimationClipManager::CreateEnemyClip(std::string strName, std::string strType, const char * path, float time, int framecnt, bool loop)
+//{
+//	AnimationClip* NewClip = new AnimationClip(m_GameObject);
+//	NewClip->Init(image::Getimage(const_cast<char*>(path)), time, framecnt, 1, loop, false);
+//	m_vecEnemyClip.insert(std::make_pair((strName + "/" + strType), NewClip));
+//}
+//
+//void AnimationClipManager::ReleasePlayerClip()
+//{
+//	std::map<std::string, AnimationClip*>::iterator itr = m_vecPlayerClip.begin();
+//	while (itr != m_vecPlayerClip.end())
+//	{
+//		if ((*itr).second)
+//		{
+//			delete (*itr).second;
+//			(*itr).second = NULL;
+//		}
+//		++itr;
+//	}
+//	m_vecPlayerClip.clear();
+//}
+//
+//void AnimationClipManager::ReleaseEnemyClip()
+//{
+//	std::map<std::string, AnimationClip*>::iterator itr = m_vecEnemyClip.begin();
+//	while (itr != m_vecEnemyClip.end())
+//	{
+//		if ((*itr).second)
+//		{
+//			delete (*itr).second;
+//			(*itr).second = NULL;
+//		}
+//		++itr;
+//	}
+//	m_vecEnemyClip.clear();
+//}
+//
+//AnimationClip * AnimationClipManager::GetEnemyClip(std::string strName, bool dir)
+//{
+//	if (dir)
+//		return m_vecEnemyClip[strName];
+//	else
+//		return m_vecEnemyClip["R/" + strName];
+//	return nullptr;
+//}
+//
+//AnimationClip* AnimationClipManager::GetPlayerClip(std::string strName, bool dir)
+//{
+//	if (dir)
+//		return m_vecPlayerClip[strName];
+//	else
+//		return m_vecPlayerClip["R/" + strName];
+//	return nullptr;
+//}

@@ -6,7 +6,6 @@
 #include "PlayerScript.h"
 #include "Ray2D.h"
 #include "ObjectManager.h"
-#include "AnimationClipManager.h"
 #include "ColliderManager.h"
 #include "FSMMarcine.h"
 
@@ -53,6 +52,7 @@ void PlayerObject::Init()
 	Vector2 pos = GetPosition();
 	GetComponent<Collider>()->SetRect(Rect(pos.x - PLAYER_H_HALFSIZE, pos.y - PLAYER_V_HALFSIZE, pos.x + PLAYER_H_HALFSIZE, pos.y + PLAYER_V_HALFSIZE));
 
+	ANIMCLIP_MGR->CreateClipOfTarget(this, "Player", m_playerClips);
 	AddComponent<PlayerScript>();
 
 	m_shotpos = new PlayerShotPos();
