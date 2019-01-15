@@ -41,7 +41,7 @@ void PlayerObject::Init()
 	AddComponent<Transform>();
 	AddComponent<Animation>();
 	AddComponent<Rigidbody>();
-	AddComponent<AnimationClipManager>();
+	//AddComponent<AnimationClipManager>();
 	AddComponent<FSMMarcine>();
 	AddComponent<Collider>();
 	GetComponent<Collider>()->SetIsGravity(true);

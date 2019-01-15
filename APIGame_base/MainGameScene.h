@@ -21,6 +21,8 @@ public:
 	virtual void Render(HDC hdc);
 	virtual void Release();
 	virtual LRESULT SceneProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+
+	bool LoadEnemy(std::string strPath);
 private:
 	ColliderManager * pCollMan;
 };

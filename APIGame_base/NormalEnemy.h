@@ -14,7 +14,7 @@ class Rigidbody;
 class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
-	NormalEnemy(EnemyType etype);
+	NormalEnemy();
 	virtual ~NormalEnemy();
 
 	virtual void Init();
@@ -22,8 +22,7 @@ public:
 	virtual void Release() ;
 
 	bool SetEmemy();
-
-	//void SetEnemy(std::map<std::string, >)
+	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
 
 protected:
 	ObjectCamp m_type;
@@ -31,6 +30,8 @@ protected:
 	Animation* m_pAnim;
 	Rigidbody* m_pRg;
 	BOOL m_nbdir;
+
+	std::map<std::string, AnimationClip*> m_mapHaveClip;
 };
 
 class EnemyShotPos : public GameObject

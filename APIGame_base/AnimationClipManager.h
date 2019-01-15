@@ -8,8 +8,18 @@
 #include "Enumdefinition.h"
 #include <map>
 
-class AnimationClipManager : public Component
+#define ANIMCLIP_MGR AnimationClipManager::GetInstance()
+
+class AnimationClipManager
 {
+public:
+	static AnimationClipManager* m_Instance;
+public:
+	static AnimationClipManager* GetInstance()
+	{
+		if (m_Instance == NULL) m_Instance = new AnimationClipManager;
+		return m_Instance;
+	}
 public:
 	AnimationClipManager();
 	~AnimationClipManager();
@@ -25,7 +35,7 @@ public:
 private:
 	void CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop);
 	void ReleasePlayerClip();
-	void CreateEnemyClip(std::string strName, const char* path, float time, int framecnt, bool loop);
+	void CreateEnemyClip(std::string strName, std::string strType, const char* path, float time, int framecnt, bool loop);
 	void ReleaseEnemyClip();
 	
 	std::map<std::string, AnimationClip*> m_vecPlayerClip;

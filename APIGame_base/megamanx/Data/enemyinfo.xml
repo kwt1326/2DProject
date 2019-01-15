@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Enemy>
+  <Normal name="Bee" pos="400,200">
+    <Idle anim="Detection/Bee"/>
+    <Damage anim="Damage/Bee"/>
+    <Dead anim="Dead/Bee"/>
+    <Attack anim="Attack/Bee"/>
+  </Normal>
+  <Normal name="Bee" pos="2000,100">
+    <Idle anim="Detection/Bee"/>
+    <Damage anim="Damage/Bee"/>
+    <Dead anim="Dead/Bee"/>
+    <Attack anim="Attack/Bee"/>
+  </Normal>
+  <Normal name="Bee" pos="1000,200">
+    <Idle anim="Detection/Bee"/>
+    <Damage anim="Damage/Bee"/>
+    <Dead anim="Dead/Bee"/>
+    <Attack anim="Attack/Bee"/>
+  </Normal>
+</Enemy>

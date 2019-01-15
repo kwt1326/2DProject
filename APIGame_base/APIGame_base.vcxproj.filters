@@ -100,9 +100,6 @@
     <Filter Include="MegamanXGame_Project\003_Manager">
       <UniqueIdentifier>{fb7367f4-fca6-4317-b976-8bdce36c9f3b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MegamanXGame_Project\003_Manager\AnimationClipManager">
-      <UniqueIdentifier>{453c4368-06c4-437c-9277-30177854aa33}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MegamanXGame_Project\003_Manager\DIBsectionMGR">
       <UniqueIdentifier>{d2273b07-947d-4d8e-8b86-dc146be4d086}</UniqueIdentifier>
     </Filter>
@@ -204,9 +201,6 @@
     <ClCompile Include="Titlescene.cpp">
       <Filter>MegamanXGame_Project\000_Scene\000_TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationClipManager.cpp">
-      <Filter>MegamanXGame_Project\003_Manager\AnimationClipManager</Filter>
-    </ClCompile>
     <ClCompile Include="DIBsectionMGR.cpp">
       <Filter>MegamanXGame_Project\003_Manager\DIBsectionMGR</Filter>
     </ClCompile>
@@ -264,9 +258,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
     </ClCompile>
-    <ClCompile Include="ColliderManager.cpp">
-      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
-    </ClCompile>
     <ClCompile Include="Ray2D.cpp">
       <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
     </ClCompile>
@@ -291,6 +282,12 @@
     </ClCompile>
     <ClCompile Include="Pugixml\pugixml.cpp">
       <Filter>lib\pugixml</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderManager.cpp">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationClipManager.cpp">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,9 +372,6 @@
     <ClInclude Include="Titlescene.h">
       <Filter>MegamanXGame_Project\000_Scene\000_TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationClipManager.h">
-      <Filter>MegamanXGame_Project\003_Manager\AnimationClipManager</Filter>
-    </ClInclude>
     <ClInclude Include="DIBsectionMGR.h">
       <Filter>MegamanXGame_Project\003_Manager\DIBsectionMGR</Filter>
     </ClInclude>
@@ -440,9 +434,6 @@
     <ClInclude Include="MapColider.h">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="ColliderManager.h">
-      <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
-    </ClInclude>
     <ClInclude Include="Ray2D.h">
       <Filter>MegamanXGame_Project\04_Rigidbody</Filter>
     </ClInclude>
@@ -475,6 +466,12 @@
     </ClInclude>
     <ClInclude Include="Pugixml\pugixml.hpp">
       <Filter>lib\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderManager.h">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationClipManager.h">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

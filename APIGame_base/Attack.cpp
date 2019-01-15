@@ -27,7 +27,7 @@ void Attack::Init()
 {
 	AddComponent<Renderer>();
 	AddComponent<Animation>();
-	AddComponent<AnimationClipManager>();
+	//AddComponent<AnimationClipManager>();
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
 	AddComponent<Transform>();

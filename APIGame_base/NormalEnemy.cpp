@@ -11,11 +11,10 @@
 #include "FSMMarcine.h"
 #include "ObjectManager.h"
 
-NormalEnemy::NormalEnemy(EnemyType etype)
+NormalEnemy::NormalEnemy()
 	:m_type(ENEMYCAMP)
 	,m_nbdir(FALSE)
 {
-	m_eType = etype;
 	m_nHealth = 3;
 }
 
@@ -35,8 +34,7 @@ void NormalEnemy::Init()
 	m_pMachine = AddComponent<FSMMarcine>();
 	m_pRg = AddComponent<Rigidbody>();
 	m_pAnim = AddComponent<Animation>();
-	m_pAnimMgr = AddComponent<AnimationClipManager>();
-	m_pAnimMgr->SetGameObject(this);
+	m_pAnimMgr = ANIMCLIP_MGR; //AddComponent<AnimationClipManager>();
 
 	GameObject* pEnemyPos = new EnemyShotPos();
 	OBJECT_MGR->AddObject(pEnemyPos);
@@ -59,17 +57,6 @@ void NormalEnemy::Init()
 	SetActive(true);
 }
 bool NormalEnemy::SetEmemy() {
-	switch (m_eType)
-	{
-	case E_TYPE_BEE:
-		break;
-	case E_TYPE_CROLLER:
-		break;
-	case E_TYPE_1BOSS:
-		break;
-	default:
-		break;
-	}
 
 	return false;
 }
