@@ -27,7 +27,7 @@
 
 PlayerScript::PlayerScript()
 {
-	m_pPlayer = NULL;
+	m_pPlayer = PLAYER_INSTANCE;
 	m_ChangeDirection = true;
 	m_isjump = false;
 	m_maxspeed = PLAYER_INSTANCE->GetMaxSpeed();
@@ -80,7 +80,6 @@ void PlayerScript::Update(float dt)
 }
 void PlayerScript::Init()
 {
-	m_pPlayer = PLAYER_INSTANCE;
 	Vector2& pos = m_pPlayer->GetPosition();
 	m_pRigidbody = m_pPlayer->GetComponent<Rigidbody>();
 
@@ -132,23 +131,11 @@ void PlayerScript::ProcessPlayer(float dt)
 
 void PlayerScript::ChangePlayerAnimState(std::string state)
 {
-	AnimationPlay(p_Anim, GetComponent<AnimationClipManager>()->GetPlayerClip(state, true),
-		GetComponent<AnimationClipManager>()->GetPlayerClip(state, false));
-}
-
-void PlayerScript::AnimationPlay(Animation* panim, AnimationClip* clip, AnimationClip* rclip)
-{
-	AnimationClip* compare_clip;
-	if (m_ChangeDirection) {
-		if (clip == NULL) return;
-		compare_clip = clip;
+	AnimationClip* compare_clip = m_pPlayer->GetClip(state);
+	if (compare_clip) {
+		if (p_Anim->GetAnimationClip() != compare_clip)
+			p_Anim->Play(compare_clip);
 	}
-	else {
-		if (rclip == NULL) return;
-		compare_clip = rclip;
-	}
-	if (p_Anim->GetAnimationClip() != compare_clip)
-		p_Anim->Play(compare_clip);
 }
 
 bool PlayerScript::GameStart(PlayerObject* player)

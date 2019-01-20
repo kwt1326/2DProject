@@ -10,9 +10,10 @@
 #include "ObjectManager.h"
 #include "ColliderManager.h"
 
-Attack::Attack(InstanceType origin, InstanceObjType type, Vector2 pos, int Damage)
+Attack::Attack(PlayerObject* pOwner, InstanceType origin, InstanceObjType type, Vector2 pos, int Damage)
 	:m_untildestroytime(0.f)
 {
+	m_pOwner = pOwner;
 	m_type = type;
 	m_pos = pos;
 	m_damage = Damage;
@@ -65,8 +66,8 @@ void Attack::SetforType(InstanceObjType type)
 	switch (type)
 	{
 	case ROCKMAN_BUSTER_NC:
-		if (PLAYER_INSTANCE->GetDirection()) mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip("STATE_XBUSTER",true));
-		else mp_Anim->Play(GetComponent<AnimationClipManager>()->GetPlayerClip("R/STATE_XBUSTER", false));
+		if (PLAYER_INSTANCE->GetDirection()) m_pOwner->GetClip("STATE_XBUSTER");
+		else m_pOwner->GetClip("R/STATE_XBUSTER");
 		SetCollider(5, 3, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR1:

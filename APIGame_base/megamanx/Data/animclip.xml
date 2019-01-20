@@ -26,7 +26,7 @@
     <Clip target="Player" state="STATE_FALLDOWN"              direction="right" path="megamanx/clip/Falldown.bmp"	   duration="1"  frame="1"  loop="0"/>
     <Clip target="Player" state="STATE_GAMESTART"             direction="right" path="megamanx/clip/landing.bmp"	   duration="1"  frame="16" loop="0"/>
                                                               
-    <Clip target="Bee"    state="Detection"                   direction="left"  path="megamanx/enemyclips/enemy_bee.bmp"	   duration="1"  frame="9" loop="1"/>
-    <Clip target="Bee"    state="R/Detection"                 direction="right" path="megamanx/enemyclips/enemy_bee.bmp"	   duration="1"  frame="9" loop="1"/>
+    <Clip target="Bee"    state="Detection"                   direction="right" path="megamanx/enemyclips/enemy_bee_r.bmp"	  duration="1"  frame="9" loop="1"/>
+    <Clip target="Bee"    state="R/Detection"                 direction="left"  path="megamanx/enemyclips/enemy_bee.bmp"	    duration="1"  frame="9" loop="1"/>
   </Animation>
 </Data>

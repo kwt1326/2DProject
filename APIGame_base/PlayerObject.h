@@ -101,6 +101,10 @@ public:
 	PlayerShotPos* GetShotpos() { return m_shotpos; }
 	Vector2 GetShotLoc() { return m_shotpos->GetComponent<Transform>()->GetPosition(); }
 
+	AnimationClip* GetClip(std::string strclip) { 
+		if (m_playerClips.find(strclip) != m_playerClips.end()) { return m_playerClips.find(strclip)->second; } else return nullptr; 
+	};
+
 private:
 	Vector2 m_worldposition;
 	float m_PlayerSpeed;

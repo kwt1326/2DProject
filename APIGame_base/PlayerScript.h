@@ -37,7 +37,6 @@ private:
 	BOOL			m_wparam[255]; // 동시 키 입력 위함
 	TState*		m_playerstate;
 
-	void AnimationPlay(Animation* panim, AnimationClip* clip, AnimationClip* rclip);
 	bool GameStart(PlayerObject* player);
 
 public:

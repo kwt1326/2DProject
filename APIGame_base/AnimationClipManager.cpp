@@ -2,6 +2,8 @@
 #include "Pugixml/pugixml.hpp"
 #define PUGIXML_NO_EXCEPTIONS
 
+AnimationClipManager* AnimationClipManager::m_Instance = NULL;
+
 // animation pointer 는 개별 관리해야 한다. (릴리스)
 AnimationClipManager::AnimationClipManager()
 {
@@ -94,6 +96,13 @@ void AnimationClipManager::Init()
 void AnimationClipManager::Release()
 {
 	m_vecLoadedClipInfo.clear();
+}
+ClipInfo AnimationClipManager::GetClipinfo(std::string name) {
+	for (auto it = m_vecLoadedClipInfo.begin(); it != m_vecLoadedClipInfo.end(); ++it) {
+		if ((*it).first.compare(name) != std::string::npos) {
+			return (*it).second;
+		}
+	}
 }
 //void AnimationClipManager::CreatePlayerClip(std::string strName, const char* path, float time, int framecnt, bool loop)
 //{

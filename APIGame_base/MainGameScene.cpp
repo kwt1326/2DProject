@@ -9,6 +9,7 @@
 #include "ObjectManager.h"
 #include "Animation.h"
 #include "AnimationClip.h"
+#include "AnimationClipManager.h"
 
 #include "PlayerObject.h"
 #include "PlayerScript.h"
@@ -102,15 +103,16 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 					NormalEnemy* pNewEnemy = new NormalEnemy();
 					OBJECT_MGR->AddObject(pNewEnemy, Vector2(vec_pos[0], vec_pos[1]));
 					std::map<std::string, AnimationClip*>& clipmap = pNewEnemy->GetClipMap();
-					//AnimationClipManager* 
 
 					while (att_node.next_sibling() != NULL)
 					{
 						xa = att_node.first_attribute();
 						xait = att_node.attributes_begin();
-						while (xait != sibling.attributes_end()) {
+						while (xait != att_node.attributes_end()) {
 							if (strcmp(xait->name(), "anim") == 0) {
-
+								std::string animname = xait->value();
+								 ClipInfo info = ANIMCLIP_MGR->GetClipinfo(animname);
+								 //???
 							}
 							++xait;
 						}

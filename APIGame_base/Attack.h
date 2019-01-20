@@ -9,11 +9,13 @@
 #include "Enumdefinition.h"
 #include <vector>
 
+class PlayerObject;
 class Animation;
+class AnimationClipManager;
 class Attack : public GameObject
 {
 public:
-	Attack(InstanceType origin, InstanceObjType type, Vector2 pos, int Damage);
+	Attack(PlayerObject* pOwner, InstanceType origin, InstanceObjType type, Vector2 pos, int Damage);
 	virtual ~Attack();
 
 	virtual void Init();
@@ -37,6 +39,7 @@ public:
 private:
 	Vector2		m_scale;
 	int			m_damage;
+	PlayerObject* m_pOwner;
 };
 
 #endif

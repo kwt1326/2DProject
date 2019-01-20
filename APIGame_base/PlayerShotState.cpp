@@ -22,7 +22,7 @@ void PlayerShotState::HandleInput()
 	if (((pMachine->GetCurAnimState().compare("STATE_COMJUMP") != 0) && (pMachine->GetCurAnimState().compare("STATE_SHOTJUMP") != 0)) && (player->GetJump() == false))
 		pMachine->SetAnimState("STATE_SHOTIDLE");
 
-	Attack* bullet = new Attack(PROJECTILE, ROCKMAN_BUSTER_NC, PLAYER_INSTANCE->GetShotLoc(), 1);
+	Attack* bullet = new Attack(player, PROJECTILE, ROCKMAN_BUSTER_NC, PLAYER_INSTANCE->GetShotLoc(), 1);
 	OBJECT_MGR->AddObject(bullet);
 }
 
