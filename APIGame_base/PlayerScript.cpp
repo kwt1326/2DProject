@@ -65,7 +65,7 @@ void PlayerScript::SetComparePosition(Vector2 vPos, Vector2 vWorldPos)
 	}
 
 	if (IsScrolling(false)) {
-		//vPos.y = recthalfsize_Y;
+		vPos.y = recthalfsize_Y;
 	}
 
 	m_pPlayer->SetPosition(vPos);
@@ -131,6 +131,7 @@ void PlayerScript::ProcessPlayer(float dt)
 
 void PlayerScript::ChangePlayerAnimState(std::string state)
 {
+	if (!m_ChangeDirection) state = "R/" + state;
 	AnimationClip* compare_clip = m_pPlayer->GetClip(state);
 	if (compare_clip) {
 		if (p_Anim->GetAnimationClip() != compare_clip)

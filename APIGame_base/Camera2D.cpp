@@ -28,8 +28,6 @@ void Camera2D::Update(float dt)
 
 	Vector2 rectpoint(m_pGamemrg->Getrect().right, m_pGamemrg->Getrect().bottom);
 
-	//if (!player->GetGamestart()) return;
-
 	Scroll(player, rectpoint);
 }
 void Camera2D::Init()

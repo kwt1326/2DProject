@@ -88,8 +88,12 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 					pugi::xml_attribute xa = sibling.first_attribute();
 					pugi::xml_attribute_iterator xait = sibling.attributes_begin();
 					std::vector<int> vec_pos; vec_pos.clear();
+					std::string target = "";
 
 					while (xait != sibling.attributes_end()) {
+						if (strcmp(xait->name(), "name") == 0) {
+							target = const_cast<pugi::char_t*>(xait->value());
+						}
 						if (strcmp(xait->name(), "pos") == 0) {
 							std::stringstream ss(xait->value());
 							std::string token;
@@ -103,59 +107,14 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 					NormalEnemy* pNewEnemy = new NormalEnemy();
 					OBJECT_MGR->AddObject(pNewEnemy, Vector2(vec_pos[0], vec_pos[1]));
 					std::map<std::string, AnimationClip*>& clipmap = pNewEnemy->GetClipMap();
-
-					while (att_node.next_sibling() != NULL)
-					{
-						xa = att_node.first_attribute();
-						xait = att_node.attributes_begin();
-						while (xait != att_node.attributes_end()) {
-							if (strcmp(xait->name(), "anim") == 0) {
-								std::string animname = xait->value();
-								 ClipInfo info = ANIMCLIP_MGR->GetClipinfo(animname);
-								 //???
-							}
-							++xait;
-						}
+					ANIMCLIP_MGR->CreateClipOfTarget(pNewEnemy, target, clipmap);
+					if (clipmap.find(target) != clipmap.end()) {
+						Animation* pAnim = pNewEnemy->GetComponent<Animation>();
+						pAnim->SetAnimationClip(clipmap.find(target)->second);
+						pAnim->Play();
 					}
-					//clipmap.insert(std::make_pair())
 				}
-
-				//pugi::xml_attribute xa = base_sibling.first_attribute();
-				//pugi::xml_attribute_iterator xait = base_sibling.attributes_begin();
-
-				//char* name = ""; char* path = ""; char* state = "";
-				//bool dir = true; bool loop = false; float dur = 0;
-				//int frame = 0; char* type = ""; // type = enemy
-
-				//while (xait != base_sibling.attributes_end())
-				//{
-				//	if (strcmp(xait->name(), "target") == 0) {
-				//		name = const_cast<pugi::char_t*>(xait->value());
-				//	}
-				//	else if (strcmp(xait->name(), "state") == 0) {
-				//		state = const_cast<pugi::char_t*>(xait->value());
-				//	}
-				//	else if (strcmp(xait->name(), "direction") == 0) {
-				//		dir = (strcmp(xait->value(), "right") == 0) ? true : false;
-				//	}
-				//	else if (strcmp(xait->name(), "path") == 0) {
-				//		path = const_cast<pugi::char_t*>(xait->value());
-				//	}
-				//	else if (strcmp(xait->name(), "duration") == 0) {
-				//		dur = atof(xait->value());
-				//	}
-				//	else if (strcmp(xait->name(), "frame") == 0) {
-				//		frame = atoi(xait->value());
-				//	}
-				//	else if (strcmp(xait->name(), "loop") == 0) {
-				//		loop = (strcmp(xait->value(), "1") == 0) ? true : false;
-				//	}
-				//	else if (strcmp(xait->name(), "type") == 0) { // enemy 
-				//		type = const_cast<pugi::char_t*>(xait->value());
-				//	}
-				//	++xait;
-				//}
-				//base_sibling = base_sibling.next_sibling("Clip");
+				sibling = sibling.next_sibling();
 			}
 		}
 		return true;

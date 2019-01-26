@@ -34,7 +34,7 @@ void NormalEnemy::Init()
 	m_pMachine = AddComponent<FSMMarcine>();
 	m_pRg = AddComponent<Rigidbody>();
 	m_pAnim = AddComponent<Animation>();
-	m_pAnimMgr = ANIMCLIP_MGR; //AddComponent<AnimationClipManager>();
+	m_pAnimMgr = ANIMCLIP_MGR;
 
 	GameObject* pEnemyPos = new EnemyShotPos();
 	OBJECT_MGR->AddObject(pEnemyPos);

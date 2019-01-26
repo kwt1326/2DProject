@@ -11,9 +11,9 @@
 #define ANIMCLIP_MGR AnimationClipManager::GetInstance()
 
 struct ClipInfo {
-	char* target = ""; char* path = ""; char* name = "";
+	std::string target = ""; std::string path = ""; std::string name = "";
 	bool dir = true; bool loop = false; float dur = 0;
-	int frame = 0; char* type = "";
+	int frame = 0; std::string type = "";
 };
 
 class AnimationClipManager

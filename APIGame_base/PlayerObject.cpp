@@ -40,7 +40,6 @@ void PlayerObject::Init()
 	AddComponent<Transform>();
 	AddComponent<Animation>();
 	AddComponent<Rigidbody>();
-	//AddComponent<AnimationClipManager>();
 	AddComponent<FSMMarcine>();
 	AddComponent<Collider>();
 	GetComponent<Collider>()->SetIsGravity(true);
@@ -70,8 +69,6 @@ void PlayerObject::Release()
 void PlayerShotPos::Init()
 {
 	AddComponent<Transform>();
-	AddComponent<Renderer>();
-	AddComponent<Animation>();
 	GetComponent<Transform>()->SetParent(PLAYER_INSTANCE->GetComponent<Transform>());
 	GetComponent<Transform>()->SetlocalScale(Vector2(1.0f,1.0f));
 	ShotPosChangeofDir(true);
