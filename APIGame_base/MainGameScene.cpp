@@ -104,7 +104,7 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 						}
 						++xait;
 					}
-					NormalEnemy* pNewEnemy = new NormalEnemy();
+					NormalEnemy* pNewEnemy = new NormalEnemy(target);
 					OBJECT_MGR->AddObject(pNewEnemy, Vector2(vec_pos[0], vec_pos[1]));
 					std::map<std::string, AnimationClip*>& clipmap = pNewEnemy->GetClipMap();
 					ANIMCLIP_MGR->CreateClipOfTarget(pNewEnemy, target, clipmap);

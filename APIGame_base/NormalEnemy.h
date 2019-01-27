@@ -14,12 +14,16 @@ class Rigidbody;
 class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
-	NormalEnemy();
+	NormalEnemy(std::string name);
 	virtual ~NormalEnemy();
 
 	virtual void Init();
 	virtual void Update(float dt);
 	virtual void Release() ;
+
+	void SetDirection(BOOL dir) { m_nbdir = dir; }
+	BOOL GetDirection() { return m_nbdir; }
+	std::string GetName() { return m_name; }
 
 	bool SetEmemy();
 	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
@@ -31,6 +35,7 @@ protected:
 	Rigidbody* m_pRg;
 	BOOL m_nbdir;
 
+	std::string m_name;
 	std::map<std::string, AnimationClip*> m_mapHaveClip;
 };
 
@@ -61,7 +66,7 @@ private:
 class NormalEnemy_detection : public TState
 {
 public:
-	NormalEnemy_detection() { m_id = E_DETECTION_ID; }
+	NormalEnemy_detection(GameObject* pOwner) { SetOwner(pOwner); m_id = E_DETECTION_ID; }
 	virtual ~NormalEnemy_detection() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
@@ -72,7 +77,7 @@ public:
 class NormalEnemy_Attack : public TState
 {
 public:
-	NormalEnemy_Attack() { m_id = E_ATTACK_ID; }
+	NormalEnemy_Attack(GameObject* pOwner) { SetOwner(pOwner); m_id = E_ATTACK_ID; }
 	virtual ~NormalEnemy_Attack() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
@@ -83,7 +88,7 @@ public:
 class NormalEnemy_Damage : public TState
 {
 public:
-	NormalEnemy_Damage() { m_id = E_DAMAGE_ID; }
+	NormalEnemy_Damage(GameObject* pOwner) { SetOwner(pOwner); m_id = E_DAMAGE_ID; }
 	virtual ~NormalEnemy_Damage() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;

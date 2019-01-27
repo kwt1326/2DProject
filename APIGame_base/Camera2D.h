@@ -22,7 +22,7 @@ public:
 	virtual void Release();
 
 public: // public_function
-	void Scroll(PlayerObject* playerm, Vector2 rectpoint);
+	void Scroll(PlayerObject* playerm, Vector2 rectpoint, float dt);
 	Vector2 GetPosition();
 	Vector2 GetMaxMovablePosition();
 

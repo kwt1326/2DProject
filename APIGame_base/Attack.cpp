@@ -28,7 +28,6 @@ void Attack::Init()
 {
 	AddComponent<Renderer>();
 	AddComponent<Animation>();
-	//AddComponent<AnimationClipManager>();
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
 	AddComponent<Transform>();
@@ -36,6 +35,7 @@ void Attack::Init()
 	GetComponent<Transform>()->SetPosition(m_pos);
 
 	mp_Anim = GetComponent<Animation>();
+	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips);
 
 	SetforType(m_type);
 
@@ -66,8 +66,7 @@ void Attack::SetforType(InstanceObjType type)
 	switch (type)
 	{
 	case ROCKMAN_BUSTER_NC:
-		if (PLAYER_INSTANCE->GetDirection()) m_pOwner->GetClip("STATE_XBUSTER");
-		else m_pOwner->GetClip("R/STATE_XBUSTER");
+		SetAnimation("STATE_XBUSTER");
 		SetCollider(5, 3, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR1:
@@ -87,4 +86,16 @@ void Attack::SetforType(InstanceObjType type)
 		break;
 	}
 	m_active = true;
+}
+void Attack::SetAnimation(std::string stranim) {
+	if (PLAYER_INSTANCE->GetDirection()) {
+		AnimationClip* pclip = m_objClips[stranim];
+		if (pclip)
+			GetComponent<Animation>()->Play(pclip);
+	}
+	else {
+		AnimationClip* pclip = m_objClips["R/" + stranim];
+		if (pclip)
+			GetComponent<Animation>()->Play(pclip);
+	}
 }

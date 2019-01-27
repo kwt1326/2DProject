@@ -11,9 +11,10 @@
 #include "FSMMarcine.h"
 #include "ObjectManager.h"
 
-NormalEnemy::NormalEnemy()
+NormalEnemy::NormalEnemy(std::string name)
 	:m_type(ENEMYCAMP)
 	,m_nbdir(FALSE)
+	,m_name(name)
 {
 	m_nHealth = 3;
 }
@@ -48,9 +49,9 @@ void NormalEnemy::Init()
 	GetComponent<Collider>()->SetRect(Rect(pos.x - 10, pos.y - 10, pos.x + 10, pos.y + 10));
 	COLLIDER_MGR->AddEnemyCollider(this);
 
-	m_pMachine->InsertState(E_DETECTION_ID, new NormalEnemy_detection());
-	m_pMachine->InsertState(E_DAMAGE_ID, new NormalEnemy_Damage());
-	m_pMachine->InsertState(E_ATTACK_ID, new NormalEnemy_Attack());
+	m_pMachine->InsertState(E_DETECTION_ID, new NormalEnemy_detection(this));
+	m_pMachine->InsertState(E_DAMAGE_ID, new NormalEnemy_Damage(this));
+	m_pMachine->InsertState(E_ATTACK_ID, new NormalEnemy_Attack(this));
 	m_pMachine->ChangeState(E_DETECTION_ID);
 
 	// most 
@@ -62,6 +63,7 @@ bool NormalEnemy::SetEmemy() {
 }
 void NormalEnemy::Update(float dt)
 {
+	m_pMachine->Update(dt);
 }
 // detection
 void NormalEnemy_detection::HandleInput()
@@ -70,6 +72,14 @@ void NormalEnemy_detection::HandleInput()
 
 void NormalEnemy_detection::Update(float dt)
 {
+	GameObject* pOwner = GetOwner();
+	NormalEnemy* pObj = dynamic_cast<NormalEnemy*>(pOwner);
+	auto clipmap = pObj->GetClipMap();
+	std::string clipname = (pObj->GetDirection()) ? "R/Detection/" + pObj->GetName() : "Detection/" + pObj->GetName();
+
+	if (GetOwner()->GetComponent<Animation>()->GetAnimationClip() != clipmap[clipname]) {
+		GetOwner()->GetComponent<Animation>()->Play();
+	}
 }
 
 void NormalEnemy_detection::HandleExit()

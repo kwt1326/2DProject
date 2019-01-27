@@ -64,9 +64,9 @@ void PlayerScript::SetComparePosition(Vector2 vPos, Vector2 vWorldPos)
 		vPos.x = recthalfsize_X;
 	}
 
-	if (IsScrolling(false)) {
-		vPos.y = recthalfsize_Y;
-	}
+	//if (IsScrolling(false)) {
+	//	vPos.y = recthalfsize_Y;
+	//}
 
 	m_pPlayer->SetPosition(vPos);
 	m_pPlayer->SetWorldPosition(vWorldPos);

@@ -28,6 +28,7 @@ public:
 	void SetScale(int x, int y) { m_scale = Vector2(x, y); }
 	Vector2 GetScale() { return m_scale; }
 	int GetDamage() { return m_damage; }
+	void SetAnimation(std::string stranim);
 public:
 	Vector2		m_pos;
 	bool		m_active;
@@ -40,6 +41,7 @@ private:
 	Vector2		m_scale;
 	int			m_damage;
 	PlayerObject* m_pOwner;
+	std::map<std::string, AnimationClip*> m_objClips;
 };
 
 #endif

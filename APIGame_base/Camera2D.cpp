@@ -28,7 +28,7 @@ void Camera2D::Update(float dt)
 
 	Vector2 rectpoint(m_pGamemrg->Getrect().right, m_pGamemrg->Getrect().bottom);
 
-	Scroll(player, rectpoint);
+	Scroll(player, rectpoint, dt);
 }
 void Camera2D::Init()
 {
@@ -57,7 +57,7 @@ Vector2 Camera2D::GetMaxMovablePosition() // 최대 스크롤 가능 범위
 }
 
 // Player 의 OffSet을 따라간다.
-void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
+void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint, float dt)
 {
 	PlayerScript* script = player->GetComponent<PlayerScript>();
 	Vector2 point = player->GetWorldPosition();
@@ -81,7 +81,19 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint)
 
 	if (point.y >= rectcenterY && point.y <= m_mapRect.y - rectpoint.y / 2)
 	{
-		m_tr->SetPosition(Vector2(m_tr->GetPosition().x, calcCameraPoint.y));
+		double fint_up = (((-1) * m_tr->GetPosition().y) + rectcenterY) - (rectcenterY / 2);
+		double fint_down = (((-1) * m_tr->GetPosition().y) + rectcenterY) + (rectcenterY / 2);
+		float movinglength = dt * 300.f;
+		//if (point.y <= fint_up) {
+		//	m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y + movinglength));
+		//}
+		//else if (point.y >= fint_down) {
+		//	m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y - movinglength));
+		//}
+		if (point.y <= fint_up || point.y >= fint_down) {
+			m_tr->SetPosition(Vector2(m_tr->GetPosition().x, calcCameraPoint.y));
+			PLAYER_INSTANCE->GetComponent<Rigidbody>()->OnRectColliderEnter_PLAYER(PLAYER_INSTANCE);
+		}
 	}
 	else
 	{
