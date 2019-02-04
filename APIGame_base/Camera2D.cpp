@@ -79,20 +79,16 @@ void Camera2D::Scroll(PlayerObject* player, Vector2 rectpoint, float dt)
 			m_tr->SetPosition(Vector2(-(m_mapRect.x - rectcenterX), m_tr->GetPosition().y));
 	}
 
-	if (point.y >= rectcenterY && point.y <= m_mapRect.y - rectpoint.y / 2)
+	if (point.y >= rectcenterY && point.y <= m_mapRect.y - rectpoint.y/4)
 	{
 		double fint_up = (((-1) * m_tr->GetPosition().y) + rectcenterY) - (rectcenterY / 2);
 		double fint_down = (((-1) * m_tr->GetPosition().y) + rectcenterY) + (rectcenterY / 2);
 		float movinglength = dt * 300.f;
-		//if (point.y <= fint_up) {
-		//	m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y + movinglength));
-		//}
-		//else if (point.y >= fint_down) {
-		//	m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y - movinglength));
-		//}
-		if (point.y <= fint_up || point.y >= fint_down) {
-			m_tr->SetPosition(Vector2(m_tr->GetPosition().x, calcCameraPoint.y));
-			PLAYER_INSTANCE->GetComponent<Rigidbody>()->OnRectColliderEnter_PLAYER(PLAYER_INSTANCE);
+		if (point.y <= fint_up) {
+			m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y + movinglength));
+		}
+		else if (point.y >= fint_down) {
+			m_tr->SetPosition(Vector2(m_tr->GetPosition().x, m_tr->GetPosition().y - movinglength));
 		}
 	}
 	else
