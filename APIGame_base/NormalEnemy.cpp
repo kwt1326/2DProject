@@ -45,25 +45,24 @@ void NormalEnemy::Init()
 
 	m_pRg->SetUseGravity(false);
 
+	GetComponent<Transform>()->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	Vector2 pos = GetComponent<Transform>()->GetPosition();
 	GetComponent<Collider>()->SetRect(Rect(pos.x - 10, pos.y - 10, pos.x + 10, pos.y + 10));
 	COLLIDER_MGR->AddEnemyCollider(this);
+	ANIMCLIP_MGR->CreateClipOfTarget(this, m_name, m_mapHaveClip);
 
 	m_pMachine->InsertState(E_DETECTION_ID, new NormalEnemy_detection(this));
 	m_pMachine->InsertState(E_DAMAGE_ID, new NormalEnemy_Damage(this));
 	m_pMachine->InsertState(E_ATTACK_ID, new NormalEnemy_Attack(this));
 	m_pMachine->ChangeState(E_DETECTION_ID);
 
+	AddComponent<NormalEnemyScript>()->SetOwner(this);
+
 	// most 
 	SetActive(true);
 }
-bool NormalEnemy::SetEmemy() {
-
-	return false;
-}
 void NormalEnemy::Update(float dt)
 {
-	m_pMachine->Update(dt);
 }
 // detection
 void NormalEnemy_detection::HandleInput()
@@ -76,9 +75,14 @@ void NormalEnemy_detection::Update(float dt)
 	NormalEnemy* pObj = dynamic_cast<NormalEnemy*>(pOwner);
 	auto clipmap = pObj->GetClipMap();
 	std::string clipname = (pObj->GetDirection()) ? "R/Detection/" + pObj->GetName() : "Detection/" + pObj->GetName();
+	auto find_it = clipmap.find(clipname);
 
-	if (GetOwner()->GetComponent<Animation>()->GetAnimationClip() != clipmap[clipname]) {
-		GetOwner()->GetComponent<Animation>()->Play();
+	if (find_it != clipmap.end()) {
+		if (find_it->second != nullptr) {
+			if (GetOwner()->GetComponent<Animation>()->GetAnimationClip() != find_it->second) {
+				GetOwner()->GetComponent<Animation>()->Play(find_it->second);
+			}
+		}
 	}
 }
 
@@ -100,7 +104,7 @@ void NormalEnemy_Attack::HandleExit()
 // damage
 void NormalEnemy_Damage::HandleInput()
 {
-
+	EarnDamage();
 }
 
 void NormalEnemy_Damage::Update(float dt)
@@ -121,4 +125,25 @@ void NormalEnemy_Damage::EarnDamage()
 		pobj->SetHealth(pobj->GetHealth() - pobj->GetDamage());
 		pobj->SetDamage(0);
 	}
+}
+
+NormalEnemyScript::NormalEnemyScript()
+{
+}
+
+NormalEnemyScript::~NormalEnemyScript()
+{
+}
+
+void NormalEnemyScript::Init()
+{
+}
+
+void NormalEnemyScript::Update(float dt)
+{
+	m_pEnemy->GetMachine()->_Update(dt);
+}
+
+void NormalEnemyScript::Release()
+{
 }

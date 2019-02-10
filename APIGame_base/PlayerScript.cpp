@@ -61,12 +61,8 @@ void PlayerScript::SetComparePosition(Vector2 vPos, Vector2 vWorldPos)
 	double recthalfsize_Y = screen.Bottom / 2;
 
 	if (IsScrolling(true)) {
-		vPos.x = recthalfsize_X;
+		vPos.x = recthalfsize_X; // 수평만 고정, 수직은 버벅임 발생으로 다르게 처리
 	}
-
-	//if (IsScrolling(false)) {
-	//	vPos.y = recthalfsize_Y;
-	//}
 
 	m_pPlayer->SetPosition(vPos);
 	m_pPlayer->SetWorldPosition(vWorldPos);
@@ -76,7 +72,7 @@ void PlayerScript::Update(float dt)
 {
 	ProcessPlayer(dt);
 	
-	m_pMachine->_Update(dt); // FSM Pattern
+	m_pMachine->_Update(dt); // FSM Pattern Realtime Update
 }
 void PlayerScript::Init()
 {
@@ -126,6 +122,25 @@ void PlayerScript::ProcessPlayer(float dt)
 	}
 	else if (m_pRigidbody->GetGravity() == Vector2::Zero) {
 		m_pRigidbody->SetGravity(Vector2(0, 300.f));
+	}
+}
+
+void PlayerScript::Move(float dt)
+{
+	PlayerObject* player = PLAYER_INSTANCE;
+	PlayerScript* script = player->GetComponent<PlayerScript>();
+	float moveenergy = player->GetPlayerSpeed() * dt;
+	float yAxis = player->GetWorldPosition().y;
+
+	if (script->GetInput(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
+	{
+		script->SetComparePosition(Vector2(player->GetPosition().x - moveenergy, player->GetPosition().y),
+			Vector2(player->GetWorldPosition().x - moveenergy, yAxis));
+	}
+	else if (script->GetInput(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
+	{
+		script->SetComparePosition(Vector2(player->GetPosition().x + moveenergy, player->GetPosition().y),
+			Vector2(player->GetWorldPosition().x + moveenergy, yAxis));
 	}
 }
 

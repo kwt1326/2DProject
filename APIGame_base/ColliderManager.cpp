@@ -148,26 +148,35 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 	}
 
 	// 적/아군 총알 <-> 적/아군 오브젝트
-	std::list<GameObject*>::iterator itCol2 = m_InstanceColliderlist.begin();
-
-	for (; itCol2 != m_InstanceColliderlist.end(); ++itCol2) 
-	{
-		Attack* patk = dynamic_cast<Attack*>(*itCol2);
-		Collider* col_bullet = (*itCol2)->GetComponent<Collider>();
-		Rigidbody* rg_bullet = (*itCol2)->GetComponent<Rigidbody>();
-		std::list<GameObject*>::iterator itr = m_EnemyColliderlist.begin();
-		while (itr != m_EnemyColliderlist.end())
+	std::list<GameObject*>::iterator itCol2 = m_EnemyColliderlist.begin();
+	for (; itCol2 != m_EnemyColliderlist.end(); ++itCol2) {
+		std::list<GameObject*>::iterator itr = m_InstanceColliderlist.begin();
+		while (itr != m_InstanceColliderlist.end())
 		{
 			Collider* col = (*itr)->GetComponent<Collider>();
 			Rigidbody* rg = (*itr)->GetComponent<Rigidbody>();
 			if (col != NULL && rg != NULL) {
 				if (col->GetIsInstance()) {
-					if (Physic::RectToRectCollisionCheck(col->GetRect(), col_bullet->GetRect()))
-					{
-						EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itr);
-						penemy->SetDamage(patk->GetDamage());
-						penemy->GetMachine()->ChangeState(E_DAMAGE_ID);
-						if ((dynamic_cast<EnemyBase*>(*itr))->GetHealth() == 0) {
+					Rect& rect = col->GetRect();
+					Collider* pCol = (*itCol2)->GetComponent<Collider>();
+					if (pCol) {
+						if (Physic::RectToRectCollisionCheck(rect, pCol->GetRect()))
+						{
+							// 적 체력 처리
+							Attack* pAtk = dynamic_cast<Attack*>(*itr);
+							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itCol2);
+
+							penemy->SetDamage(pAtk->GetDamage());
+							penemy->GetMachine()->ChangeState(E_DAMAGE_ID);
+							if (penemy->GetHealth() == 0) {
+								OBJECT_MGR->Destroy((*itCol2));
+								itCol2 = m_EnemyColliderlist.erase(itCol2);
+							}
+							else {
+								penemy->GetMachine()->ChangeState(E_DETECTION_ID);
+							}
+
+							// 처리 후 불렛 제거
 							OBJECT_MGR->Destroy((*itr));
 							itr = m_InstanceColliderlist.erase(itr);
 							continue;
@@ -178,6 +187,7 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 			++itr;
 		}
 	}
+
 }
 
 void ColliderManager::RemoveObj(GameObject * pobj)
@@ -231,11 +241,18 @@ void ColliderManager::Draw(bool btrue)
 			}
 		}
 
-		Rect PlayerRect = m_pPlayer->GetLocalRect(); /*Rect(point.x - 20, point.y - 50, point.x + 20, point.y + 50);*/
+		Rect PlayerRect = m_pPlayer->GetLocalRect(); 
 		Rect PlayerRectW = m_pPlayer->GetWorldRect();
 		Rect PlayerRectX = m_pPlayer->GetRect();
 
-		Rectangle(m_hdc, PlayerRect.Left, PlayerRect.Top, PlayerRect.Right, PlayerRect.Bottom);
+		std::vector<GameObject*>& reflist = OBJECT_MGR->GetInstance()->GetObjectList();
+		for (auto a = reflist.begin(); a != reflist.end(); ++a) {
+			Collider* pcol = (*a)->GetComponent<Collider>();
+			if (pcol != NULL) {
+				Rect rect = pcol->GetRect();
+				Rectangle(m_hdc, rect.Left, rect.Top, rect.Right, rect.Bottom);
+			}
+		}
 
 		// 맵벡터값 실시간 표시
 		char Timestr[255];

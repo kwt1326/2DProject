@@ -106,13 +106,6 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 					}
 					NormalEnemy* pNewEnemy = new NormalEnemy(target);
 					OBJECT_MGR->AddObject(pNewEnemy, Vector2(vec_pos[0], vec_pos[1]));
-					std::map<std::string, AnimationClip*>& clipmap = pNewEnemy->GetClipMap();
-					ANIMCLIP_MGR->CreateClipOfTarget(pNewEnemy, target, clipmap);
-					if (clipmap.find(target) != clipmap.end()) {
-						Animation* pAnim = pNewEnemy->GetComponent<Animation>();
-						pAnim->SetAnimationClip(clipmap.find(target)->second);
-						pAnim->Play();
-					}
 				}
 				sibling = sibling.next_sibling();
 			}

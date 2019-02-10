@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Enemy>
-  <Normal name="Bee" pos="400,200"/>
+  <Normal name="Bee" pos="300,310"/>
   <Normal name="Bee" pos="2000,100"/>
   <Normal name="Bee" pos="1000,200"/>
 </Enemy>

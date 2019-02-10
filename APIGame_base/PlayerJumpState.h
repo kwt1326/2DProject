@@ -16,7 +16,6 @@ public:
 	virtual void HandleExit() override;
 
 private:
-	void InstanceMove(float dt);
 	FSMMarcine* pMachine;
 };
 

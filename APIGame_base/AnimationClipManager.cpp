@@ -29,7 +29,7 @@ bool AnimationClipManager::Load(std::string strpath) {
 				first = first.first_child();
 				if (strcmp(first.name(), "Clip") == 0) {
 					pugi::xml_node base_sibling = first;
-					while (base_sibling.next_sibling() != NULL)
+					while (base_sibling != NULL)
 					{
 						pugi::xml_attribute xa = base_sibling.first_attribute();
 						pugi::xml_attribute_iterator xait = base_sibling.attributes_begin();

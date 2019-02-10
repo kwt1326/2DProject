@@ -2,6 +2,7 @@
 #ifndef _NormalEnemy_H_
 #define _NormalEnemy_H_
 
+#include "Component.h"
 #include "GameObject.h"
 #include "EnemyBase.h"
 #include "TState.h"
@@ -25,7 +26,6 @@ public:
 	BOOL GetDirection() { return m_nbdir; }
 	std::string GetName() { return m_name; }
 
-	bool SetEmemy();
 	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
 
 protected:
@@ -37,6 +37,22 @@ protected:
 
 	std::string m_name;
 	std::map<std::string, AnimationClip*> m_mapHaveClip;
+};
+
+class NormalEnemyScript : public Component
+{
+public:
+	NormalEnemyScript();
+	virtual ~NormalEnemyScript();
+
+	virtual void Init();
+	virtual void Update(float dt);
+	virtual void Release();
+
+	void SetOwner(NormalEnemy* pEnemy) { m_pEnemy = pEnemy; }
+
+protected:
+	NormalEnemy* m_pEnemy;
 };
 
 class EnemyShotPos : public GameObject

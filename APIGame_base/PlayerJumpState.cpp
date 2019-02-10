@@ -29,14 +29,23 @@ void PlayerJumpState::HandleInput()
 void PlayerJumpState::Update(float dt)
 {
 	PlayerObject* player = PLAYER_INSTANCE;
+	PlayerScript* pScript = PLAYER_INSTANCE->GetComponent<PlayerScript>();
 	Rigidbody* rigidbody = player->GetComponent<Rigidbody>();
 
 	if (input::GetKey(VK_RIGHT) || input::GetKey(VK_LEFT)) // Move 점프중 좌우 이동
 	{
 		if((player->GetBlockState() != NO_BLOCK) && input::GetKey(0x43))
 			pMachine->ChangeState(LANDWALLSTATE_ID);
-		else
-			InstanceMove(dt);
+		else {
+			if (pScript != nullptr) {
+				pScript->Move(dt);
+			}
+		}
+	}
+
+	if (input::GetKeyDown(0x58)) {
+		pMachine->ChangeState(SHOTSTATE_ID);
+		return;
 	}
 
 	if (rigidbody->GetStateInfo().m_bOnMap == true)
@@ -48,23 +57,4 @@ void PlayerJumpState::Update(float dt)
 
 void PlayerJumpState::HandleExit()
 {
-}
-// 점프중 이동 커맨드 시 상태 이동 비용이 비싸 이동관련 함수 제작
-void PlayerJumpState::InstanceMove(float dt)
-{
-	PlayerObject* player = PLAYER_INSTANCE;
-	PlayerScript* script = player->GetComponent<PlayerScript>();
-	float moveenergy = player->GetPlayerSpeed() * dt;
-	float yAxis = player->GetWorldPosition().y;
-
-	if (script->GetInput(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
-	{
-		script->SetComparePosition(Vector2(player->GetPosition().x - moveenergy, player->GetPosition().y),
-			Vector2(player->GetWorldPosition().x - moveenergy, yAxis));
-	}
-	else if (script->GetInput(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
-	{
-		script->SetComparePosition(Vector2(player->GetPosition().x + moveenergy, player->GetPosition().y),
-			Vector2(player->GetWorldPosition().x + moveenergy, yAxis));
-	}
 }
