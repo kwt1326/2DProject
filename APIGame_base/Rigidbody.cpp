@@ -220,6 +220,67 @@ bool Rigidbody::OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& pla
 	}
 	return false;
 }
+//[범용]
+bool Rigidbody::OnRectColliderEnter(GameObject * pObject)
+{
+	std::function<bool()> SetPosition = [&]() mutable -> bool {
+		Vector2 move = pObject->GetComponent<Transform>()->GetPosition() + m_strstay.m_coord;
+		m_strstay.m_coord = Vector2::Zero;
+		return true;
+	};
+
+	Rect col = pObject->GetComponent<Collider>()->GetRect();
+	std::list<ColliderInfo>& colliderlist = m_Colmrg->GetCurField();
+	std::list<ColliderInfo>::iterator it = colliderlist.begin();
+
+	for (auto itr = colliderlist.begin(); itr != colliderlist.end(); ++itr) 
+	{
+		if (Physic::RectToRectCollisionCheck(col, (*itr).col)) 
+		{
+			Rect Mapcol = (*itr).col;
+			Rect Mergecol;
+
+			Mergecol.Left = (col.Left > Mapcol.Left) ? col.Left : Mapcol.Left;
+			Mergecol.Right = (col.Right < Mapcol.Right) ? col.Right : Mapcol.Right;
+			Mergecol.Top = (col.Top > Mapcol.Top) ? col.Top : Mapcol.Top;
+			Mergecol.Bottom = (col.Bottom < Mapcol.Bottom) ? col.Bottom : Mapcol.Bottom;
+
+			float MergecolHorizontal = Mergecol.Right - Mergecol.Left;
+			float MergecolVertical = Mergecol.Bottom - Mergecol.Top;
+
+			if (MergecolHorizontal < MergecolVertical)
+			{
+				// 수평 충돌
+				if (col.Right > Mapcol.Right && col.Left > Mapcol.Left || col.Left < Mapcol.Left && col.Right < Mapcol.Right)
+				{
+					if (Mergecol.Right == Mapcol.Right) {
+						m_strstay.m_coord.x = MergecolHorizontal;
+					}
+					else if (Mergecol.Left == Mapcol.Left) {
+						m_strstay.m_coord.x = -MergecolHorizontal;
+					}
+					return SetPosition();
+				}
+			}
+			else
+			{
+				// 수직 충돌
+				if (col.Bottom > Mapcol.Top && col.Top < Mapcol.Bottom || col.Top < Mapcol.Bottom && col.Bottom > Mapcol.Top)
+				{
+					if (Mergecol.Top == Mapcol.Top) { // 바닥 착지
+						m_strstay.m_coord.y = -MergecolVertical;
+						SetGravity(Vector2::Zero);
+					}
+					else if (Mergecol.Bottom == Mapcol.Bottom) { // 천장 충돌
+						m_strstay.m_coord.y = MergecolVertical;
+					}
+					return SetPosition();
+				}
+			}
+		}
+	}
+	return false;
+}
 
 // 플레이어가 맵 콜라이더 위에 서있을 때 판단용 (현재 사용 X)
 bool Rigidbody::HitColliderOnMap(const Rect playercol, const Rect Mapcol)

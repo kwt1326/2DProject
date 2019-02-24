@@ -8,6 +8,12 @@
 #include "TState.h"
 #include <map>
 
+struct EnemyObjectInfo {
+	Vector2 m_vShotpos;
+	Rect m_rectpos;
+	float m_fRadiusforCircle;
+};
+
 class FSMMarcine;
 class Animation;
 class AnimationClipManager;
@@ -15,7 +21,7 @@ class Rigidbody;
 class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
-	NormalEnemy(std::string name);
+	NormalEnemy(std::string name, EnemyObjectInfo info);
 	virtual ~NormalEnemy();
 
 	virtual void Init();
@@ -24,6 +30,7 @@ public:
 
 	void SetDirection(BOOL dir) { m_nbdir = dir; }
 	BOOL GetDirection() { return m_nbdir; }
+	Circle& GetDetectionCircle() { return m_detectioncircle; }
 	std::string GetName() { return m_name; }
 
 	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
@@ -35,6 +42,8 @@ protected:
 	Rigidbody* m_pRg;
 	BOOL m_nbdir;
 
+	EnemyObjectInfo m_objinfo;
+	Circle m_detectioncircle;
 	std::string m_name;
 	std::map<std::string, AnimationClip*> m_mapHaveClip;
 };

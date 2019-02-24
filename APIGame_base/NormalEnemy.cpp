@@ -11,11 +11,12 @@
 #include "FSMMarcine.h"
 #include "ObjectManager.h"
 
-NormalEnemy::NormalEnemy(std::string name)
+NormalEnemy::NormalEnemy(std::string name, EnemyObjectInfo info)
 	:m_type(ENEMYCAMP)
 	,m_nbdir(FALSE)
 	,m_name(name)
 {
+	m_objinfo = info;
 	m_nHealth = 3;
 }
 
@@ -40,14 +41,16 @@ void NormalEnemy::Init()
 	GameObject* pEnemyPos = new EnemyShotPos();
 	OBJECT_MGR->AddObject(pEnemyPos);
 	pEnemyPos->GetComponent<Transform>()->SetParent(this->GetComponent<Transform>());
-	((EnemyShotPos*)pEnemyPos)->SetShotPos(Vector2(10.f, 10.f), true);
-	((EnemyShotPos*)pEnemyPos)->SetShotPos(Vector2(-10.f, 10.f), false);
+	((EnemyShotPos*)pEnemyPos)->SetShotPos(Vector2(m_objinfo.m_vShotpos.x, m_objinfo.m_vShotpos.y), true);
+	((EnemyShotPos*)pEnemyPos)->SetShotPos(Vector2(-m_objinfo.m_vShotpos.x, m_objinfo.m_vShotpos.y), false);
 
 	m_pRg->SetUseGravity(false);
 
 	GetComponent<Transform>()->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	Vector2 pos = GetComponent<Transform>()->GetPosition();
-	GetComponent<Collider>()->SetRect(Rect(pos.x - 10, pos.y - 10, pos.x + 10, pos.y + 10));
+	GetComponent<Collider>()->SetRect(
+		Rect(pos.x - m_objinfo.m_rectpos.Left, pos.y - m_objinfo.m_rectpos.Top,
+			pos.x + m_objinfo.m_rectpos.Right, pos.y + m_objinfo.m_rectpos.Bottom));
 	COLLIDER_MGR->AddEnemyCollider(this);
 	ANIMCLIP_MGR->CreateClipOfTarget(this, m_name, m_mapHaveClip);
 
@@ -57,6 +60,9 @@ void NormalEnemy::Init()
 	m_pMachine->ChangeState(E_DETECTION_ID);
 
 	AddComponent<NormalEnemyScript>()->SetOwner(this);
+
+	m_detectioncircle.Center = GetComponent<Transform>()->GetPosition();
+	m_detectioncircle.Radius = m_objinfo.m_fRadiusforCircle;
 
 	// most 
 	SetActive(true);
@@ -71,17 +77,27 @@ void NormalEnemy_detection::HandleInput()
 
 void NormalEnemy_detection::Update(float dt)
 {
+	// anim
+	PlayerObject* pPlayer = PLAYER_INSTANCE;
 	GameObject* pOwner = GetOwner();
-	NormalEnemy* pObj = dynamic_cast<NormalEnemy*>(pOwner);
-	auto clipmap = pObj->GetClipMap();
-	std::string clipname = (pObj->GetDirection()) ? "R/Detection/" + pObj->GetName() : "Detection/" + pObj->GetName();
-	auto find_it = clipmap.find(clipname);
+	NormalEnemy* pObj = (pOwner) ? dynamic_cast<NormalEnemy*>(pOwner) : NULL;
 
-	if (find_it != clipmap.end()) {
-		if (find_it->second != nullptr) {
-			if (GetOwner()->GetComponent<Animation>()->GetAnimationClip() != find_it->second) {
-				GetOwner()->GetComponent<Animation>()->Play(find_it->second);
+	if (pPlayer != NULL && pObj != NULL) {
+		auto clipmap = pObj->GetClipMap();
+		std::string clipname = (pObj->GetDirection()) ? "R/Detection/" + pObj->GetName() : "Detection/" + pObj->GetName();
+		auto find_it = clipmap.find(clipname);
+
+		if (find_it != clipmap.end()) {
+			if (find_it->second != nullptr) {
+				if (GetOwner()->GetComponent<Animation>()->GetAnimationClip() != find_it->second) {
+					GetOwner()->GetComponent<Animation>()->Play(find_it->second);
+				}
 			}
+		}
+
+		// detection
+		if (Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
+			pObj->GetMachine()->ChangeState(StateIdentify::E_ATTACK_ID);
 		}
 	}
 }
@@ -109,6 +125,16 @@ void NormalEnemy_Damage::HandleInput()
 
 void NormalEnemy_Damage::Update(float dt)
 {
+	// detection
+	PlayerObject* pPlayer = PLAYER_INSTANCE;
+	GameObject* pOwner = GetOwner();
+	NormalEnemy* pObj = (pOwner) ? dynamic_cast<NormalEnemy*>(pOwner) : NULL;
+
+	if (pPlayer != NULL && pObj != NULL) {
+		if (!Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
+			pObj->GetMachine()->ChangeState(StateIdentify::E_DETECTION_ID);
+		}
+	}
 }
 
 void NormalEnemy_Damage::HandleExit()
@@ -142,6 +168,8 @@ void NormalEnemyScript::Init()
 void NormalEnemyScript::Update(float dt)
 {
 	m_pEnemy->GetMachine()->_Update(dt);
+	Rigidbody* pRg = m_pEnemy->GetComponent<Rigidbody>();
+	pRg->OnRectColliderEnter(m_pEnemy);
 }
 
 void NormalEnemyScript::Release()

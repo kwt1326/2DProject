@@ -37,7 +37,7 @@ public:
 	bool OnStairColliderEnter_Check_PLAYER(PlayerObject* player, Rect& playercol, Rect& mapcol);
 
 	// Object Check
-	//bool OnColliderEnter_Object();
+	bool OnRectColliderEnter(GameObject* pObject);
 
 	bool HitColliderOnMap(const Rect playercol, const Rect Mapcol);
 	int HitColliderToHorizon(const Rect playercol, const Rect Mapcol);
