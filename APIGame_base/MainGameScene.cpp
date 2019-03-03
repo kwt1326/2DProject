@@ -81,6 +81,7 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 		pugi::xml_node first = xmldoc.first_child();
 		if (strcmp(first.name(), "Enemy") == 0) {
 			pugi::xml_node sibling = first.first_child();
+			EnemyObjectInfo info;
 			while (sibling.next_sibling() != NULL) // child sibling
 			{
 				if (strcmp(sibling.name(), "Normal") == 0) {
@@ -88,23 +89,46 @@ bool MainGameScene::LoadEnemy(std::string strPath) {
 					pugi::xml_attribute xa = sibling.first_attribute();
 					pugi::xml_attribute_iterator xait = sibling.attributes_begin();
 					std::vector<int> vec_pos; vec_pos.clear();
+					std::vector<int> rect_pos; rect_pos.clear();
 					std::string target = "";
 
 					while (xait != sibling.attributes_end()) {
 						if (strcmp(xait->name(), "name") == 0) {
 							target = const_cast<pugi::char_t*>(xait->value());
 						}
-						if (strcmp(xait->name(), "pos") == 0) {
+						else if (strcmp(xait->name(), "pos") == 0) {
 							std::stringstream ss(xait->value());
 							std::string token;
 							while (std::getline(ss, token, ',')) {
 								vec_pos.push_back(atof(token.c_str()));
 							}
-							break;
+						}
+						else if (strcmp(xait->name(), "shotpos") == 0) {
+							std::stringstream ss(xait->value());
+							std::string token;
+							while (std::getline(ss, token, ',')) {
+								vec_pos.push_back(atof(token.c_str()));
+							}
+							info.m_vShotpos = Vector2(vec_pos[0], vec_pos[1]);
+						}
+						else if (strcmp(xait->name(), "collider") == 0) {
+							std::stringstream ss(xait->value());
+							std::string token;
+							while (std::getline(ss, token, ',')) {
+								rect_pos.push_back(atof(token.c_str()));
+							}
+							info.m_rectpos = Rect(rect_pos[0], rect_pos[1], rect_pos[2], rect_pos[3]);
+						}
+						else if (strcmp(xait->name(), "radius") == 0) {
+							std::stringstream ss(xait->value());
+							std::string token;
+							while (std::getline(ss, token, ',')) {
+								info.m_fRadiusforCircle = atof(token.c_str());
+							}
 						}
 						++xait;
 					}
-					NormalEnemy* pNewEnemy = new NormalEnemy(target);
+					NormalEnemy* pNewEnemy = new NormalEnemy(target, info);
 					OBJECT_MGR->AddObject(pNewEnemy, Vector2(vec_pos[0], vec_pos[1]));
 				}
 				sibling = sibling.next_sibling();

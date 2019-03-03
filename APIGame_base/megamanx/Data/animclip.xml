@@ -5,7 +5,7 @@
     <Clip target="Player" state="STATE_COMJUMP"               direction="right" path="megamanx/clip/comjumpstate.bmp" duration="1"   frame="11" loop="0"/>
     <Clip target="Player" state="STATE_COMRUN"                direction="right" path="megamanx/clip/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
     <Clip target="Player" state="STATE_SHOTIDLE"              direction="right" path="megamanx/clip/comshot.bmp"		 duration="0.25" frame="8" loop="0"/>
-    <Clip target="Player" state="STATE_SHOTJUMP"              direction="right" path="megamanx/clip/jumpshot.bmp"		 duration="0.25" frame="8" loop="0"/>
+    <Clip target="Player" state="STATE_SHOTJUMP"              direction="right" path="megamanx/clip/comshotafter.bmp"		 duration="0.25" frame="1" loop="0"/>
     <Clip target="Player" state="STATE_DASHSTART"             direction="right" path="megamanx/clip/dashstart.bmp"	 duration="0.15" frame="3" loop="0"/>
     <Clip target="Player" state="STATE_DASHSTOP"              direction="right" path="megamanx/clip/stopdash.bmp"	   duration="0.2"  frame="4" loop="0"/>
     <Clip target="Player" state="STATE_DASHING"               direction="right" path="megamanx/clip/dashing.bmp"		 duration="0.5"  frame="1" loop="0"/>
@@ -16,7 +16,7 @@
     <Clip target="Player" state="R/STATE_COMJUMP"             direction="left" path="megamanx/clip/clipr/comjumpstate.bmp" duration="1"    frame="11" loop="0"/>
     <Clip target="Player" state="R/STATE_COMRUN"              direction="left" path="megamanx/clip/clipr/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
     <Clip target="Player" state="R/STATE_SHOTIDLE"            direction="left" path="megamanx/clip/clipr/comshot.bmp"	     duration="0.25" frame="8"  loop="0"/>
-    <Clip target="Player" state="R/STATE_SHOTJUMP"            direction="left" path="megamanx/clip/clipr/jumpshot.bmp"		 duration="0.25" frame="8" loop="0"/>
+    <Clip target="Player" state="R/STATE_SHOTJUMP"            direction="left" path="megamanx/clip/clipr/comshotafter.bmp"		 duration="0.25" frame="1" loop="0"/>
     <Clip target="Player" state="R/STATE_DASHSTART"           direction="left" path="megamanx/clip/clipr/dashstart.bmp"    duration="0.15" frame="3"  loop="0"/>
     <Clip target="Player" state="R/STATE_DASHSTOP"            direction="left" path="megamanx/clip/clipr/stopdash.bmp"	   duration="0.2"  frame="4"  loop="0"/>
     <Clip target="Player" state="R/STATE_DASHING"             direction="left" path="megamanx/clip/clipr/dashing.bmp"	     duration="0.5"  frame="1"  loop="0"/>
@@ -27,6 +27,7 @@
     <Clip target="Player" state="STATE_GAMESTART"             direction="right" path="megamanx/clip/landing.bmp"	   duration="1"  frame="16" loop="0"/>
 
     <Clip target="instance" state="STATE_XBUSTER"             direction="right" path="megamanx/clip/xbuster.bmp"		 duration="0.7"  frame="5" loop="1"/>
+    <Clip target="instance" state="STATE_XBUSTER_EXPLOSION"   direction="right" path="megamanx/clip/buster1_explosion.bmp"		 duration="0.5"  frame="4" loop="0"/>
     <Clip target="instance" state="R/STATE_XBUSTER"           direction="left" path="megamanx/clip/clipr/xbuster.bmp"	     duration="0.7"  frame="5"  loop="1"/>
 
     <Clip target="Bee"    state="Detection/Bee"               direction="right" path="megamanx/enemyclips/enemy_bee_r.bmp"	  duration="1"  frame="9" loop="1"/>
