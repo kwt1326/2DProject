@@ -221,6 +221,7 @@ void ColliderManager::PreDrawMode(bool btrue)
 }
 void ColliderManager::Draw(bool btrue)
 {
+	// Debug Only
 	if (btrue)
 	{
 		std::list<ColliderInfo>& Collist = m_colliderFieldlist["STAGE" + std::to_string(m_nStage)];
@@ -243,16 +244,25 @@ void ColliderManager::Draw(bool btrue)
 
 		Rect PlayerRect = m_pPlayer->GetLocalRect(); 
 		Rect PlayerRectW = m_pPlayer->GetWorldRect();
-		Rect PlayerRectX = m_pPlayer->GetRect();
 
 		std::vector<GameObject*>& reflist = OBJECT_MGR->GetInstance()->GetObjectList();
 		for (auto a = reflist.begin(); a != reflist.end(); ++a) {
-			Collider* pcol = (*a)->GetComponent<Collider>();
-			if (pcol != NULL) {
-				Rect rect = pcol->GetRect();
-				Rectangle(m_hdc, rect.Left, rect.Top, rect.Right, rect.Bottom);
+			if ((*a)->GetName().compare("Player") == 0) 
+				continue;
+			else 
+			{
+				//(*a)->
+
+				// other
+				Collider* pcol = (*a)->GetComponent<Collider>();
+				if (pcol != NULL) {
+					Rect rect = pcol->GetRect();
+					Rectangle(m_hdc, rect.Left, rect.Top, rect.Right, rect.Bottom);
+				}
 			}
 		}
+
+		Rectangle(m_hdc, PlayerRect.Left, PlayerRect.Top, PlayerRect.Right, PlayerRect.Bottom);
 
 		// ¸Êº¤ÅÍ°ª ½Ç½Ã°£ Ç¥½Ã
 		char Timestr[255];
@@ -266,7 +276,5 @@ void ColliderManager::Draw(bool btrue)
 		TextOut(m_hdc, 0, 90, (Timestr), strlen(Timestr));
 		sprintf(Timestr, "playerLocalRect : %.2f, %.2f,%.2f, %.2f", PlayerRect.Left, PlayerRect.Top, PlayerRect.Right, PlayerRect.Bottom);
 		TextOut(m_hdc, 0, 105, (Timestr), strlen(Timestr));
-		sprintf(Timestr, "playerRectXXXX : %.2f, %.2f,%.2f, %.2f", PlayerRectX.Left, PlayerRectX.Top, PlayerRectX.Right, PlayerRectX.Bottom);
-		TextOut(m_hdc, 0, 120, (Timestr), strlen(Timestr));
 	}
 }

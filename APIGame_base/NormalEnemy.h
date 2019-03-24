@@ -108,6 +108,8 @@ public:
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
+private:
+	float m_fDelayTime;
 };
 
 class NormalEnemy_Damage : public TState

@@ -289,6 +289,9 @@
     <ClCompile Include="AnimationClipManager.cpp">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleAttack.cpp">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamemanager.h">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="AnimationClipManager.h">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleAttack.h">
+      <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

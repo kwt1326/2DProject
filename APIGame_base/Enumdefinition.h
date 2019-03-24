@@ -77,6 +77,9 @@ enum InstanceObjType {
 	ZERO_SABER_CB2,
 	ZERO_SABER_CB3,
 };
+typedef enum InstanceObjTypeForEnemy {
+	BEE_BULLET,
+}E_ATK_OBJ;
 enum ColliderType {
 	RECT_COLLIDER = 1 << 1,
 	CIRCLE_COLLIDER = 1 << 2,

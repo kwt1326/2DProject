@@ -108,10 +108,28 @@ void NormalEnemy_detection::HandleExit()
 // attack
 void NormalEnemy_Attack::HandleInput()
 {
+	m_fDelayTime = 0;
 }
 
 void NormalEnemy_Attack::Update(float dt)
 {
+	// detection
+	PlayerObject* pPlayer = PLAYER_INSTANCE;
+	GameObject* pOwner = GetOwner();
+	NormalEnemy* pObj = (pOwner) ? dynamic_cast<NormalEnemy*>(pOwner) : NULL;
+
+	m_fDelayTime += dt * 60;
+
+	if (m_fDelayTime < 3.0f) 
+	{
+		
+	}
+
+	if (pPlayer != NULL && pObj != NULL) {
+		if (!Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
+			pObj->GetMachine()->ChangeState(StateIdentify::E_DETECTION_ID);
+		}
+	}
 }
 
 void NormalEnemy_Attack::HandleExit()
@@ -125,16 +143,6 @@ void NormalEnemy_Damage::HandleInput()
 
 void NormalEnemy_Damage::Update(float dt)
 {
-	// detection
-	PlayerObject* pPlayer = PLAYER_INSTANCE;
-	GameObject* pOwner = GetOwner();
-	NormalEnemy* pObj = (pOwner) ? dynamic_cast<NormalEnemy*>(pOwner) : NULL;
-
-	if (pPlayer != NULL && pObj != NULL) {
-		if (!Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
-			pObj->GetMachine()->ChangeState(StateIdentify::E_DETECTION_ID);
-		}
-	}
 }
 
 void NormalEnemy_Damage::HandleExit()

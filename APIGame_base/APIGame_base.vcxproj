@@ -436,6 +436,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="SimpleAttack.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
@@ -604,6 +607,7 @@
     <ClInclude Include="Physic.h" />
     <ClInclude Include="Pugixml\pugiconfig.hpp" />
     <ClInclude Include="Pugixml\pugixml.hpp" />
+    <ClInclude Include="SimpleAttack.h" />
     <ClInclude Include="TState.h" />
     <ClInclude Include="PlayerDashState.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
