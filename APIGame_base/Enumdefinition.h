@@ -68,6 +68,7 @@ enum InstanceType {
 	PROJECTILE = 1 << 1, 
 	NEARATK = 1 << 2,
 };
+
 enum InstanceObjType {
 	ROCKMAN_BUSTER_NC = 1 << 1,
 	ROCKMAN_BUSTER_CR1 = 1 << 2,
@@ -77,9 +78,11 @@ enum InstanceObjType {
 	ZERO_SABER_CB2,
 	ZERO_SABER_CB3,
 };
+
 typedef enum InstanceObjTypeForEnemy {
 	BEE_BULLET,
 }E_ATK_OBJ;
+
 enum ColliderType {
 	RECT_COLLIDER = 1 << 1,
 	CIRCLE_COLLIDER = 1 << 2,
