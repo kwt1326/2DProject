@@ -30,7 +30,13 @@
     <Clip target="instance" state="STATE_XBUSTER_EXPLOSION"   direction="right" path="megamanx/clip/buster1_explosion.bmp"		 duration="0.5"  frame="4" loop="0"/>
     <Clip target="instance" state="R/STATE_XBUSTER"           direction="left" path="megamanx/clip/clipr/xbuster.bmp"	     duration="0.7"  frame="5"  loop="1"/>
 
-    <Clip target="Bee"    state="Detection/Bee"               direction="right" path="megamanx/enemyclips/enemy_bee_r.bmp"	  duration="1"  frame="9" loop="1"/>
-    <Clip target="Bee"    state="R/Detection/Bee"             direction="left"  path="megamanx/enemyclips/enemy_bee.bmp"	    duration="1"  frame="9" loop="1"/>
+    <Clip target="domba"    state="Detection/domba"           direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_walk.bmp"	  duration="2"  frame="10" loop="1"/>
+    <Clip target="domba"    state="R/Detection/domba"         direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_walk_R.bmp"	    duration="2"  frame="10" loop="1"/>
+    <Clip target="domba"    state="Guard/domba"               direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_guard.bmp"	  duration="1"  frame="4" loop="1"/>
+    <Clip target="domba"    state="R/Guard/domba"             direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_guard_R.bmp"	    duration="1"  frame="4" loop="1"/>
+    <Clip target="domba"    state="Attack/domba"              direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_Attack.bmp"	  duration="1.5"  frame="5" loop="1"/>
+    <Clip target="domba"    state="R/Attack/domba"            direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_Attack_R.bmp"	    duration="1.5"  frame="5" loop="1"/>
+    <Clip target="instance" state="DOMBA_BULLET"              direction="right" path="megamanx/enemyclips/Enemy1/Enemy1/Enemy1_bullet.bmp"	     duration="0.3"  frame="2"  loop="1"/>
+
   </Animation>
 </Data>

@@ -12,7 +12,7 @@ public:
 	~AnimationClip();
 
 public:
-	void Init(image* image, float Time, int Framecnt, int Directioncnt, bool loop, bool HasExittime);
+	void Init(image* image, float Time, int Framecnt, int Directioncnt, bool loop, bool HasExittime, bool bReverse = false);
 	void Update(float dt);
 
 public:
@@ -39,6 +39,8 @@ public:
 	bool GetHasExitTime() { return m_HasExitTime; }
 
 private:
+	bool		m_bReverse;
+
 	int			m_LoopCnt;
 	int			m_nextcnt;
 

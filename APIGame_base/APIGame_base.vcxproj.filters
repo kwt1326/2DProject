@@ -115,6 +115,9 @@
     <Filter Include="lib\pugixml">
       <UniqueIdentifier>{e2f71602-7e96-4161-b05e-6c1c6af8d67b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MegamanXGame_Project\002_Script\EnemyScript">
+      <UniqueIdentifier>{221e0553-8a29-4ccc-8a14-8b9478541754}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Winmain.cpp">
@@ -289,7 +292,7 @@
     <ClCompile Include="AnimationClipManager.cpp">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleAttack.cpp">
+    <ClCompile Include="EnemyAttack.cpp">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -476,7 +479,7 @@
     <ClInclude Include="AnimationClipManager.h">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleAttack.h">
+    <ClInclude Include="EnemyAttack.h">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
   </ItemGroup>

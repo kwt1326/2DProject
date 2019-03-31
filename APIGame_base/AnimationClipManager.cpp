@@ -78,13 +78,19 @@ bool AnimationClipManager::Load(std::string strpath) {
 
 	return false;
 }
-void AnimationClipManager::CreateClipOfTarget(GameObject * pObject, std::string target, std::map<std::string, AnimationClip*>& out)
+void AnimationClipManager::CreateClipOfTarget(GameObject * pObject, std::string target, std::map<std::string, AnimationClip*>& out, bool bReverse)
 {
 	for (auto it = m_vecLoadedClipInfo.begin(); it != m_vecLoadedClipInfo.end(); ++it) {
 		if (it->first.compare(target) == 0) {
 			ClipInfo info = it->second;
 			AnimationClip* pclip = new AnimationClip(pObject);
-			pclip->Init(image::Getimage(const_cast<char*>(info.path.c_str())), info.dur, info.frame, 1, info.loop, false);
+			bool bflip = false;
+
+			if (bReverse) 
+				if (info.name.find("R/") != std::string::npos)
+					bflip = true;
+
+			pclip->Init(image::Getimage(const_cast<char*>(info.path.c_str())), info.dur, info.frame, 1, info.loop, false, bflip);
 			out.insert(std::make_pair(info.name, pclip));
 		}
 	}

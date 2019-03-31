@@ -18,6 +18,7 @@ class FSMMarcine;
 class Animation;
 class AnimationClipManager;
 class Rigidbody;
+class NormalEnemyScript;
 class NormalEnemy : public EnemyBase, public GameObject
 {
 public:
@@ -32,6 +33,7 @@ public:
 	BOOL GetDirection() { return m_nbdir; }
 	Circle& GetDetectionCircle() { return m_detectioncircle; }
 	std::string GetName() { return m_name; }
+	void PlayAnimation(std::string animname);
 
 	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
 
@@ -51,8 +53,8 @@ protected:
 class NormalEnemyScript : public Component
 {
 public:
-	NormalEnemyScript();
-	virtual ~NormalEnemyScript();
+	NormalEnemyScript() {};
+	virtual ~NormalEnemyScript() {};
 
 	virtual void Init();
 	virtual void Update(float dt);
@@ -91,37 +93,36 @@ private:
 class NormalEnemy_detection : public TState
 {
 public:
-	NormalEnemy_detection(GameObject* pOwner) { SetOwner(pOwner); m_id = E_DETECTION_ID; }
+	NormalEnemy_detection(GameObject* pOwner) 
+		: m_vDestination(Vector2::Zero), 
+		  m_bRight(false)
+	{ SetOwner(pOwner); m_id = E_DETECTION_ID; }
+
 	virtual ~NormalEnemy_detection() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
+private:
+	float GetMoveThink(NormalEnemy* pOwner);
+private:
+	Vector2 m_vDestination;
+	bool  m_bRight;
 };
 
+class EnemyAttack;
 class NormalEnemy_Attack : public TState
 {
 public:
-	NormalEnemy_Attack(GameObject* pOwner) { SetOwner(pOwner); m_id = E_ATTACK_ID; }
+	NormalEnemy_Attack(GameObject* pOwner) : m_fDelayTime(0) { SetOwner(pOwner); m_id = E_ATTACK_ID; }
 	virtual ~NormalEnemy_Attack() {};
 	// TState을(를) 통해 상속됨
 	virtual void HandleInput() override;
 	virtual void Update(float dt) override;
 	virtual void HandleExit() override;
 private:
+	std::list<EnemyAttack *> m_pBulletFullingArray;
 	float m_fDelayTime;
-};
-
-class NormalEnemy_Damage : public TState
-{
-public:
-	NormalEnemy_Damage(GameObject* pOwner) { SetOwner(pOwner); m_id = E_DAMAGE_ID; }
-	virtual ~NormalEnemy_Damage() {};
-	// TState을(를) 통해 상속됨
-	virtual void HandleInput() override;
-	virtual void Update(float dt) override;
-	virtual void HandleExit() override;
-	void EarnDamage();
 };
 
 #endif

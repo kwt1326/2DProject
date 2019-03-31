@@ -21,7 +21,7 @@ void ColliderManager::init(const char* path)
 	m_pPlayer = PLAYER_INSTANCE;
 	m_pcam = OBJECT_MGR->GetInstance()->FindObject("Background")->GetComponent<Camera2D>();
 
-	// COLLIDER 파일 구문을 읽어 등록 시킨다.
+	// COLLIDER 파일 구문을 읽어 등록 시킨다. (맵 충돌체 리딩)
 	FILE* pfile;
 	pfile = fopen(path, "r");
 	if (pfile == NULL)
@@ -166,14 +166,11 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 							Attack* pAtk = dynamic_cast<Attack*>(*itr);
 							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itCol2);
 
-							penemy->SetDamage(pAtk->GetDamage());
-							penemy->GetMachine()->ChangeState(E_DAMAGE_ID);
+							penemy->SetHealth(penemy->GetHealth() - pAtk->GetDamage());
 							if (penemy->GetHealth() == 0) {
+								/* 폭발 애니메이션 넣어야함 */
 								OBJECT_MGR->Destroy((*itCol2));
 								itCol2 = m_EnemyColliderlist.erase(itCol2);
-							}
-							else {
-								penemy->GetMachine()->ChangeState(E_DETECTION_ID);
 							}
 
 							// 처리 후 불렛 제거
@@ -251,7 +248,13 @@ void ColliderManager::Draw(bool btrue)
 				continue;
 			else 
 			{
-				//(*a)->
+				// 적 감지 범위 확인
+				NormalEnemy* pEnemy = dynamic_cast<NormalEnemy*>(*a);
+				if (pEnemy) {
+					Vector2 center = pEnemy->GetDetectionCircle().Center;
+					float radius = pEnemy->GetDetectionCircle().Radius;
+					Ellipse(m_hdc, center.x - radius, center.y - radius, center.x + radius, center.y + radius);
+				}
 
 				// other
 				Collider* pcol = (*a)->GetComponent<Collider>();

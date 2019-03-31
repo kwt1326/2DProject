@@ -80,7 +80,7 @@ enum InstanceObjType {
 };
 
 typedef enum InstanceObjTypeForEnemy {
-	BEE_BULLET,
+	DOMBA_BULLET,
 }E_ATK_OBJ;
 
 enum ColliderType {
@@ -90,7 +90,7 @@ enum ColliderType {
 };
 
 enum EnemyType {
-	E_TYPE_BEE,
+	E_TYPE_DOMBA,
 	E_TYPE_CROLLER,
 	E_TYPE_1BOSS,
 };

@@ -25,7 +25,7 @@ AnimationClip::~AnimationClip()
 
 }
 
-void AnimationClip::Init(image* image, float Time, int Framecnt, int Directioncnt, bool loop, bool HasExittime)
+void AnimationClip::Init(image* image, float Time, int Framecnt, int Directioncnt, bool loop, bool HasExittime, bool bReverse)
 {
 	SetImage(image);
 	SetAnimationTime(Time);
@@ -33,7 +33,7 @@ void AnimationClip::Init(image* image, float Time, int Framecnt, int Directioncn
 	SetLoop(loop);
 	SetHasExitTime(HasExittime);
 	SetDirectionCnt(Directioncnt);
-
+	m_bReverse = bReverse;
 }
 void AnimationClip::Update(float dt)
 {
@@ -66,11 +66,22 @@ void AnimationClip::Update(float dt)
 
 	if (m_image != NULL)
 	{
-		m_Renderer->SetSizeX(m_SizeX);
-		m_Renderer->SetSizeY(m_SizeY);
-		m_Renderer->SetImage(m_image);
-		m_Renderer->SetFrameX((int)(m_FrameCnt * m_Progress) * m_SizeX);
-		m_Renderer->SetFrameY((int)(m_NowDirection) * m_SizeY);
+		if (m_bReverse)
+		{
+			m_Renderer->SetSizeX(m_SizeX);
+			m_Renderer->SetSizeY(m_SizeY);
+			m_Renderer->SetImage(m_image);
+			m_Renderer->SetFrameX((int)(m_FrameCnt - (m_FrameCnt * m_Progress)) * m_SizeX);
+			m_Renderer->SetFrameY((int)(m_NowDirection)* m_SizeY);
+		}
+		else
+		{
+			m_Renderer->SetSizeX(m_SizeX);
+			m_Renderer->SetSizeY(m_SizeY);
+			m_Renderer->SetImage(m_image);
+			m_Renderer->SetFrameX((int)(m_FrameCnt * m_Progress) * m_SizeX);
+			m_Renderer->SetFrameY((int)(m_NowDirection)* m_SizeY);
+		}
 	}
 }
 

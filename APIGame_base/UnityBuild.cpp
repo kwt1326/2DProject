@@ -27,7 +27,7 @@
 #include "Titlescene.cpp"
 #include "MainGameScene.cpp"
 #include "Attack.cpp"
-#include "SimpleAttack.cpp"
+#include "EnemyAttack.cpp"
 #include "BackGround.cpp"
 #include "MapBackGround.cpp"
 #include "MapColider.cpp"

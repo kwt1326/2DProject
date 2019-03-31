@@ -36,7 +36,7 @@ public:
 public:
 	bool Load(std::string strpath);
 	ClipInfo GetClipinfo(std::string name);
-	void CreateClipOfTarget(GameObject* pObject, std::string target, std::map<std::string, AnimationClip*>& out);
+	void CreateClipOfTarget(GameObject* pObject, std::string target, std::map<std::string, AnimationClip*>& out, bool bReverse = false);
 private:
 	std::vector<std::pair<std::string, ClipInfo>> m_vecLoadedClipInfo;
 };
