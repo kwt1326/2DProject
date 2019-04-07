@@ -33,6 +33,7 @@ void Attack::Init()
 	AddComponent<Transform>();
 	GetComponent<Transform>()->SetGameObject(this);
 	GetComponent<Transform>()->SetPosition(m_pos);
+	GetComponent<Transform>()->SetAnchorPoint(Vector2(0.5, 0.5));
 
 	mp_Anim = GetComponent<Animation>();
 	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips);
@@ -52,7 +53,6 @@ void Attack::Release()
 }
 void Attack::SetCollider(float Hscale, float Vscale, Vector2 pos)
 {
-	SetScale(5, 3);
 	Collider* col = GetComponent<Collider>();
 	Rigidbody* rg = GetComponent<Rigidbody>();
 	col->SetRect(Rect(pos.x - (Hscale*0.5f), pos.y - (Vscale*0.5f), pos.x + (Hscale*0.5f), pos.y + (Vscale*0.5f)));
@@ -67,7 +67,7 @@ void Attack::SetforType(InstanceObjType type)
 	{
 	case ROCKMAN_BUSTER_NC:
 		SetAnimation("STATE_XBUSTER");
-		SetCollider(5, 3, m_pos);
+		SetCollider(20, 10, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR1:
 		SetCollider(10, 10, m_pos);

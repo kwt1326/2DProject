@@ -146,12 +146,17 @@ LRESULT MainGameScene::SceneProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM
 	{
 		case WM_KEYDOWN:
 		{
+			if (wParam == 'p')
+				COLLIDER_MGR->SetDraw(false);
+
 			PLAYER_INSTANCE->GetComponent<PlayerScript>()->InputKeycode(wParam, TRUE);
+			PLAYER_INSTANCE->SetChargeTime(clock());
 			break;
 		}
  		case WM_KEYUP:
 		{
 			PLAYER_INSTANCE->GetComponent<PlayerScript>()->InputKeycode(wParam, FALSE);
+			PLAYER_INSTANCE->SetChargeTime(PLAYER_INSTANCE->GetChargeTime() - clock());
 			break;
 		}
 	}

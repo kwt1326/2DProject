@@ -34,7 +34,7 @@ void NormalEnemy::Init()
 	// Enemy Most Component
 	AddComponent<Renderer>();
 	AddComponent<Collider>()->SetGameObject(this);
-	GetComponent<Collider>()->SetIsGravity(false);
+	GetComponent<Collider>()->SetIsGravity(true);
 	m_pMachine = AddComponent<FSMMarcine>();
 	m_pRg = AddComponent<Rigidbody>();
 	m_pAnim = AddComponent<Animation>();
@@ -66,8 +66,25 @@ void NormalEnemy::Init()
 	// most 
 	SetActive(true);
 }
+
 void NormalEnemy::Update(float dt)
 {
+}
+
+bool NormalEnemy::CheckCurClip(std::string strTarget)
+{
+	auto clipmap = GetClipMap();
+	std::string clipname = (GetDirection()) ? "R/" + strTarget + "/" + GetName() : strTarget + "/" + GetName();
+	auto find_it = clipmap.find(clipname);
+
+	if (find_it != clipmap.end()) {
+		if (find_it->second != nullptr) {
+			if (GetComponent<Animation>()->GetAnimationClip() == find_it->second) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 void NormalEnemy::PlayAnimation(std::string animname)
@@ -78,7 +95,8 @@ void NormalEnemy::PlayAnimation(std::string animname)
 
 	if (find_it != clipmap.end()) {
 		if (find_it->second != nullptr) {
-			if (GetComponent<Animation>()->GetAnimationClip() != find_it->second) {
+			if ((GetComponent<Animation>()->GetAnimationClip() != find_it->second) ||
+				(!GetComponent<Animation>()->GetAnimationClip()->IsPlay())) {
 				GetComponent<Animation>()->Play(find_it->second);
 			}
 		}
@@ -88,7 +106,7 @@ void NormalEnemy::PlayAnimation(std::string animname)
 // detection
 void NormalEnemy_detection::HandleInput()
 {
-	srand(1); // 매번 다르게 할 필요 없어 그냥 1 로 시드 만듬
+	srand(1); // 매번 다르게 할 필요 없어 1 로 시드 만듬
 	m_vDestination = GetOwner()->GetTransform()->GetPosition();
 }
 
@@ -104,18 +122,19 @@ void NormalEnemy_detection::Update(float dt)
 		pObj->PlayAnimation("Detection");
 
 		// detection
-		if (Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
+		if (Physic::RectToCircleCollisionCheck(pPlayer->GetComponent<Collider>()->GetRect(), pObj->GetDetectionCircle())) {
 			pObj->GetMachine()->ChangeState(StateIdentify::E_ATTACK_ID);
 			return;
 		}
 
-		// 적은 적게 만들고 끝낼것. 구조적 처리 X
+		// 적은 적게 만들고 끝낼예정. 구조적 처리 X
 
 		if (pObj->GetName().compare("domba") == 0) // 돔바
 		{
 			Transform* pTr = pObj->GetComponent<Transform>();
+			Rigidbody* pRg = pObj->GetComponent<Rigidbody>();
 
-			if (GetMoveThink(pObj) < 0.1f)
+			if (GetMoveThink(pObj) < 0.1f || pRg->GetStateInfo().m_bOnHWall)
 			{
 				m_bRight = !m_bRight;
 				pObj->SetDirection(m_bRight);
@@ -145,12 +164,6 @@ float NormalEnemy_detection::GetMoveThink(NormalEnemy* pOwner)
 void NormalEnemy_Attack::HandleInput()
 {
 	m_fDelayTime = 0;
-
-	NormalEnemy* pEnemy = dynamic_cast<NormalEnemy*>(GetOwner());
-
-	if (pEnemy->GetName().compare("domba") == 0) // 돔바
-	{
-	}
 }
 
 void NormalEnemy_Attack::Update(float dt)
@@ -162,14 +175,19 @@ void NormalEnemy_Attack::Update(float dt)
 
 	if (pPlayer != NULL && pObj != NULL) {
 
-		pObj->PlayAnimation("Attack");
-
-		if (!Physic::CircleToPointCollisionCheck(pObj->GetDetectionCircle(), pPlayer->GetWorldPosition())) {
+		if (!Physic::RectToCircleCollisionCheck(pPlayer->GetComponent<Collider>()->GetRect(), pObj->GetDetectionCircle())) {
 			pObj->GetMachine()->ChangeState(StateIdentify::E_DETECTION_ID);
 		}
 
-		//m_pBulletFullingArray.back()
-
+		if (pObj->GetName().compare("domba") == 0) // 돔바
+		{
+			if (!pObj->CheckCurClip("Attack") || !pObj->GetComponent<Animation>()->GetAnimationClip()->IsPlay())
+			{
+				EnemyAttack* pAtk = new EnemyAttack(E_ATK_OBJ::DOMBA_BULLET, pObj);
+				OBJECT_MGR->AddObject(pAtk);
+				pObj->PlayAnimation("Attack");
+			}
+		}
 	}
 }
 

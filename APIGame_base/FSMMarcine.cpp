@@ -31,9 +31,17 @@ void FSMMarcine::Revert()
 		ChangeState(m_pPrevState->Getid());
 }
 
+TState * FSMMarcine::GetState(StateIdentify nID)
+{
+	if (m_mapState.find(nID) != m_mapState.end())
+		return m_mapState.find(nID)->second;
+
+	return nullptr;
+}
+
 void FSMMarcine::InsertState(StateIdentify eID, TState * pState)
 {
-	if (m_mapState.find(eID) == m_mapState.end()) // 중복 허락 X
+	if (m_mapState.find(eID) == m_mapState.end())
 		m_mapState.insert(std::make_pair(eID, pState));
 }
 
@@ -52,7 +60,6 @@ void FSMMarcine::ChangeState(StateIdentify sid)
 
 	m_pPrevState = m_pCurrState;
 	
-	// if Current Exist Enter the Exit, and New State Enter
 	if (m_pCurrState != NULL)
 		ExitState();
 

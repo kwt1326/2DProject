@@ -139,6 +139,8 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 					{
 						OBJECT_MGR->Destroy((*itr));
 						itr = m_InstanceColliderlist.erase(itr);
+
+						if (m_InstanceColliderlist.empty()) return;
 						continue;
 					}
 				}
@@ -147,44 +149,75 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 		}
 	}
 
-	// 적/아군 총알 <-> 적/아군 오브젝트
-	std::list<GameObject*>::iterator itCol2 = m_EnemyColliderlist.begin();
-	for (; itCol2 != m_EnemyColliderlist.end(); ++itCol2) {
-		std::list<GameObject*>::iterator itr = m_InstanceColliderlist.begin();
-		while (itr != m_InstanceColliderlist.end())
+	// 플레이어 총알 <-> 적 오브젝트
+	std::list<GameObject*>::iterator itenemy = m_EnemyColliderlist.begin();
+	for (; itenemy != m_EnemyColliderlist.end(); ++itenemy) {
+		std::list<GameObject*>::iterator itATK = m_InstanceColliderlist.begin();
+		while (itATK != m_InstanceColliderlist.end())
 		{
-			Collider* col = (*itr)->GetComponent<Collider>();
-			Rigidbody* rg = (*itr)->GetComponent<Rigidbody>();
+			Collider* col = (*itATK)->GetComponent<Collider>();
+			Rigidbody* rg = (*itATK)->GetComponent<Rigidbody>();
 			if (col != NULL && rg != NULL) {
 				if (col->GetIsInstance()) {
-					Rect& rect = col->GetRect();
-					Collider* pCol = (*itCol2)->GetComponent<Collider>();
-					if (pCol) {
-						if (Physic::RectToRectCollisionCheck(rect, pCol->GetRect()))
+					Rect& rectATK = col->GetRect();
+					Collider* pColEnemy = (*itenemy)->GetComponent<Collider>();
+					if (pColEnemy) {
+						if (Physic::RectToRectCollisionCheck(rectATK, pColEnemy->GetRect()))
 						{
 							// 적 체력 처리
-							Attack* pAtk = dynamic_cast<Attack*>(*itr);
-							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itCol2);
+							Attack* pAtk = dynamic_cast<Attack*>(*itATK);
+							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itenemy);
 
 							penemy->SetHealth(penemy->GetHealth() - pAtk->GetDamage());
 							if (penemy->GetHealth() == 0) {
 								/* 폭발 애니메이션 넣어야함 */
-								OBJECT_MGR->Destroy((*itCol2));
-								itCol2 = m_EnemyColliderlist.erase(itCol2);
+								OBJECT_MGR->Destroy((*itenemy));
+								itenemy = m_EnemyColliderlist.erase(itenemy);
 							}
 
 							// 처리 후 불렛 제거
-							OBJECT_MGR->Destroy((*itr));
-							itr = m_InstanceColliderlist.erase(itr);
+							OBJECT_MGR->Destroy((*itATK));
+							itATK = m_InstanceColliderlist.erase(itATK);
+
+							// 리스트 요소가 둘중 하나라도 비면 수행하지 않는다.
+							if (m_EnemyColliderlist.empty() || m_InstanceColliderlist.empty())
+								return;
+
 							continue;
 						}
 					}
 				}
 			}
-			++itr;
+			++itATK;
 		}
 	}
 
+	// 적 총알 -> 플레이어
+	Rect playerRect = PLAYER_INSTANCE->GetLocalRect();
+	std::list<GameObject*>::iterator itATK = m_InstanceColliderlist_Enemy.begin();
+	while (itATK != m_InstanceColliderlist_Enemy.end())
+	{
+		Collider* col = (*itATK)->GetComponent<Collider>();
+		Rigidbody* rg = (*itATK)->GetComponent<Rigidbody>();
+		if (col != NULL && rg != NULL) {
+			if (col->GetIsInstance()) {
+				Rect& rectATK = col->GetRect();
+				if (Physic::RectToRectCollisionCheck(rectATK, playerRect))
+				{
+					EnemyAttack* pATK = dynamic_cast<EnemyAttack*>(*itATK);
+					PlayerScript* pScript = PLAYER_INSTANCE->GetComponent<PlayerScript>();
+					pScript->ReplaceHealth(pATK->GetDamage());
+
+					OBJECT_MGR->Destroy((*itATK));
+					itATK = m_InstanceColliderlist_Enemy.erase(itATK);
+
+					if (m_InstanceColliderlist_Enemy.empty()) return;
+					continue;
+				}
+			}
+		}
+		++itATK;
+	}
 }
 
 void ColliderManager::RemoveObj(GameObject * pobj)
@@ -239,7 +272,7 @@ void ColliderManager::Draw(bool btrue)
 			}
 		}
 
-		Rect PlayerRect = m_pPlayer->GetLocalRect(); 
+		Rect PlayerRect = m_pPlayer->GetComponent<Collider>()->GetRect(); 
 		Rect PlayerRectW = m_pPlayer->GetWorldRect();
 
 		std::vector<GameObject*>& reflist = OBJECT_MGR->GetInstance()->GetObjectList();

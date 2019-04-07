@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Enemy>
-  <Normal name="domba" pos="300,310"  shotpos ="10,10" collider="10,10,10,10" radius="200"/>
-  <Normal name="domba" pos="2000,100" shotpos ="10,10" collider="10,10,10,10" radius="200"/>
-  <Normal name="domba" pos="1000,200" shotpos ="10,10" collider="10,10,10,10" radius="200"/>
+  <Normal name="domba" pos="300,310"  shotpos ="10,10" collider="20,45,20,20" radius="200"/>
+  <Normal name="domba" pos="2000,100" shotpos ="10,10" collider="20,45,20,20" radius="200"/>
+  <Normal name="domba" pos="1000,200" shotpos ="10,10" collider="20,45,20,20" radius="200"/>
 </Enemy>

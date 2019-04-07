@@ -57,6 +57,7 @@ enum StateIdentify {
 	SHOTSTATE_ID,
 	DASHSTATE_ID,
 	LANDWALLSTATE_ID,
+	GAMEOVERSTATE_ID,
 
 	// enemy
 	E_DAMAGE_ID,

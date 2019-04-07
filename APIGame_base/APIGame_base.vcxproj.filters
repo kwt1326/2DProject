@@ -295,6 +295,7 @@
     <ClCompile Include="EnemyAttack.cpp">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerGAMEOVERState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamemanager.h">
@@ -482,6 +483,7 @@
     <ClInclude Include="EnemyAttack.h">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerGAMEOVERState.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="APIGame_base1.rc" />

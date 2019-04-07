@@ -226,6 +226,7 @@ bool Rigidbody::OnRectColliderEnter(GameObject * pObject)
 	std::function<bool()> SetPosition = [&]() mutable -> bool {
 		Vector2 move = pObject->GetComponent<Transform>()->GetPosition() + m_strstay.m_coord;
 		m_strstay.m_coord = Vector2::Zero;
+		pObject->GetComponent<Transform>()->SetPosition(move);
 		return true;
 	};
 
@@ -259,6 +260,7 @@ bool Rigidbody::OnRectColliderEnter(GameObject * pObject)
 					else if (Mergecol.Left == Mapcol.Left) {
 						m_strstay.m_coord.x = -MergecolHorizontal;
 					}
+					m_strstay.m_bOnHWall = true;
 					return SetPosition();
 				}
 			}
@@ -269,6 +271,7 @@ bool Rigidbody::OnRectColliderEnter(GameObject * pObject)
 				{
 					if (Mergecol.Top == Mapcol.Top) { // ¹Ù´Ú ÂøÁö
 						m_strstay.m_coord.y = -MergecolVertical;
+						m_strstay.m_bOnMap = true;
 						SetGravity(Vector2::Zero);
 					}
 					else if (Mergecol.Bottom == Mapcol.Bottom) { // ÃµÀå Ãæµ¹
@@ -279,6 +282,8 @@ bool Rigidbody::OnRectColliderEnter(GameObject * pObject)
 			}
 		}
 	}
+	m_strstay.m_bOnHWall = false;
+	m_strstay.m_bOnMap = false;
 	return false;
 }
 

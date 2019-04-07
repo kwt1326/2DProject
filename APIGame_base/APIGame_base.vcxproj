@@ -367,6 +367,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="PlayerGAMEOVERState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Unity_Debug|x64'">true</ExcludedFromBuild>
@@ -605,6 +606,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Physic.h" />
+    <ClInclude Include="PlayerGAMEOVERState.h" />
     <ClInclude Include="Pugixml\pugiconfig.hpp" />
     <ClInclude Include="Pugixml\pugixml.hpp" />
     <ClInclude Include="EnemyAttack.h" />

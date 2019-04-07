@@ -21,6 +21,7 @@
 #include "PlayerShotState.h"
 #include "PlayerIdleState.h"
 #include "PlayerLandWallState.h"
+#include "PlayerGAMEOVERState.h"
 
 #define PLAYER_H_HALFSIZE 20
 #define PLAYER_V_HALFSIZE 50
@@ -84,6 +85,7 @@ void PlayerScript::Init()
 	p_Anim = GetComponent<Animation>();
 	m_pPlayer->SetPlayerSpeed(p_PlayerSpeed = 400.f);
 	m_pPlayer->SetDashSpeed(750.f);
+	m_pPlayer->SetHealth(10);
 	m_dt_time = 0;
 
 	m_Transform->SetAllofTransform(NULL, Vector2(0.5f, 0.5f), Vector2(2.0f, 2.0f), Vector2(1.f, 1.f), NULL, NULL, pos, pos);
@@ -96,6 +98,8 @@ void PlayerScript::Init()
 	m_pMachine->InsertState(SHOTSTATE_ID, new PlayerShotState());
 	m_pMachine->InsertState(DASHSTATE_ID, new PlayerDashState());
 	m_pMachine->InsertState(LANDWALLSTATE_ID, new PlayerLandWallState());
+	m_pMachine->InsertState(GAMEOVERSTATE_ID, new PlayerGAMEOVERState());
+	m_pMachine->GetState(GAMEOVERSTATE_ID)->SetOwner(PLAYER_INSTANCE);
 
 	m_pMachine->ChangeState(STARTSTATE_ID);
 }
@@ -105,8 +109,6 @@ void PlayerScript::Release()
 
 void PlayerScript::ProcessPlayer(float dt)
 {
-	Sleep(1);
-
 	if (input::GetKey(VK_LEFT))
 		m_ChangeDirection = false;
 	else if (input::GetKey(VK_RIGHT))
@@ -141,6 +143,15 @@ void PlayerScript::Move(float dt)
 	{
 		script->SetComparePosition(Vector2(player->GetPosition().x + moveenergy, player->GetPosition().y),
 			Vector2(player->GetWorldPosition().x + moveenergy, yAxis));
+	}
+}
+
+void PlayerScript::ReplaceHealth(int nValue)
+{
+	m_pPlayer->SetHealth(m_pPlayer->GetHealth() + nValue);
+	if (m_pPlayer->GetHealth() <= 0)
+	{
+		m_pMachine->ChangeState(GAMEOVERSTATE_ID);
 	}
 }
 

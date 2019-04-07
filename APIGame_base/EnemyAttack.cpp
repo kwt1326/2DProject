@@ -1,7 +1,8 @@
 #include "EnemyAttack.h"
 
-EnemyAttack::EnemyAttack(E_ATK_OBJ type)
+EnemyAttack::EnemyAttack(E_ATK_OBJ type, NormalEnemy* pOwner)
 	:m_ntype(type)
+	,m_pOwner1(pOwner)
 {
 }
 
@@ -16,6 +17,9 @@ void EnemyAttack::Init()
 	AddComponent<Animation>();
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
+	GetComponent<Transform>()->SetGameObject(this);
+	GetComponent<Transform>()->SetPosition(m_pOwner1->GetTransform()->GetPosition());
+	GetComponent<Transform>()->SetAnchorPoint(Vector2(0.5, 0.5));
 
 	m_pAnim = GetComponent<Animation>();
 	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips);
@@ -35,24 +39,29 @@ void EnemyAttack::Release()
 {
 }
 
-void EnemyAttack::SetCollider(float Hscale, float Vscale, Vector2 pos)
+void EnemyAttack::SetCollider(float Hscale, float Vscale, Vector2 pos, float fspeed)
 {
-	SetScale(5, 3);
+	m_fSpeed = fspeed;
 	Collider* col = GetComponent<Collider>();
 	Rigidbody* rg = GetComponent<Rigidbody>();
 	col->SetRect(Rect(pos.x - (Hscale*0.5f), pos.y - (Vscale*0.5f), pos.x + (Hscale*0.5f), pos.y + (Vscale*0.5f)));
 	col->SetIsInstance(true);
 	col->SetIsGravity(false);
 	rg->SetUseGravity(false);
-	COLLIDER_MGR->AddInstanceCollider(this);
+	COLLIDER_MGR->AddInstanceCollider_Enemy(this);
 }
 
 void EnemyAttack::SetbyType()
 {
 	switch (m_ntype)
 	{
-	case DOMBA_BULLET:
+	case DOMBA_BULLET: {
 		SetAnimation("DOMBA_BULLET");
+		SetCollider(10, 10, m_pOwner1->GetTransform()->GetPosition());
+		SetDirection(PLAYER_INSTANCE->GetPosition() - m_pOwner1->GetTransform()->GetPosition());
+		m_nDamage = -1;
+		break;
+	}
 	default:
 		break;
 	}
@@ -68,7 +77,8 @@ void EnemyAttackScript::Update(float dt)
 {
 	if (m_bStart)
 	{
-		//m_pOwner->get
+		Vector2 vMoved = m_pOwner->GetTransform()->GetPosition() + (m_pOwner->GetDirection() * m_pOwner->GetSpeed());
+		m_pOwner->GetTransform()->SetPosition(vMoved);
 	}
 }
 

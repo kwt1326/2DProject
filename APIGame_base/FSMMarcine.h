@@ -24,6 +24,7 @@ public:
 
 	void Revert();
 
+	TState* GetState(StateIdentify nID);
 	StateIdentify GetCurStateID() { return m_nState; }
 
 	std::string GetCurAnimState() { return m_nAnimState; }

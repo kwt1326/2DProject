@@ -34,6 +34,7 @@ public:
 	Circle& GetDetectionCircle() { return m_detectioncircle; }
 	std::string GetName() { return m_name; }
 	void PlayAnimation(std::string animname);
+	bool CheckCurClip(std::string strTarget);
 
 	std::map<std::string, AnimationClip*>& GetClipMap() { return m_mapHaveClip; }
 

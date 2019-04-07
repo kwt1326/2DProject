@@ -45,16 +45,18 @@ public:
 	GameObject* GetField() { return m_pField; }
 	void SetField(GameObject* obj) { if (obj->GetComponent<ColliderPixel>() != NULL) m_pField = obj; }
 	void AddEnemyCollider(GameObject* obj) { m_EnemyColliderlist.push_back(obj); }
+	void AddInstanceCollider_Enemy(GameObject* obj) { m_InstanceColliderlist_Enemy.push_back(obj); }
 	void AddInstanceCollider(GameObject* obj) { m_InstanceColliderlist.push_back(obj); }
 	void RemoveObj(GameObject* pobj);
 
 	void SetStage(int nStage) { m_nStage = nStage; }
-	void SetDraw(bool bDraw) { m_bDraw = bDraw; }
+	void SetDraw() { m_bDraw = !m_bDraw; }
 	void SetLineThink(float fthink) { m_LineColthink = fthink; }
 	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
 
 private:
 	std::list<GameObject*> m_InstanceColliderlist;
+	std::list<GameObject*> m_InstanceColliderlist_Enemy;
 	std::list<GameObject*> m_EnemyColliderlist;
 	std::map<std::string, std::list<ColliderInfo>> m_colliderFieldlist;
 	GameObject* m_pField;
