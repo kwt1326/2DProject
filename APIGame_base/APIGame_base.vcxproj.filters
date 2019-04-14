@@ -296,6 +296,9 @@
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayerGAMEOVERState.cpp" />
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gamemanager.h">
@@ -484,6 +487,9 @@
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
     <ClInclude Include="PlayerGAMEOVERState.h" />
+    <ClInclude Include="EffectManager.h">
+      <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="APIGame_base1.rc" />

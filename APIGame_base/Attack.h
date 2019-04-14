@@ -29,6 +29,7 @@ public:
 	Vector2 GetScale() { return m_scale; }
 	int GetDamage() { return m_damage; }
 	void SetAnimation(std::string stranim);
+	void ActivateEffect();
 public:
 	Vector2		m_pos;
 	bool		m_active;

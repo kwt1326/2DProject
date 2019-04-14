@@ -164,8 +164,10 @@ void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝�
 					if (pColEnemy) {
 						if (Physic::RectToRectCollisionCheck(rectATK, pColEnemy->GetRect()))
 						{
-							// 적 체력 처리
 							Attack* pAtk = dynamic_cast<Attack*>(*itATK);
+							pAtk->ActivateEffect();
+
+							// 적 체력 처리
 							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itenemy);
 
 							penemy->SetHealth(penemy->GetHealth() - pAtk->GetDamage());

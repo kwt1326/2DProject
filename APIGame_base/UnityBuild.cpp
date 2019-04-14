@@ -44,6 +44,7 @@
 #include "ColliderPixel.cpp"
 #include "Ray2D.cpp"
 #include "Rigidbody.cpp"
+#include "EffectManager.cpp"
 // enemy list
 #include "NormalEnemy.cpp"
 

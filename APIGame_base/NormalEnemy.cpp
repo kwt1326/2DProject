@@ -24,6 +24,12 @@ NormalEnemy::NormalEnemy(std::string name, EnemyObjectInfo info)
 
 NormalEnemy::~NormalEnemy()
 {
+	m_pAnim->Stop();
+	for (auto it = m_mapHaveClip.begin(); it != m_mapHaveClip.end(); ++it)
+	{
+		delete it->second;
+	}
+	m_mapHaveClip.clear();
 }
 void NormalEnemy::Release()
 {

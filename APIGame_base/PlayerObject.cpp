@@ -26,6 +26,12 @@ PlayerObject::PlayerObject()
 }
 PlayerObject::~PlayerObject()
 {
+	GetComponent<Animation>()->Stop();
+	for (auto it = m_playerClips.begin(); it != m_playerClips.end(); ++it)
+	{
+		delete it->second;
+	}
+	m_playerClips.clear();
 }
 
 void PlayerObject::Update()

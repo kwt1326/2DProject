@@ -9,6 +9,12 @@ EnemyAttack::EnemyAttack(E_ATK_OBJ type, NormalEnemy* pOwner)
 
 EnemyAttack::~EnemyAttack()
 {
+	m_pAnim->Stop();
+	for (auto it = m_objClips.begin(); it != m_objClips.end(); ++it)
+	{
+		delete it->second;
+	}
+	m_objClips.clear();
 }
 
 void EnemyAttack::Init()

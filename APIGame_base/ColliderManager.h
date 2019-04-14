@@ -50,7 +50,7 @@ public:
 	void RemoveObj(GameObject* pobj);
 
 	void SetStage(int nStage) { m_nStage = nStage; }
-	void SetDraw() { m_bDraw = !m_bDraw; }
+	void SetDraw(bool bDraw) { m_bDraw = bDraw; }
 	void SetLineThink(float fthink) { m_LineColthink = fthink; }
 	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
 

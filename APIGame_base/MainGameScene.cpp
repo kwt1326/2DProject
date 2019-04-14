@@ -10,6 +10,7 @@
 #include "Animation.h"
 #include "AnimationClip.h"
 #include "AnimationClipManager.h"
+#include "EffectManager.h"
 
 #include "PlayerObject.h"
 #include "PlayerScript.h"
@@ -41,6 +42,7 @@ void MainGameScene::Init()
 {
 	SOUND_MGR->init();
 	OBJECT_MGR->GetObjectList().clear();
+	EFFECT_MGR->init("megamanx/Data/effectclip.xml");
 
 	// Player & Map 
 	ANIMCLIP_MGR->Init();
@@ -62,6 +64,7 @@ void MainGameScene::Init()
 void MainGameScene::Update(float dt)
 {
 	pCollMan->Update_CollisionCheck(dt);
+	EFFECT_MGR->UpdateManagedEffect();
 }
 void MainGameScene::Render(HDC hdc)
 {

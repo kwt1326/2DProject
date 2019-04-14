@@ -22,6 +22,12 @@ Attack::Attack(PlayerObject* pOwner, InstanceType origin, InstanceObjType type, 
 
 Attack::~Attack()
 {
+	mp_Anim->Stop();
+	for (auto it = m_objClips.begin(); it != m_objClips.end(); ++it)
+	{
+		delete it->second;
+	}
+	m_objClips.clear();
 }
 
 void Attack::Init()
@@ -97,5 +103,21 @@ void Attack::SetAnimation(std::string stranim) {
 		AnimationClip* pclip = m_objClips["R/" + stranim];
 		if (pclip)
 			GetComponent<Animation>()->Play(pclip);
+	}
+}
+
+void Attack::ActivateEffect()
+{
+	switch (m_type)
+	{
+	case ROCKMAN_BUSTER_NC:
+		EFFECT_MGR->ActivateEffect("ROCKMAN_BUSTER_NC_EF", GetTransform()->GetPosition());
+		break;
+	case ROCKMAN_BUSTER_CR1:
+		break;
+	case ROCKMAN_BUSTER_CR2:
+		break;
+	default:
+		break;
 	}
 }
