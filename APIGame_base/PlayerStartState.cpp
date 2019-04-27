@@ -34,6 +34,7 @@ void PlayerStartState::Update(float dt)
 	{
 		pAnim->GetAnimationClip()->Stop();
 		pMarcine->ChangeState(IDLESTATE_ID);
+		TIME_MGR->BeginStopWatch();
 	}
 }
 

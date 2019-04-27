@@ -57,8 +57,6 @@ public:
 	virtual void Update();
 	virtual void Release();
 
-	void SetChargeTime(clock_t ftime) { m_fChargeTime = ftime; }
-	clock_t GetChargeTime() { return m_fChargeTime; }
 	UINT GetHealth() { return m_nHealth; }
 	void SetHealth(UINT nHealth) { m_nHealth = nHealth; }
 	float GetPlayerSpeed() { return m_PlayerSpeed; }
@@ -114,7 +112,6 @@ private:
 	float m_PlayerSpeed;
 	float m_PlayerDashSpeed;
 	float m_Maxspeed;
-	clock_t m_fChargeTime;
 	Block m_blockstate;
 	bool  mb_gamestart;
 	bool  mb_move;

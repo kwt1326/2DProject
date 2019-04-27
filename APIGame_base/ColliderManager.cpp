@@ -116,19 +116,15 @@ void ColliderManager::Release()
 	m_InstanceColliderlist.clear();
 	m_EnemyColliderlist.clear();
 }	
-void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ® Ãæµ¹ ÀÌº¥Æ® Ã¼Å©
+
+void ColliderManager::ProcessCol2Field(std::list<GameObject*>& collist)
 {
-	if (input::GetKeyDown(0x50)) m_bDraw = (m_bDraw) ? false : true;
-
-	Draw(m_bDraw);
-
-	// Àû/¾Æ±º ÃÑ¾Ë <-> ÇÊµå_Ãæµ¹
 	std::list<ColliderInfo>& curColliderlist = GetCurField();
 	std::list<ColliderInfo>::iterator itCol = curColliderlist.begin();
 
 	for (; itCol != curColliderlist.end(); ++itCol) {
-		std::list<GameObject*>::iterator itr = m_InstanceColliderlist.begin();
-		while (itr != m_InstanceColliderlist.end()) 
+		std::list<GameObject*>::iterator itr = collist.begin();
+		while (itr != collist.end())
 		{
 			Collider* col = (*itr)->GetComponent<Collider>();
 			Rigidbody* rg = (*itr)->GetComponent<Rigidbody>();
@@ -138,9 +134,9 @@ void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ
 					if (Physic::RectToRectCollisionCheck(rect, (*itCol).col))
 					{
 						OBJECT_MGR->Destroy((*itr));
-						itr = m_InstanceColliderlist.erase(itr);
+						itr = collist.erase(itr);
 
-						if (m_InstanceColliderlist.empty()) return;
+						if (collist.empty()) return;
 						continue;
 					}
 				}
@@ -148,10 +144,23 @@ void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ
 			++itr;
 		}
 	}
+}
+
+void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ® Ãæµ¹ ÀÌº¥Æ® Ã¼Å©
+{
+	if (input::GetKeyDown(0x50)) m_bDraw = (m_bDraw) ? false : true;
+
+	Draw(m_bDraw);
+
+	// Àû/¾Æ±º ÃÑ¾Ë <-> ÇÊµå_Ãæµ¹
+	ProcessCol2Field(m_InstanceColliderlist);
+	ProcessCol2Field(m_InstanceColliderlist_Enemy);
 
 	// ÇÃ·¹ÀÌ¾î ÃÑ¾Ë <-> Àû ¿ÀºêÁ§Æ®
 	std::list<GameObject*>::iterator itenemy = m_EnemyColliderlist.begin();
-	for (; itenemy != m_EnemyColliderlist.end(); ++itenemy) {
+	while (itenemy != m_EnemyColliderlist.end()) 
+	{
+		bool bEnemyErased = false;
 		std::list<GameObject*>::iterator itATK = m_InstanceColliderlist.begin();
 		while (itATK != m_InstanceColliderlist.end())
 		{
@@ -171,10 +180,11 @@ void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ
 							EnemyBase* penemy = dynamic_cast<EnemyBase*>(*itenemy);
 
 							penemy->SetHealth(penemy->GetHealth() - pAtk->GetDamage());
-							if (penemy->GetHealth() == 0) {
-								/* Æø¹ß ¾Ö´Ï¸ÞÀÌ¼Ç ³Ö¾î¾ßÇÔ */
+							if (penemy->GetHealth() <= 0) {
+								/* Àû Æø¹ß ¾Ö´Ï¸ÞÀÌ¼Ç ³Ö¾î¾ßÇÔ */
 								OBJECT_MGR->Destroy((*itenemy));
 								itenemy = m_EnemyColliderlist.erase(itenemy);
+								bEnemyErased = true;
 							}
 
 							// Ã³¸® ÈÄ ºÒ·¿ Á¦°Å
@@ -185,6 +195,9 @@ void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ
 							if (m_EnemyColliderlist.empty() || m_InstanceColliderlist.empty())
 								return;
 
+							if (bEnemyErased) 
+								break;
+
 							continue;
 						}
 					}
@@ -192,6 +205,8 @@ void ColliderManager::Update_CollisionCheck(float dt) // (ÇÃ·¹ÀÌ¾î Á¦¿Ü) ¿ÀºêÁ§Æ
 			}
 			++itATK;
 		}
+		if (bEnemyErased) continue;
+		++itenemy;
 	}
 
 	// Àû ÃÑ¾Ë -> ÇÃ·¹ÀÌ¾î
@@ -256,6 +271,9 @@ void ColliderManager::Draw(bool btrue)
 	// Debug Only
 	if (btrue)
 	{
+		MyBrush = (HBRUSH)GetStockObject(NULL_BRUSH);
+		OldBrush = (HBRUSH)SelectObject(m_hdc, MyBrush);
+
 		std::list<ColliderInfo>& Collist = m_colliderFieldlist["STAGE" + std::to_string(m_nStage)];
 		for (auto it = Collist.begin(); it != Collist.end(); ++it){
 			Rect col = (*it).col;
@@ -315,4 +333,7 @@ void ColliderManager::Draw(bool btrue)
 		sprintf(Timestr, "playerLocalRect : %.2f, %.2f,%.2f, %.2f", PlayerRect.Left, PlayerRect.Top, PlayerRect.Right, PlayerRect.Bottom);
 		TextOut(m_hdc, 0, 105, (Timestr), strlen(Timestr));
 	}
+	MyBrush = (HBRUSH)CreateSolidBrush(RGB(0, 255, 0));
+	OldBrush = (HBRUSH)SelectObject(m_hdc, MyBrush);
+	PLAYER_INSTANCE->GetComponent<PlayerScript>()->DrawHealthBar();
 }

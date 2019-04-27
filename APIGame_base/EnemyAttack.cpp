@@ -30,10 +30,11 @@ void EnemyAttack::Init()
 	m_pAnim = GetComponent<Animation>();
 	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips);
 
-	SetbyType();
-
 	m_pscript = AddComponent<EnemyAttackScript>();
 	m_pscript->SetOwner(this);
+
+	SetbyType();
+
 	m_pscript->SetStart(true);
 }
 
@@ -68,6 +69,15 @@ void EnemyAttack::SetbyType()
 		m_nDamage = -1;
 		break;
 	}
+	case GUADERMAN_BULLET:
+	{
+		SetAnimation("GUADERMAN_BULLET");
+		SetCollider(10, 10, m_pOwner1->GetTransform()->GetPosition());
+		SetDirection(PLAYER_INSTANCE->GetPosition() - m_pOwner1->GetTransform()->GetPosition());
+		m_pscript->SetPower(170.f);
+		m_nDamage = -1;
+		break;
+	}
 	default:
 		break;
 	}
@@ -83,8 +93,23 @@ void EnemyAttackScript::Update(float dt)
 {
 	if (m_bStart)
 	{
-		Vector2 vMoved = m_pOwner->GetTransform()->GetPosition() + (m_pOwner->GetDirection() * m_pOwner->GetSpeed());
-		m_pOwner->GetTransform()->SetPosition(vMoved);
+		switch (m_pOwner->GetType())
+		{
+		case DOMBA_BULLET: { // 일직선 공격
+			Vector2 vMoved = m_pOwner->GetTransform()->GetPosition() + (m_pOwner->GetDirection() * m_pOwner->GetSpeed());
+			m_pOwner->GetTransform()->SetPosition(vMoved);
+			break;
+		}
+		case GUADERMAN_BULLET: { // 포물선 공격
+			m_fPower -= (dt * 100.f);
+			Vector2 vMoved = m_pOwner->GetTransform()->GetPosition() + (m_pOwner->GetDirection() * m_pOwner->GetSpeed());
+			vMoved.y -= (dt * m_fPower);
+			m_pOwner->GetTransform()->SetPosition(vMoved);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 

@@ -25,15 +25,11 @@ void PlayerIdleState::Update(float dt)
 	{
 		pMachine->ChangeState(MOVESTATE_ID);
 	}
-	else if (input::GetKey(0x58)) // Buster
-	{
-		pMachine->ChangeState(SHOTSTATE_ID);
-	}
-	else if (input::GetKey(0x5A)) // Dash
+	else if (input::GetKeyDown('z') || input::GetKeyDown('Z')) // Dash
 	{
 		pMachine->ChangeState(DASHSTATE_ID);
 	}
-	else if (input::GetKey(0x43)) // Jump
+	else if (input::GetKeyDown('c') || input::GetKeyDown('C')) // Jump
 	{
 		pMachine->ChangeState(JUMPSTATE_ID);
 	}

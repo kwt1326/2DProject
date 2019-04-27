@@ -18,6 +18,7 @@ public:
 	virtual void HandleExit() override;
 private:
 	FSMMarcine * pMachine;
+	bool m_bStartCharge;
 };
 
 #endif

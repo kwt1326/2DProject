@@ -43,10 +43,10 @@ void PlayerJumpState::Update(float dt)
 		}
 	}
 
-	if (input::GetKeyDown(0x58)) {
-		pMachine->ChangeState(SHOTSTATE_ID);
-		return;
-	}
+	//if (input::GetKeyDown('x') || input::GetKeyDown('X')) {
+	//	pMachine->ChangeState(SHOTSTATE_ID);
+	//	return;
+	//}
 
 	if (rigidbody->GetStateInfo().m_bOnMap == true)
 	{

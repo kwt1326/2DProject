@@ -57,7 +57,7 @@ void PlayerObject::Init()
 	Vector2 pos = GetPosition();
 	GetComponent<Collider>()->SetRect(Rect(pos.x - PLAYER_H_HALFSIZE, pos.y - PLAYER_V_HALFSIZE, pos.x + PLAYER_H_HALFSIZE, pos.y + PLAYER_V_HALFSIZE));
 
-	ANIMCLIP_MGR->CreateClipOfTarget(this, "Player", m_playerClips);
+	ANIMCLIP_MGR->CreateClipOfTarget(this, "Player", m_playerClips, true);
 	AddComponent<PlayerScript>();
 
 	m_shotpos = new PlayerShotPos();

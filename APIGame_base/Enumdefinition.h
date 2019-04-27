@@ -82,6 +82,7 @@ enum InstanceObjType {
 
 typedef enum InstanceObjTypeForEnemy {
 	DOMBA_BULLET,
+	GUADERMAN_BULLET,
 }E_ATK_OBJ;
 
 enum ColliderType {

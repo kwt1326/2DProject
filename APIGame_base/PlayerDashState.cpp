@@ -37,7 +37,8 @@ void PlayerDashState::Update(float dt)
 	{
 		pMachine->SetAnimState("STATE_DASHING");
 	}
-	else if (pMachine->GetCurAnimState().compare("STATE_DASHING") == 0)
+	else if (pMachine->GetCurAnimState().compare("STATE_DASHING") == 0 ||
+			 pMachine->GetCurAnimState().compare("STATE_SHOTDASH") == 0)
 	{
 		if (player->GetBlockState() == NO_BLOCK)
 		{

@@ -42,7 +42,7 @@ void Attack::Init()
 	GetComponent<Transform>()->SetAnchorPoint(Vector2(0.5, 0.5));
 
 	mp_Anim = GetComponent<Animation>();
-	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips);
+	ANIMCLIP_MGR->CreateClipOfTarget(this, "instance", m_objClips, true);
 
 	SetforType(m_type);
 
@@ -76,10 +76,12 @@ void Attack::SetforType(InstanceObjType type)
 		SetCollider(20, 10, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR1:
-		SetCollider(10, 10, m_pos);
+		SetAnimation("STATE_XBUSTER_CR1");
+		SetCollider(20, 20, m_pos);
 		break;
 	case ROCKMAN_BUSTER_CR2:
-		SetCollider(20, 20, m_pos);
+		SetAnimation("STATE_XBUSTER_CR2");
+		SetCollider(40, 30, m_pos);
 		break;
 	case ROCKMAN_SABER:
 		SetCollider(15, 15, m_pos);
@@ -114,8 +116,10 @@ void Attack::ActivateEffect()
 		EFFECT_MGR->ActivateEffect("ROCKMAN_BUSTER_NC_EF", GetTransform()->GetPosition());
 		break;
 	case ROCKMAN_BUSTER_CR1:
+		EFFECT_MGR->ActivateEffect("ROCKMAN_BUSTER_NC_EF", GetTransform()->GetPosition());
 		break;
 	case ROCKMAN_BUSTER_CR2:
+		EFFECT_MGR->ActivateEffect("ROCKMAN_BUSTER_NC_EF", GetTransform()->GetPosition());
 		break;
 	default:
 		break;

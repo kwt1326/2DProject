@@ -31,6 +31,7 @@ PlayerScript::PlayerScript()
 	m_pPlayer = PLAYER_INSTANCE;
 	m_ChangeDirection = true;
 	m_isjump = false;
+	m_bStartCharge = false;
 	m_maxspeed = PLAYER_INSTANCE->GetMaxSpeed();
 	m_playerstate = NULL;
 	m_Cooltime = 0.f;
@@ -88,6 +89,8 @@ void PlayerScript::Init()
 	m_pPlayer->SetHealth(10);
 	m_dt_time = 0;
 
+	DrawHealthBar();
+
 	m_Transform->SetAllofTransform(NULL, Vector2(0.5f, 0.5f), Vector2(2.0f, 2.0f), Vector2(1.f, 1.f), NULL, NULL, pos, pos);
 
 	m_pMachine = m_pPlayer->GetComponent<FSMMarcine>();
@@ -95,7 +98,7 @@ void PlayerScript::Init()
 	m_pMachine->InsertState(IDLESTATE_ID, new PlayerIdleState());
 	m_pMachine->InsertState(JUMPSTATE_ID, new PlayerJumpState());
 	m_pMachine->InsertState(MOVESTATE_ID, new PlayerMoveState());
-	m_pMachine->InsertState(SHOTSTATE_ID, new PlayerShotState());
+	//m_pMachine->InsertState(SHOTSTATE_ID, new PlayerShotState()); // shot 은 상태처리 하면 망가진다.
 	m_pMachine->InsertState(DASHSTATE_ID, new PlayerDashState());
 	m_pMachine->InsertState(LANDWALLSTATE_ID, new PlayerLandWallState());
 	m_pMachine->InsertState(GAMEOVERSTATE_ID, new PlayerGAMEOVERState());
@@ -119,11 +122,110 @@ void PlayerScript::ProcessPlayer(float dt)
 
 	ChangePlayerAnimState(m_pMachine->GetCurAnimState());
 
+	UpdateShot();
+
 	if (m_pRigidbody->OnRectColliderEnter_PLAYER(m_pPlayer)) {
 		GameStart(m_pPlayer);
 	}
 	else if (m_pRigidbody->GetGravity() == Vector2::Zero) {
 		m_pRigidbody->SetGravity(Vector2(0, 300.f));
+	}
+}
+
+void PlayerScript::ChangeShotAnimByState(int enumChargeState)
+{
+	if ((m_pMachine->GetCurAnimState().compare("STATE_COMJUMP") == 0) && (m_pPlayer->GetJump() == true))
+		m_pMachine->SetAnimState("STATE_SHOTJUMP");
+	else if ((m_pMachine->GetCurAnimState().compare("STATE_COMRUN") == 0) && (m_pPlayer->GetJump() == false))
+		m_pMachine->SetAnimState("STATE_SHOTRUN");
+	else if ((m_pMachine->GetCurAnimState().compare("STATE_COMIDLE") == 0) && (m_pPlayer->GetJump() == false))
+	{
+		switch (enumChargeState)
+		{
+		case ROCKMAN_BUSTER_NC:
+			m_pMachine->SetAnimState("STATE_SHOTIDLE");
+			break;
+		case ROCKMAN_BUSTER_CR1:
+			m_pMachine->SetAnimState("STATE_SHOTIDLE_CHARGESHOT1");
+			break;
+		case ROCKMAN_BUSTER_CR2:
+			m_pMachine->SetAnimState("STATE_SHOTIDLE_CHARGESHOT2");
+			break;
+		default:
+			break;
+		} 
+	}
+	else if ((m_pMachine->GetCurAnimState().compare("STATE_DASHING") == 0) && (m_pPlayer->GetJump() == false))
+		m_pMachine->SetAnimState("STATE_SHOTDASH");
+}
+
+void PlayerScript::UpdateShot()
+{
+	if (!m_pPlayer->GetGamestart()) return;
+
+	AnimationClip* pCurClip = p_Anim->GetAnimationClip();
+
+	// Charge begin
+	if (m_wparam['X'] == true && m_bStartCharge == false) // Charge start
+	{
+		if (0.5f < TIME_MGR->StopStopWatch(false)) {
+			TIME_MGR->StopStopWatch(true);
+			m_bStartCharge = true;
+			TIME_MGR->BeginStopWatch();
+		}
+	}
+	else if (m_wparam['X'] == false && m_bStartCharge == true) // Shot
+	{
+		m_bStartCharge = false;
+		int nChargeMode = ROCKMAN_BUSTER_NC;
+		double chargertime = TIME_MGR->StopStopWatch(true);
+		if (chargertime < 0.5f) {
+			Attack* bullet = new Attack(m_pPlayer, PROJECTILE, ROCKMAN_BUSTER_NC, PLAYER_INSTANCE->GetShotLoc(), 1);
+			OBJECT_MGR->AddObject(bullet);
+		}
+		else if (chargertime > 0.5f && chargertime < 1.5f) {
+			Attack* bullet = new Attack(m_pPlayer, PROJECTILE, ROCKMAN_BUSTER_CR1, PLAYER_INSTANCE->GetShotLoc(), 2);
+			OBJECT_MGR->AddObject(bullet);
+			nChargeMode = ROCKMAN_BUSTER_CR1;
+		}
+		else if (chargertime > 1.5f) {
+			Attack* bullet = new Attack(m_pPlayer, PROJECTILE, ROCKMAN_BUSTER_CR2, PLAYER_INSTANCE->GetShotLoc(), 5);
+			OBJECT_MGR->AddObject(bullet);
+			nChargeMode = ROCKMAN_BUSTER_CR2;
+		}
+
+		EFFECT_MGR->StopEffect("ROCKMAN_CHARGE_1");
+		EFFECT_MGR->StopEffect("ROCKMAN_CHARGE_2");
+		ChangeShotAnimByState(nChargeMode);
+
+		// Shot Delay 측정 시작
+		TIME_MGR->BeginStopWatch();
+		return;
+	}
+
+	// During to Charge
+	if (m_bStartCharge)
+	{
+		if (TIME_MGR->StopStopWatch(false) > 0.5f) {
+			if (!EFFECT_MGR->IsAlreadyAppliedEffect("ROCKMAN_CHARGE_1"))
+				EFFECT_MGR->ActivateEffect("ROCKMAN_CHARGE_1", m_pPlayer->GetTransform()->GetPosition());
+			else
+				EFFECT_MGR->TranslatePosEffect("ROCKMAN_CHARGE_1", m_pPlayer->GetPosition());
+		}
+		if (TIME_MGR->StopStopWatch(false) > 1.5f) {
+			if (!EFFECT_MGR->IsAlreadyAppliedEffect("ROCKMAN_CHARGE_2"))
+				EFFECT_MGR->ActivateEffect("ROCKMAN_CHARGE_2", m_pPlayer->GetTransform()->GetPosition());
+			else
+				EFFECT_MGR->TranslatePosEffect("ROCKMAN_CHARGE_2", m_pPlayer->GetPosition());
+		}
+	}
+
+	if ((pCurClip->GetName().find("SHOT") != std::string::npos) && (pCurClip->IsPlay() == false))
+	{
+		if (m_pMachine->GetCurStateID() == IDLESTATE_ID)
+			m_pMachine->SetAnimState("STATE_COMIDLE");
+		else
+			m_pMachine->ChangeState(IDLESTATE_ID);
 	}
 }
 
@@ -146,9 +248,16 @@ void PlayerScript::Move(float dt)
 	}
 }
 
+void PlayerScript::DrawHealthBar()
+{
+	Rectangle(COLLIDER_MGR->GetHdc(), 50, 350 - m_pPlayer->GetHealth() * 10, 70, 350);
+}
+
 void PlayerScript::ReplaceHealth(int nValue)
 {
 	m_pPlayer->SetHealth(m_pPlayer->GetHealth() + nValue);
+	DrawHealthBar();
+
 	if (m_pPlayer->GetHealth() <= 0)
 	{
 		m_pMachine->ChangeState(GAMEOVERSTATE_ID);

@@ -34,12 +34,12 @@ void PlayerLandWallState::Update(float dt)
 	Vector2 dir = (!script->m_ChangeDirection) ? dir_normal : ~dir_normal;
 	if (dir.y > 0) dir.y *= (-1);
 
-	if (!m_bready == input::GetKeyDown(0x43) == TRUE)
+	if (!m_bready == (script->GetInput('c') || script->GetInput('C')))
 		m_bready = true;
 
 	if (m_bready)
 	{
-		if (input::GetKeyUP(0x43) == TRUE)
+		if (script->GetInput('c') || script->GetInput('C'))
 		{
 			m_bing = true;
 			pMachine->SetAnimState("STATE_ATTACHTOWALL_KICKUP");

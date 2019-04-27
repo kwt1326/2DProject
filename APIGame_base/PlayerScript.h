@@ -48,6 +48,7 @@ public:
 	bool		m_ChangeDirection;
 	bool		m_isjump;
 	bool		m_gamestart;
+	bool		m_bStartCharge;
 public:
 	void ProcessPlayer(float dt);
 	void Move(float dt);
@@ -56,6 +57,10 @@ public:
 	void SetComparePosition(Vector2 vPos, Vector2 vWorldPos);
 	void InputKeycode(int input, BOOL istrue) { m_wparam[input] = istrue; }
 	BOOL GetInput(int input) { return m_wparam[input]; }
+
+	void DrawHealthBar();
+	void ChangeShotAnimByState(int enumChargeState);
+	void UpdateShot();
 
 	bool IsScrolling(bool bX);
 

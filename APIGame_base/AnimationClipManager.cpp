@@ -91,6 +91,7 @@ void AnimationClipManager::CreateClipOfTarget(GameObject * pObject, std::string 
 					bflip = true;
 
 			pclip->Init(image::Getimage(const_cast<char*>(info.path.c_str())), info.dur, info.frame, 1, info.loop, false, bflip);
+			pclip->SetName(info.name);
 			out.insert(std::make_pair(info.name, pclip));
 		}
 	}

@@ -25,6 +25,7 @@ public:
 	float GetSpeed() { return m_fSpeed; }
 	Vector2 GetDirection() { return m_vDir; }
 	int GetDamage() { return m_nDamage; }
+	E_ATK_OBJ GetType() { return m_ntype; }
 private:
 	std::map<std::string, AnimationClip*> m_objClips;
 
@@ -52,7 +53,11 @@ public:
 
 	void SetOwner(EnemyAttack* pOwner) { m_pOwner = pOwner; }
 	void SetStart(bool bstart) { m_bStart = bstart; }
+	void SetPower(float fPower) { m_fPower = fPower; }
+
+	float GetPower() { return m_fPower; }
 private:
 	EnemyAttack * m_pOwner;
 	bool m_bStart;
+	float m_fPower;
 };

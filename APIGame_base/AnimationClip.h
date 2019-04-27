@@ -26,6 +26,7 @@ public:
 	void SetFrameCnt(int cnt);
 	void SetDirectionCnt(int cnt);
 	void SetDirection(float angle);
+	void SetName(std::string strName) { m_strName = strName; }
 
 	// 애니메이션 정보 얻기
 	float GetProgress() { return m_Progress; }
@@ -37,6 +38,7 @@ public:
 	image* GetImage() { return m_image; }
 	int Getloopcnt() { return m_LoopCnt; }
 	bool GetHasExitTime() { return m_HasExitTime; }
+	std::string GetName() { return m_strName; }
 
 private:
 	bool		m_bReverse;
@@ -58,6 +60,8 @@ private:
 	int			m_ImageHeight;
 	int			m_SizeX;
 	int			m_SizeY;
+
+	std::string m_strName;
 	
 	image*		m_image;
 	GameObject* m_GameObject; // 현재 애니메이션 컴포넌트를 소유하고 있는 게임오브젝트

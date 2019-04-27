@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EffectList>
-  <Effect name="shotexplosion1" nickname="ROCKMAN_BUSTER_NC_EF" path="megamanx\clip\buster1_explosion.bmp" duration="0.5" frame="4" loop="0"></Effect>
-  <Effect name="charge1" nickname="ROCKMAN_CHARGE_1" path="megamanx\clip\chargemotion1.bmp" duration="1" frame="8" loop="1"></Effect>
-  <Effect name="charge2" nickname="ROCKMAN_CHARGE_2" path="megamanx\clip\chargemotion2.bmp" duration="0.5" frame="4" loop="1"></Effect>
+  <Effect name="shotexplosion1" nickname="ROCKMAN_BUSTER_NC_EF" path="megamanx\clip\buster1_explosion.bmp" duration="0.25" frame="4" loop="0"></Effect>
+  <Effect name="charge1" nickname="ROCKMAN_CHARGE_1" path="megamanx\clip\chargemotion1.bmp" duration="0.5" frame="8" loop="1"></Effect>
+  <Effect name="charge2" nickname="ROCKMAN_CHARGE_2" path="megamanx\clip\chargemotion2.bmp" duration="0.25" frame="4" loop="1"></Effect>
 </EffectList>

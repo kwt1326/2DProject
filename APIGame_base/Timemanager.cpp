@@ -77,3 +77,15 @@ float Timemanager::GetFPS()
 
 	return FPS;
 }
+
+void Timemanager::BeginStopWatch() 
+{ 
+	mStopWatchTime = clock(); 
+}
+
+float Timemanager::StopStopWatch(bool binit)
+{ 
+	float fReturnValue = (float)(clock() - mStopWatchTime) / (double)1000;
+	if(binit) mStopWatchTime = 0;
+	return fReturnValue;
+}

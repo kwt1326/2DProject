@@ -49,11 +49,15 @@ public:
 	void AddInstanceCollider(GameObject* obj) { m_InstanceColliderlist.push_back(obj); }
 	void RemoveObj(GameObject* pobj);
 
+	void ProcessCol2Field(std::list<GameObject*>& collist);
+
 	void SetStage(int nStage) { m_nStage = nStage; }
 	void SetDraw(bool bDraw) { m_bDraw = bDraw; }
 	void SetLineThink(float fthink) { m_LineColthink = fthink; }
 	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
 
+	// draw
+	HDC GetHdc() {return m_hdc;}
 private:
 	std::list<GameObject*> m_InstanceColliderlist;
 	std::list<GameObject*> m_InstanceColliderlist_Enemy;

@@ -33,6 +33,8 @@ public:
 	void StopEffect(std::string strNickname);
 	void ActivateEffect(std::string strNickname, Vector2 pos);
 	void UpdateManagedEffect();
+	void TranslatePosEffect(std::string strNickname, Vector2 pos);
+	bool IsAlreadyAppliedEffect(std::string strNickname);
 private:
 	std::vector<GameObject*> m_vecEffectOwner;
 	std::vector<std::pair<std::string, AnimationClip*>> m_listActivatedClip;

@@ -85,10 +85,9 @@ void EffectManager::StopEffect(std::string strNickname)
 	{
 		if (it->first.compare(strNickname) == 0)
 		{
-			it->second->Stop();
-			delete it->second;
 			for (auto it2 = m_vecEffectOwner.begin(); it2 != m_vecEffectOwner.end(); ++it2) {
 				if ((*it2)->GetName().compare(it->first) == 0) {
+					(*it2)->GetComponent<Animation>()->Stop();
 					OBJECT_MGR->Destroy((*it2));
 					m_vecEffectOwner.erase(it2);
 					break;
@@ -132,9 +131,9 @@ void EffectManager::UpdateManagedEffect()
 	{
 		if (!(it->second->IsPlay())) {
 			it->second->Stop();
-			delete it->second;
 			for (auto it2 = m_vecEffectOwner.begin(); it2 != m_vecEffectOwner.end(); ++it2) {
 				if ((*it2)->GetName().compare(it->first) == 0) {
+					(*it2)->GetComponent<Animation>()->Stop();
 					OBJECT_MGR->Destroy((*it2));
 					m_vecEffectOwner.erase(it2);
 					break;
@@ -145,4 +144,21 @@ void EffectManager::UpdateManagedEffect()
 		}
 		++it;
 	}
+}
+
+void EffectManager::TranslatePosEffect(std::string strNickname, Vector2 pos)
+{
+	for (int i = 0; i < m_vecEffectOwner.size(); ++i) {
+		if (m_vecEffectOwner[i]->GetName().compare(strNickname) == 0)
+			m_vecEffectOwner[i]->GetTransform()->SetPosition(pos);
+	}
+}
+
+bool EffectManager::IsAlreadyAppliedEffect(std::string strNickname)
+{
+	for (auto it = m_listActivatedClip.begin(); it != m_listActivatedClip.end(); ++it)
+		if (it->first.compare(strNickname) == 0)
+			return true;
+
+	return false;
 }

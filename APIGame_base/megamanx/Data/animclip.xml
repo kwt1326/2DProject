@@ -6,31 +6,40 @@
     <Clip target="Player" state="STATE_COMRUN"                direction="right" path="megamanx/clip/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
     <Clip target="Player" state="STATE_SHOTIDLE"              direction="right" path="megamanx/clip/comshot.bmp"		 duration="0.25" frame="8" loop="0"/>
     <Clip target="Player" state="STATE_SHOTJUMP"              direction="right" path="megamanx/clip/comshotafter.bmp"		 duration="0.25" frame="1" loop="0"/>
+    <Clip target="Player" state="STATE_SHOTRUN"               direction="right" path="megamanx/clip/shotrun.bmp"		 duration="1.5" frame="14" loop="1"/>
+    <Clip target="Player" state="STATE_SHOTDASH"              direction="right" path="megamanx/clip/shotdash.bmp"		 duration="2" frame="1" loop="0"/>
+    <Clip target="Player" state="STATE_SHOTIDLE_CHARGESHOT1"  direction="right" path="megamanx/clip/chargeshot1.bmp"	duration="0.4" frame="8" loop="0"/>
+    <Clip target="Player" state="STATE_SHOTIDLE_CHARGESHOT2"  direction="right" path="megamanx/clip/chargeshot.bmp"		duration="0.4" frame="8" loop="0"/>
     <Clip target="Player" state="STATE_DASHSTART"             direction="right" path="megamanx/clip/dashstart.bmp"	 duration="0.15" frame="3" loop="0"/>
     <Clip target="Player" state="STATE_DASHSTOP"              direction="right" path="megamanx/clip/stopdash.bmp"	   duration="0.2"  frame="4" loop="0"/>
     <Clip target="Player" state="STATE_DASHING"               direction="right" path="megamanx/clip/dashing.bmp"		 duration="0.5"  frame="1" loop="0"/>
     <Clip target="Player" state="STATE_ATTACHTOWALL_KICKUP"   direction="right" path="megamanx/clip/kickwall.bmp"	   duration="0.3"  frame="6" loop="0"/>
     <Clip target="Player" state="STATE_ATTACHTOWALL"          direction="right" path="megamanx/clip/landwall.bmp"	   duration="0.5"  frame="1" loop="0"/>
 
-    <Clip target="Player" state="R/STATE_COMIDLE"             direction="left" path="megamanx/clip/clipr/comidle2.bmp"	   duration="2"    frame="5"  loop="1"/>
-    <Clip target="Player" state="R/STATE_COMJUMP"             direction="left" path="megamanx/clip/clipr/comjumpstate.bmp" duration="1"    frame="11" loop="0"/>
-    <Clip target="Player" state="R/STATE_COMRUN"              direction="left" path="megamanx/clip/clipr/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
-    <Clip target="Player" state="R/STATE_SHOTIDLE"            direction="left" path="megamanx/clip/clipr/comshot.bmp"	     duration="0.25" frame="8"  loop="0"/>
-    <Clip target="Player" state="R/STATE_SHOTJUMP"            direction="left" path="megamanx/clip/clipr/comshotafter.bmp"		 duration="0.25" frame="1" loop="0"/>
-    <Clip target="Player" state="R/STATE_DASHSTART"           direction="left" path="megamanx/clip/clipr/dashstart.bmp"    duration="0.15" frame="3"  loop="0"/>
-    <Clip target="Player" state="R/STATE_DASHSTOP"            direction="left" path="megamanx/clip/clipr/stopdash.bmp"	   duration="0.2"  frame="4"  loop="0"/>
-    <Clip target="Player" state="R/STATE_DASHING"             direction="left" path="megamanx/clip/clipr/dashing.bmp"	     duration="0.5"  frame="1"  loop="0"/>
-    <Clip target="Player" state="R/STATE_ATTACHTOWALL_KICKUP" direction="left" path="megamanx/clip/clipr/kickwall.bmp"	   duration="0.3"  frame="6"  loop="0"/>
-    <Clip target="Player" state="R/STATE_ATTACHTOWALL"        direction="left" path="megamanx/clip/clipr/landwall.bmp"	   duration="0.5"  frame="1"  loop="0"/>
+    <Clip target="Player" state="R/STATE_COMIDLE"             direction="left" path="megamanx/clip/clip_r/comidle2.bmp"	   duration="2"    frame="5"  loop="1"/>
+    <Clip target="Player" state="R/STATE_COMJUMP"             direction="left" path="megamanx/clip/clip_r/comjumpstate.bmp" duration="1"    frame="11" loop="0"/>
+    <Clip target="Player" state="R/STATE_COMRUN"              direction="left" path="megamanx/clip/clip_r/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
+    <Clip target="Player" state="R/STATE_SHOTIDLE"            direction="left" path="megamanx/clip/clip_r/comshot.bmp"	     duration="0.25" frame="8"  loop="0"/>
+    <Clip target="Player" state="R/STATE_SHOTJUMP"            direction="left" path="megamanx/clip/clip_r/comshotafter.bmp"		 duration="0.25" frame="1" loop="0"/>
+    <Clip target="Player" state="R/STATE_SHOTRUN"             direction="left" path="megamanx/clip/clip_r/shotrun.bmp"		 duration="1.5" frame="14" loop="1"/>
+    <Clip target="Player" state="R/STATE_SHOTDASH"            direction="left" path="megamanx/clip/clip_r/shotdash.bmp"		 duration="2" frame="1" loop="0"/>
+    <Clip target="Player" state="R/STATE_SHOTIDLE_CHARGESHOT1" direction="left" path="megamanx/clip/clip_r/chargeshot1.bmp"	duration="0.4" frame="8" loop="0"/>
+    <Clip target="Player" state="R/STATE_SHOTIDLE_CHARGESHOT2" direction="left" path="megamanx/clip/clip_r/chargeshot.bmp"	duration="0.4" frame="8" loop="0"/>
+    <Clip target="Player" state="R/STATE_DASHSTART"           direction="left" path="megamanx/clip/clip_r/dashstart.bmp"    duration="0.15" frame="3"  loop="0"/>
+    <Clip target="Player" state="R/STATE_DASHSTOP"            direction="left" path="megamanx/clip/clip_r/stopdash.bmp"	   duration="0.2"  frame="4"  loop="0"/>
+    <Clip target="Player" state="R/STATE_DASHING"             direction="left" path="megamanx/clip/clip_r/dashing.bmp"	     duration="0.5"  frame="1"  loop="0"/>
+    <Clip target="Player" state="R/STATE_ATTACHTOWALL_KICKUP" direction="left" path="megamanx/clip/clip_r/kickwall.bmp"	   duration="0.3"  frame="6"  loop="0"/>
+    <Clip target="Player" state="R/STATE_ATTACHTOWALL"        direction="left" path="megamanx/clip/clip_r/landwall.bmp"	   duration="0.5"  frame="1"  loop="0"/>
 
-    <Clip target="Player" state="STATE_CHARGELEVEL1"          direction="right" path="megamanx/clip/chargemotion1.bmp"	   duration="1"  frame="8"  loop="1"/>
-    <Clip target="Player" state="STATE_CHARGELEVEL2"          direction="right" path="megamanx/clip/chargemotion2.bmp"	   duration="0.5"  frame="4"  loop="1"/>
     <Clip target="Player" state="STATE_FALLDOWN"              direction="right" path="megamanx/clip/Falldown.bmp"	   duration="1"  frame="1"  loop="0"/>
     <Clip target="Player" state="STATE_GAMESTART"             direction="right" path="megamanx/clip/landing.bmp"	   duration="1"  frame="16" loop="0"/>
 
-    <Clip target="instance" state="STATE_XBUSTER_EXPLOSION"   direction="right" path="megamanx/clip/buster1_explosion.bmp"		 duration="0.5"  frame="4" loop="0"/>
     <Clip target="instance" state="STATE_XBUSTER"             direction="right" path="megamanx/clip/xbuster.bmp"		 duration="0.7"  frame="5" loop="1"/>
-    <Clip target="instance" state="R/STATE_XBUSTER"           direction="left" path="megamanx/clip/clipr/xbuster.bmp"	     duration="0.7"  frame="5"  loop="1"/>
+    <Clip target="instance" state="R/STATE_XBUSTER"           direction="left" path="megamanx/clip/clip_r/xbuster.bmp"	     duration="0.7"  frame="5"  loop="1"/>
+    <Clip target="instance" state="STATE_XBUSTER_CR1"         direction="right" path="megamanx/clip/xcharge1buster2X.bmp"		 duration="0.3"  frame="3" loop="1"/>
+    <Clip target="instance" state="R/STATE_XBUSTER_CR1"       direction="left" path="megamanx/clip/clip_r/xcharge1buster2X.bmp"	     duration="0.3"  frame="3"  loop="1"/>
+    <Clip target="instance" state="STATE_XBUSTER_CR2"         direction="right" path="megamanx/clip/xchargemaxbuster2X.bmp"		 duration="0.3"  frame="3" loop="1"/>
+    <Clip target="instance" state="R/STATE_XBUSTER_CR2"       direction="left" path="megamanx/clip/clip_r/xchargemaxbuster2X.bmp"	     duration="0.3"  frame="3"  loop="1"/>
 
     <Clip target="domba"    state="Detection/domba"           direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_walk.bmp"	  duration="2"  frame="10" loop="1"/>
     <Clip target="domba"    state="R/Detection/domba"         direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_walk_R.bmp"	    duration="2"  frame="10" loop="1"/>
@@ -39,6 +48,14 @@
     <Clip target="domba"    state="Attack/domba"              direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_Attack.bmp"	  duration="1.5"  frame="5" loop="0"/>
     <Clip target="domba"    state="R/Attack/domba"            direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_Attack_R.bmp"	    duration="1.5"  frame="5" loop="0"/>
     <Clip target="instance" state="DOMBA_BULLET"              direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_bullet.bmp"	     duration="0.3"  frame="2"  loop="1"/>
+
+    <Clip target="GuaderMan"    state="Detection/GuaderMan"           direction="right" path="megamanx/enemyclips/GuaderMan/idle.bmp"	  duration="1"  frame="8" loop="1"/>
+    <Clip target="GuaderMan"    state="R/Detection/GuaderMan"         direction="left"  path="megamanx/enemyclips/GuaderMan/idle_R.bmp"	    duration="1"  frame="8" loop="1"/>
+    <Clip target="GuaderMan"    state="run/GuaderMan"               direction="right" path="megamanx/enemyclips/GuaderMan/run.bmp"	  duration="0.3"  frame="3" loop="1"/>
+    <Clip target="GuaderMan"    state="R/run/GuaderMan"             direction="left"  path="megamanx/enemyclips/GuaderMan/run_R.bmp"	    duration="0.3"  frame="3" loop="1"/>
+    <Clip target="GuaderMan"    state="Attack/GuaderMan"              direction="right" path="megamanx/enemyclips/GuaderMan/throwGranade.bmp"	  duration="1.0"  frame="6" loop="1"/>
+    <Clip target="GuaderMan"    state="R/Attack/GuaderMan"            direction="left"  path="megamanx/enemyclips/GuaderMan/throwGranade_R.bmp"	    duration="1.0"  frame="6" loop="1"/>
+    <Clip target="instance" state="GUADERMAN_BULLET"              direction="right" path="megamanx/enemyclips/GuaderMan/bullet.bmp"	     duration="0.3"  frame="4"  loop="1"/>
 
   </Animation>
 </Data>

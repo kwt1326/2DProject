@@ -1,6 +1,7 @@
 #ifndef  _TIMEMANAGER_H_
 #define  _TIMEMANAGER_H_
 #include <Windows.h>
+#include <time.h>
 
 #define TIME_MGR Timemanager::GetInstance()
 
@@ -31,6 +32,9 @@ public:
 	float GetWorldTime() { return mWorldtime; }
 	float GetDeltaTime() { return mDeltatime; }
 
+	void BeginStopWatch();
+	float StopStopWatch(bool binit = true);
+
 private:
 	//TimeGetTime();  ->멀티미디어 타이머 사용
 	//GetTickCount(); ->시스템 타이머 사용
@@ -42,6 +46,8 @@ private:
 	LONGLONG mEndTime;		  // 현재 프레임 시간
 	float mWorldtime;		  // 프로그램 시작이후 경과시간
 	float mDeltatime;		  // 지난 갱신으로부터 현재 갱신까지 경과된 시간
+
+	clock_t mStopWatchTime;   // 스톱워치 기능을 위한 저장시간 ( 초 )
 };
 
 #endif // ! _TIMEMANAGER_H_

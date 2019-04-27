@@ -113,6 +113,7 @@ void NormalEnemy::PlayAnimation(std::string animname)
 void NormalEnemy_detection::HandleInput()
 {
 	srand(1); // 매번 다르게 할 필요 없어 1 로 시드 만듬
+	m_clock = clock();
 	m_vDestination = GetOwner()->GetTransform()->GetPosition();
 }
 
@@ -125,8 +126,6 @@ void NormalEnemy_detection::Update(float dt)
 
 	if (pPlayer != NULL && pObj != NULL) {
 
-		pObj->PlayAnimation("Detection");
-
 		// detection
 		if (Physic::RectToCircleCollisionCheck(pPlayer->GetComponent<Collider>()->GetRect(), pObj->GetDetectionCircle())) {
 			pObj->GetMachine()->ChangeState(StateIdentify::E_ATTACK_ID);
@@ -137,6 +136,8 @@ void NormalEnemy_detection::Update(float dt)
 
 		if (pObj->GetName().compare("domba") == 0) // 돔바
 		{
+			pObj->PlayAnimation("Detection");
+
 			Transform* pTr = pObj->GetComponent<Transform>();
 			Rigidbody* pRg = pObj->GetComponent<Rigidbody>();
 
@@ -146,6 +147,35 @@ void NormalEnemy_detection::Update(float dt)
 				pObj->SetDirection(m_bRight);
 				float fDestX = pTr->GetPosition().x + (rand() % 10) * ((m_bRight) ? (1) : (-1));
 				m_vDestination = Vector2(fDestX, pTr->GetPosition().y);
+			}
+			float fMoveX = pTr->GetPosition().x + ((m_bRight) ? (dt * 50.f) : (dt * 50.f *(-1)));
+			pTr->SetPosition(fMoveX, pTr->GetPosition().y);
+		}
+		else if (pObj->GetName().compare("GuaderMan") == 0) // 가더맨
+		{
+			Transform* pTr = pObj->GetComponent<Transform>();
+			Rigidbody* pRg = pObj->GetComponent<Rigidbody>();
+
+			if (GetMoveThink(pObj) < 0.1f || pRg->GetStateInfo().m_bOnHWall)
+			{
+				if (m_clock == 0)
+					m_clock = clock();
+
+				float fReturnValue = (float)(clock() - m_clock) / (double)1000;
+				if (fReturnValue > 1.5f)
+				{
+					pObj->PlayAnimation("run");
+					m_clock = 0;
+					m_bRight = !m_bRight;
+					pObj->SetDirection(m_bRight);
+					float fDestX = pTr->GetPosition().x + (rand() % 10) * ((m_bRight) ? (1) : (-1));
+					m_vDestination = Vector2(fDestX, pTr->GetPosition().y);
+				}
+				else
+				{
+					pObj->PlayAnimation("Detection");
+					return;
+				}
 			}
 			float fMoveX = pTr->GetPosition().x + ((m_bRight) ? (dt * 50.f) : (dt * 50.f *(-1)));
 			pTr->SetPosition(fMoveX, pTr->GetPosition().y);
@@ -190,6 +220,16 @@ void NormalEnemy_Attack::Update(float dt)
 			if (!pObj->CheckCurClip("Attack") || !pObj->GetComponent<Animation>()->GetAnimationClip()->IsPlay())
 			{
 				EnemyAttack* pAtk = new EnemyAttack(E_ATK_OBJ::DOMBA_BULLET, pObj);
+				OBJECT_MGR->AddObject(pAtk);
+				pObj->PlayAnimation("Attack");
+			}
+		}
+		else if (pObj->GetName().compare("GuaderMan") == 0) // 가더맨
+		{
+			if (!pObj->CheckCurClip("Attack") || !pObj->GetComponent<Animation>()->GetAnimationClip()->IsPlay())
+			{
+				pObj->SetDirection((pObj->GetTransform()->GetPosition().x < PLAYER_INSTANCE->GetPosition().x) ? true : false);
+				EnemyAttack* pAtk = new EnemyAttack(E_ATK_OBJ::GUADERMAN_BULLET, pObj);
 				OBJECT_MGR->AddObject(pAtk);
 				pObj->PlayAnimation("Attack");
 			}

@@ -15,10 +15,16 @@ bool input::GetKey(int VK_KEY)
 {
 	if (g_isfocus == true)
 	{
-		if (GetAsyncKeyState(VK_KEY))
-		{
-			return true;
-		}
+		return (GetAsyncKeyState(VK_KEY) & 0x8000) ? true : false;
+	}
+	return false;
+}
+
+bool input::GetKeyTurboUp(int VK_KEY)
+{
+	if (g_isfocus == true)
+	{
+		return (!(GetAsyncKeyState(VK_KEY) & 0x0001)) ? true : false;
 	}
 	return false;
 }
@@ -31,7 +37,7 @@ bool input::GetKeyDown(int VK_KEY)
 		{
 			if (g_Keydown[VK_KEY] == false)
 			{
-				g_Keydown[VK_KEY] == true;
+				g_Keydown[VK_KEY] = true;
 				return true;
 			}
 		}
@@ -49,11 +55,11 @@ bool input::GetKeyUP(int VK_KEY)
 	{
 		if (GetAsyncKeyState(VK_KEY) & 0x0001)
 		{
-			g_Keyup[VK_KEY] == true;
+			g_Keyup[VK_KEY] = true;
 		}
 		else
 		{
-			if (g_Keyup[VK_KEY] = true)
+			if (g_Keyup[VK_KEY] == true)
 			{
 				g_Keyup[VK_KEY] = false;
 				return true;

@@ -97,6 +97,7 @@ public:
 	NormalEnemy_detection(GameObject* pOwner) 
 		: m_vDestination(Vector2::Zero), 
 		  m_bRight(false)
+		, m_clock(0)
 	{ SetOwner(pOwner); m_id = E_DETECTION_ID; }
 
 	virtual ~NormalEnemy_detection() {};
@@ -109,6 +110,7 @@ private:
 private:
 	Vector2 m_vDestination;
 	bool  m_bRight;
+	clock_t m_clock;
 };
 
 class EnemyAttack;
