@@ -15,6 +15,8 @@ namespace input
 
 	bool GetKeyTurboUp(int VK_KEY);
 
+	void SetKey(int VK_KEY, bool state);
+
 	// 마우스 좌표 얻어오기
 	POINT GetMousePosition();
 }

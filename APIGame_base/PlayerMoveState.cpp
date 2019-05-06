@@ -27,17 +27,17 @@ void PlayerMoveState::Update(float dt)
 	float moveenergy = player->GetPlayerSpeed() * dt;
 	float yAxis = player->GetWorldPosition().y;
 
-	if (script->GetInput(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
+	if (input::GetKey(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
 	{
-		if (input::GetKey(0x43))
+		if (input::GetKeyDown('c') || input::GetKeyDown('C'))
 			pMachine->ChangeState(JUMPSTATE_ID);
 
 		script->SetComparePosition(Vector2(player->GetPosition().x - moveenergy, player->GetPosition().y),
 			Vector2(player->GetWorldPosition().x - moveenergy, player->GetWorldPosition().y));
 	}
-	else if (script->GetInput(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
+	else if (input::GetKey(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
 	{
-		if (input::GetKey(0x43))
+		if (input::GetKeyDown('c') || input::GetKeyDown('C'))
 			pMachine->ChangeState(JUMPSTATE_ID);
 
 		script->SetComparePosition(Vector2(player->GetPosition().x + moveenergy, player->GetPosition().y),

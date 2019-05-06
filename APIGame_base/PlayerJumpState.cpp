@@ -34,7 +34,7 @@ void PlayerJumpState::Update(float dt)
 
 	if (input::GetKey(VK_RIGHT) || input::GetKey(VK_LEFT)) // Move 점프중 좌우 이동
 	{
-		if((player->GetBlockState() != NO_BLOCK) && input::GetKey(0x43))
+		if((player->GetBlockState() != NO_BLOCK) && (input::GetKeyDown('c') || input::GetKeyDown('C')))
 			pMachine->ChangeState(LANDWALLSTATE_ID);
 		else {
 			if (pScript != nullptr) {

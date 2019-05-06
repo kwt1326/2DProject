@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Data>
   <Animation>
+    <!-- PLAYER CLIPS -->
     <Clip target="Player" state="STATE_COMIDLE"               direction="right" path="megamanx/clip/comidle2.bmp"    duration="2"    frame="5" loop="1"/>
     <Clip target="Player" state="STATE_COMJUMP"               direction="right" path="megamanx/clip/comjumpstate.bmp" duration="1"   frame="11" loop="0"/>
     <Clip target="Player" state="STATE_COMRUN"                direction="right" path="megamanx/clip/commove2.bmp"	   duration="1"    frame="14" loop="1"/>
@@ -41,6 +42,7 @@
     <Clip target="instance" state="STATE_XBUSTER_CR2"         direction="right" path="megamanx/clip/xchargemaxbuster2X.bmp"		 duration="0.3"  frame="3" loop="1"/>
     <Clip target="instance" state="R/STATE_XBUSTER_CR2"       direction="left" path="megamanx/clip/clip_r/xchargemaxbuster2X.bmp"	     duration="0.3"  frame="3"  loop="1"/>
 
+    <!-- NORMAL ENEMY CLIPS -->
     <Clip target="domba"    state="Detection/domba"           direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_walk.bmp"	  duration="2"  frame="10" loop="1"/>
     <Clip target="domba"    state="R/Detection/domba"         direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_walk_R.bmp"	    duration="2"  frame="10" loop="1"/>
     <Clip target="domba"    state="Guard/domba"               direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_guard.bmp"	  duration="1"  frame="4" loop="1"/>
@@ -49,13 +51,28 @@
     <Clip target="domba"    state="R/Attack/domba"            direction="left"  path="megamanx/enemyclips/Enemy1/Enemy1_Attack_R.bmp"	    duration="1.5"  frame="5" loop="0"/>
     <Clip target="instance" state="DOMBA_BULLET"              direction="right" path="megamanx/enemyclips/Enemy1/Enemy1_bullet.bmp"	     duration="0.3"  frame="2"  loop="1"/>
 
-    <Clip target="GuaderMan"    state="Detection/GuaderMan"           direction="right" path="megamanx/enemyclips/GuaderMan/idle.bmp"	  duration="1"  frame="8" loop="1"/>
-    <Clip target="GuaderMan"    state="R/Detection/GuaderMan"         direction="left"  path="megamanx/enemyclips/GuaderMan/idle_R.bmp"	    duration="1"  frame="8" loop="1"/>
-    <Clip target="GuaderMan"    state="run/GuaderMan"               direction="right" path="megamanx/enemyclips/GuaderMan/run.bmp"	  duration="0.3"  frame="3" loop="1"/>
-    <Clip target="GuaderMan"    state="R/run/GuaderMan"             direction="left"  path="megamanx/enemyclips/GuaderMan/run_R.bmp"	    duration="0.3"  frame="3" loop="1"/>
-    <Clip target="GuaderMan"    state="Attack/GuaderMan"              direction="right" path="megamanx/enemyclips/GuaderMan/throwGranade.bmp"	  duration="1.0"  frame="6" loop="1"/>
-    <Clip target="GuaderMan"    state="R/Attack/GuaderMan"            direction="left"  path="megamanx/enemyclips/GuaderMan/throwGranade_R.bmp"	    duration="1.0"  frame="6" loop="1"/>
-    <Clip target="instance" state="GUADERMAN_BULLET"              direction="right" path="megamanx/enemyclips/GuaderMan/bullet.bmp"	     duration="0.3"  frame="4"  loop="1"/>
+    <Clip target="GuaderMan"    state="Detection/GuaderMan"   direction="right" path="megamanx/enemyclips/GuaderMan/idle.bmp"	  duration="1"  frame="8" loop="1"/>
+    <Clip target="GuaderMan"    state="R/Detection/GuaderMan" direction="left"  path="megamanx/enemyclips/GuaderMan/idle_R.bmp"	    duration="1"  frame="8" loop="1"/>
+    <Clip target="GuaderMan"    state="run/GuaderMan"         direction="right" path="megamanx/enemyclips/GuaderMan/run.bmp"	  duration="0.3"  frame="3" loop="1"/>
+    <Clip target="GuaderMan"    state="R/run/GuaderMan"       direction="left"  path="megamanx/enemyclips/GuaderMan/run_R.bmp"	    duration="0.3"  frame="3" loop="1"/>
+    <Clip target="GuaderMan"    state="Attack/GuaderMan"      direction="right" path="megamanx/enemyclips/GuaderMan/throwGranade.bmp"	  duration="1.0"  frame="6" loop="0"/>
+    <Clip target="GuaderMan"    state="R/Attack/GuaderMan"    direction="left"  path="megamanx/enemyclips/GuaderMan/throwGranade_R.bmp"	    duration="1.0"  frame="6" loop="0"/>
+    <Clip target="instance"     state="GUADERMAN_BULLET"      direction="right" path="megamanx/enemyclips/GuaderMan/bullet.bmp"	     duration="0.3"  frame="4"  loop="1"/>
 
+    <!-- BOSS CLIPS -->
+    <Clip target="Colonel"     state="STATE_FIGHTSTART"        direction="left"  path="megamanx/enemyclips/boss/colonelStartPositive.bmp"	     duration="1.0"  frame="5"  loop="0"/>
+    <Clip target="Colonel"     state="STATE_THUNDERBOLT"       direction="left"  path="megamanx/enemyclips/boss/colonelThunderTraker.bmp"	     duration="1.0"  frame="10" loop="0"/>
+    <Clip target="Colonel"     state="STATE_SLASHBUSTER"       direction="left"  path="megamanx/enemyclips/boss/colonelSlashBuster.bmp"	       duration="0.5"  frame="6"  loop="0"/>
+    <Clip target="Colonel"     state="STATE_SLASHBUSTERUP"     direction="left"  path="megamanx/enemyclips/boss/colonelSlashBusterUP.bmp"	     duration="0.5"  frame="6"  loop="0"/>
+    <Clip target="Colonel"     state="STATE_HIDEANDSEEK"       direction="left"  path="megamanx/enemyclips/boss/colonelhide.bmp"	             duration="0.3"  frame="4"  loop="0"/>
+    <Clip target="Colonel"     state="R/STATE_SLASHBUSTER"     direction="right" path="megamanx/enemyclips/boss/colonelSlashBuster_R.bmp"	     duration="0.5"  frame="6"  loop="0"/>
+    <Clip target="Colonel"     state="R/STATE_SLASHBUSTERUP"   direction="left"  path="megamanx/enemyclips/boss/colonelSlashBusterUP_R.bmp"	   duration="0.5"  frame="6"  loop="0"/>
+    <Clip target="Colonel"     state="R/STATE_HIDEANDSEEK"     direction="right" path="megamanx/enemyclips/boss/colonelhide_R.bmp"	           duration="0.3"  frame="4"  loop="0"/>
+    <Clip target="instance"     state="COLONEL_SLASH"          direction="left"  path="megamanx/enemyclips/boss/colonelSlashProjectile.bmp"	   duration="0.15" frame="3"  loop="1"/>
+    <Clip target="instance"     state="R/COLONEL_SLASH"        direction="right" path="megamanx/enemyclips/boss/colonelSlashProjectile_R.bmp"	 duration="0.15" frame="3"  loop="1"/>
+    <Clip target="instance"     state="COLONEL_BIGWAVE"        direction="left"  path="megamanx/enemyclips/boss/colonelSlashWave.bmp"	         duration="1.0"  frame="8"  loop="0"/>
+    <Clip target="instance"     state="R/COLONEL_BIGWAVE"      direction="right" path="megamanx/enemyclips/boss/colonelSlashWave_R.bmp"	       duration="1.0"  frame="8"  loop="0"/>
+    <Clip target="instance"     state="COLONEL_THUNDERBOLTORB" direction="left"  path="megamanx/enemyclips/boss/thunderboltorb.bmp"	           duration="0.3"  frame="8"  loop="1"/>
+    <Clip target="instance"     state="COLONEL_THUNDERBOLT"    direction="left"  path="megamanx/enemyclips/boss/thunderboltUpAxis.bmp"	       duration="0.3"  frame="4"  loop="1"/>
   </Animation>
 </Data>

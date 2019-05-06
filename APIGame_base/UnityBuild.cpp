@@ -55,4 +55,6 @@
 #include "PlayerLandWallState.cpp"
 #include "PlayerMoveState.cpp"
 #include "PlayerShotState.cpp"
+#include "PlayerGAMEOVERState.cpp"
+#include "EventState.cpp"
 #include "FSMMarcine.cpp"

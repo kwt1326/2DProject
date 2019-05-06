@@ -219,6 +219,7 @@ void NormalEnemy_Attack::Update(float dt)
 		{
 			if (!pObj->CheckCurClip("Attack") || !pObj->GetComponent<Animation>()->GetAnimationClip()->IsPlay())
 			{
+				pObj->SetDirection((pObj->GetTransform()->GetPosition().x < PLAYER_INSTANCE->GetPosition().x) ? true : false);
 				EnemyAttack* pAtk = new EnemyAttack(E_ATK_OBJ::DOMBA_BULLET, pObj);
 				OBJECT_MGR->AddObject(pAtk);
 				pObj->PlayAnimation("Attack");

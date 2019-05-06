@@ -3,7 +3,7 @@
   <Normal name="domba" pos="300,310"  shotpos ="10,10" collider="20,45,20,20" radius="200"/>
   <Normal name="domba" pos="2000,100" shotpos ="10,10" collider="20,45,20,20" radius="200"/>
   <Normal name="domba" pos="1000,200" shotpos ="10,10" collider="20,45,20,20" radius="200"/>
-  <Normal name="GuaderMan" pos="3000,100" shotpos ="15,15" collider="20,45,20,20" radius="200"/>
-  <Normal name="GuaderMan" pos="3500,100" shotpos ="15,15" collider="20,45,20,20" radius="200"/>
-  <Normal name="GuaderMan" pos="4000,100" shotpos ="15,15" collider="20,45,20,20" radius="200"/>
+  <Normal name="GuaderMan" pos="3000,100" shotpos ="15,15" collider="20,45,20,60" radius="200"/>
+  <Normal name="GuaderMan" pos="3500,100" shotpos ="15,15" collider="20,45,20,60" radius="200"/>
+  <Normal name="GuaderMan" pos="4000,100" shotpos ="15,15" collider="20,45,20,60" radius="200"/>
 </Enemy>

@@ -34,6 +34,7 @@ void ColliderManager::init(const char* path)
 		std::list<ColliderInfo> rectBuffer;
 		bool bHasCollider = false;
 		bool bIsLine = false;
+		bool bIsEvent = false;
 
 		while (!feof(pfile))
 		{
@@ -70,6 +71,13 @@ void ColliderManager::init(const char* path)
 					bIsLine = true;
 				}
 
+				char* pEvent = strstr(pGet, "[EVENT]");
+				if (pEvent != NULL)
+				{
+					pGet = strtok(pEvent, "[EVENT]");
+					bIsEvent = true;
+				}
+
 				int nindex = 0;
 				float rectfactor[] = { 0,0,0,0,0 };
 				char* presult = strtok(pGet, ",");
@@ -83,6 +91,7 @@ void ColliderManager::init(const char* path)
 				Rect buffer(rectfactor[0], rectfactor[1], rectfactor[2], rectfactor[3]);
 				info.col = buffer;
 				info.nType = (bIsLine) ? (int)rectfactor[4] : 0;
+				info.nEvent = (bIsEvent) ? (int)rectfactor[4] : 0;
 				if (bIsLine) {
 					int colcount = (buffer.Right - buffer.Left) / m_LineColthink;
 					double dHlength = buffer.Right - buffer.Left;
@@ -148,8 +157,6 @@ void ColliderManager::ProcessCol2Field(std::list<GameObject*>& collist)
 
 void ColliderManager::Update_CollisionCheck(float dt) // (플레이어 제외) 오브젝트 충돌 이벤트 체크
 {
-	if (input::GetKeyDown(0x50)) m_bDraw = (m_bDraw) ? false : true;
-
 	Draw(m_bDraw);
 
 	// 적/아군 총알 <-> 필드_충돌

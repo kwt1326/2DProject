@@ -166,7 +166,7 @@ void PlayerScript::UpdateShot()
 	AnimationClip* pCurClip = p_Anim->GetAnimationClip();
 
 	// Charge begin
-	if (m_wparam['X'] == true && m_bStartCharge == false) // Charge start
+	if ((input::GetKey('X') || input::GetKey('x')) && m_bStartCharge == false) // Charge start
 	{
 		if (0.5f < TIME_MGR->StopStopWatch(false)) {
 			TIME_MGR->StopStopWatch(true);
@@ -174,7 +174,7 @@ void PlayerScript::UpdateShot()
 			TIME_MGR->BeginStopWatch();
 		}
 	}
-	else if (m_wparam['X'] == false && m_bStartCharge == true) // Shot
+	else if ((input::GetKey('X') || input::GetKey('x')) == false && m_bStartCharge == true) // Shot
 	{
 		m_bStartCharge = false;
 		int nChargeMode = ROCKMAN_BUSTER_NC;
@@ -236,12 +236,12 @@ void PlayerScript::Move(float dt)
 	float moveenergy = player->GetPlayerSpeed() * dt;
 	float yAxis = player->GetWorldPosition().y;
 
-	if (script->GetInput(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
+	if (input::GetKey(VK_LEFT) && player->GetBlockState() != LEFT_BLOCK)
 	{
 		script->SetComparePosition(Vector2(player->GetPosition().x - moveenergy, player->GetPosition().y),
 			Vector2(player->GetWorldPosition().x - moveenergy, yAxis));
 	}
-	else if (script->GetInput(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
+	else if (input::GetKey(VK_RIGHT) && player->GetBlockState() != RIGHT_BLOCK)
 	{
 		script->SetComparePosition(Vector2(player->GetPosition().x + moveenergy, player->GetPosition().y),
 			Vector2(player->GetWorldPosition().x + moveenergy, yAxis));

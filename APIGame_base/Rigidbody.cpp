@@ -74,9 +74,10 @@ bool Rigidbody::OnRectColliderEnter_PLAYER(PlayerObject* player)
 				}
 			}
 
-			if (OnRectColliderEnter_Check_PLAYER(player, playercol, (*it))) {
-				return true;
-			}
+			OnRectColliderEnter_Check_PLAYER(player, playercol, (*it));
+			//if (OnRectColliderEnter_Check_PLAYER(player, playercol, (*it))) {
+			//	return true;
+			//}
 		}
 		++nCount;
 	}
@@ -163,6 +164,9 @@ bool Rigidbody::OnRectColliderEnter_Check_PLAYER(PlayerObject* player, Rect& pla
 
 	if (mapinfo.nType != 0) {
 		return false;
+	}
+	else if (mapinfo.nEvent != 0) {
+
 	}
 
 	std::function<bool()> SetPosition = [&]() mutable -> bool {

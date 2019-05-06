@@ -3,4 +3,7 @@
   <Effect name="shotexplosion1" nickname="ROCKMAN_BUSTER_NC_EF" path="megamanx\clip\buster1_explosion.bmp" duration="0.25" frame="4" loop="0"></Effect>
   <Effect name="charge1" nickname="ROCKMAN_CHARGE_1" path="megamanx\clip\chargemotion1.bmp" duration="0.5" frame="8" loop="1"></Effect>
   <Effect name="charge2" nickname="ROCKMAN_CHARGE_2" path="megamanx\clip\chargemotion2.bmp" duration="0.25" frame="4" loop="1"></Effect>
+  
+  <Effect name="thunderorb" nickname="COLONEL_THUNDERBOLTMOTION_ORB"    path="megamanx\enemyclips\boss\thunderboltorb.bmp"    duration="0.25" frame="4" loop="1"></Effect>
+  <Effect name="thunder"    nickname="COLONEL_THUNDERBOLTMOTION_EFFECT" path="megamanx\enemyclips\boss\thunderbolteffect.bmp" duration="0.25" frame="4" loop="1"></Effect>
 </EffectList>

@@ -42,6 +42,17 @@ LRESULT CALLBACK Gamemanager::WndProc(HWND hwnd, UINT imessage, WPARAM wparam, L
 			break;
 		}
 
+		case WM_KEYDOWN:
+		{
+			input::SetKey(wparam, true);
+			break;
+		}
+		case WM_KEYUP:
+		{
+			input::SetKey(wparam, false);
+			break;
+		}
+
 		case WM_SETFOCUS:
 		{
 			input::SetWindowFocus(true);

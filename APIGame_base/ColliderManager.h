@@ -21,6 +21,7 @@ struct ColliderInfo {
 	Rect col;
 	std::list<Rect> m_listlinecol;
 	int  nType; // 0 = Normal Rectangle, 1 = Down Slope 2 = Up Slope
+	int  nEvent; // Event Number
 };
 
 class ColliderManager
@@ -57,6 +58,7 @@ public:
 	std::list<ColliderInfo>& GetCurField() { return m_colliderFieldlist["STAGE" + std::to_string(m_nStage)]; }
 
 	// draw
+	bool GetDraw() { return m_bDraw; }
 	HDC GetHdc() {return m_hdc;}
 private:
 	std::list<GameObject*> m_InstanceColliderlist;

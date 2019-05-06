@@ -295,9 +295,14 @@
     <ClCompile Include="EnemyAttack.cpp">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerGAMEOVERState.cpp" />
     <ClCompile Include="EffectManager.cpp">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGAMEOVERState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClCompile>
+    <ClCompile Include="EventState.cpp">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,9 +491,14 @@
     <ClInclude Include="EnemyAttack.h">
       <Filter>MegamanXGame_Project\001_GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerGAMEOVERState.h" />
     <ClInclude Include="EffectManager.h">
       <Filter>MegamanXGame_Project\003_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGAMEOVERState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
+    </ClInclude>
+    <ClInclude Include="EventState.h">
+      <Filter>MegamanXGame_Project\003_Manager\FSMstate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

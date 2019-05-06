@@ -149,15 +149,8 @@ LRESULT MainGameScene::SceneProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM
 	{
 		case WM_KEYDOWN:
 		{
-			if (wParam == 'p')
-				COLLIDER_MGR->SetDraw(false);
-
-			PLAYER_INSTANCE->GetComponent<PlayerScript>()->InputKeycode(wParam, TRUE);
-			break;
-		}
- 		case WM_KEYUP:
-		{
-			PLAYER_INSTANCE->GetComponent<PlayerScript>()->InputKeycode(wParam, FALSE);
+			if (wParam == 'P')
+				COLLIDER_MGR->SetDraw(COLLIDER_MGR->GetDraw() ? false : true);
 			break;
 		}
 	}
